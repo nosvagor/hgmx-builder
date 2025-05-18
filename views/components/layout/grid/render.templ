@@ -1,0 +1,7 @@
+package grid
+
+templ Render(p *Props) {
+	<div role="group" data-layout="grid" class={ p.Classes() }>
+		{ children... }
+	</div>
+}

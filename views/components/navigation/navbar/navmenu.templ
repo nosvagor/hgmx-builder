@@ -1,0 +1,76 @@
+package navbar
+
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/display/content"
+	"github.com/nosvagor/hgmx-builder/views/components/display/icon"
+)
+
+templ NavMenu(p *Props) {
+	<navMenu
+		id="navMenu"
+		tabindex="0"
+		class="relative w-10 h-10 rounded-full cursor-pointer outline-none flex items-center justify-center bg-base-600 text-secondary-601 hover:text-primary-401"
+		_="
+		on click or keydown[key is 'Enter' or key is ' ']
+			halt the event
+			toggle .menu-open on me
+			call window.toggleMenu()
+		end
+
+		on click from elsewhere
+			if me.matches('.menu-open')
+				remove .menu-open from me
+				call window.toggleMenu()
+			end
+		end
+
+		on keydown[key is 'Escape'] from window
+			if me.matches('.menu-open')
+				remove .menu-open from me
+				call window.toggleMenu()
+				exit
+			end
+
+			if not window.__lastEscapeTime then set window.__lastEscapeTime to 0 end
+			set now to Date.now()
+			if now - window.__lastEscapeTime < 400
+				add .menu-open to me
+				call window.toggleMenu()
+				set window.__lastEscapeTime to 0
+			else
+				set window.__lastEscapeTime to now
+			end
+		end
+	"
+	>
+		<svg viewBox="0 0 32 32" class="overflow-visible w-6 h-6">
+			<path id="icon-p1" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" d="M 9,8 C 9,0, 23,0, 23,8"></path>
+			<path id="icon-p2" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" d="M 9,8 C 9,16, 23,16, 23,8"></path>
+			<path id="icon-p3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" d="M 6,26 C 6,18, 26,18, 26,26"></path>
+		</svg>
+	</navMenu>
+}
+
+templ ExpandedNavMenu(links []PageLink, settings PageLink) {
+	if links != nil {
+		<expandedNavMenu id="expandedNavMenu" class="fixed inset-0 z-40 pointer-events-none">
+			<div id="menu-backdrop" class="absolute inset-0 opacity-0 bg-black/25"></div>
+			<div id="menu-bg" class="flex absolute top-0 -right-10 flex-col justify-between p-10 pt-16 pr-20 pb-8 h-full shadow-2xl min-w-fit bg-base-600" style="transform: translateX(100%)">
+				<div class="flex flex-col gap-4 items-start">
+					if len(links) > 0 {
+						for _, link := range links {
+							<button hx-get={ link.Path } class="text-xl font-medium transition-colors cursor-pointer page-link font-display text-secondary-300 hover:text-primary-400">
+								@icon.Render(icon.Text(link.Icon, link.Label))
+							</button>
+						}
+					}
+				</div>
+				<div class="flex flex-col gap-4 items-end">
+					<button hx-get={ settings.Path }>
+						@icon.Render(icon.IconTip(settings.Icon, content.Text(settings.Label)))
+					</button>
+				</div>
+			</div>
+		</expandedNavMenu>
+	}
+}

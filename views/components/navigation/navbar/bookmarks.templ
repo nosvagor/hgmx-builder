@@ -1,0 +1,15 @@
+package navbar
+
+import "github.com/nosvagor/hgmx-builder/views/components/display/icon"
+
+templ Bookmarks(links []PageLink) {
+	if links != nil {
+		<bookmarks class="flex overflow-hidden gap-2 items-center font-medium font-display">
+			for _, link := range links {
+				<bookmark hx-get={ link.Path } tabindex="0" class="cursor-pointer bookmark_item hover:text-primary-401">
+					@icon.Render(icon.Text(link.Icon, link.Label))
+				</bookmark>
+			}
+		</bookmarks>
+	}
+}

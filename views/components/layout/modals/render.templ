@@ -1,0 +1,16 @@
+package modals
+
+templ Render(p *Props) {
+	<dialog
+		id={ p.ID }
+		data-layout="modal"
+		class="rounded-xl shadow-xl w-[80svw] h-[75svh] p-4 m-auto"
+		_={ "on " + p.Event + " from window call me.showModal()" }
+		aria-labelledby={ p.TitleID }
+	>
+		if p.Title != "" {
+			<h2 id={ p.TitleID } class="mb-4 text-2xl font-bold">{ p.Title }</h2>
+		}
+		{ children... }
+	</dialog>
+}
