@@ -1,0 +1,50 @@
+package icon
+
+import (
+	"fmt"
+	"strings"
+)
+
+func (p *Props) hyprscript() string {
+	b := strings.Builder{}
+	if !p.NoAnimate {
+		b.WriteString(fmt.Sprintf(`on mouseenter get first <svg/> in me then call %sAnimate(it) end`, p.Icon.Name))
+	}
+	if p.Tooltip != nil {
+		if !p.NoAnimate {
+			b.WriteString(" ")
+		}
+		b.WriteString(`on mouseenter get first <tooltip/> in me then call positionTooltip(it) end`)
+	}
+	return b.String()
+}
+
+var tooltipScript = templ.NewOnceHandle()
+
+templ (p *Props) javascript() {
+	if p.Tooltip != nil {
+		@tooltipScript.Once() {
+			<script>
+				window.positionTooltip = (tooltip) => {
+					console.log('positionTooltip', tooltip);
+				}
+
+				window.hideTooltip = (tooltip) => {
+					console.log('hideTooltip', tooltip);
+				}
+			</script>
+		}
+	}
+}
+
+templ Render(p *Props) {
+	<div
+		class="flex relative gap-1 items-center"
+		_={ p.hyprscript() }
+	>
+		@p.Icon.Render()
+		@p.RenderContent()
+		@p.RenderTooltip()
+		@p.javascript()
+	</div>
+}

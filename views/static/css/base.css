@@ -1,0 +1,65 @@
+@layer base {
+  html {
+    cursor: default;
+    scrollbar-width: none;
+  }
+
+  dialog {
+    background-color: var(--base-600);
+  }
+
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+  }
+
+  body {
+    position: relative;
+    font-family: var(--font-sans);
+    color: var(--color-surface-400);
+    min-height: 100svh;
+    width: 100svw;
+    background: linear-gradient(60deg, var(--color-base-400), var(--color-base-600));
+    background-color: var(--color-base-600);
+    background-size: 500% 500%;
+    animation: osculate 8s ease-in-out infinite;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  @supports (-moz-appearance: none) {
+    body {
+      background: var(--base-500);
+      background-size: auto;
+      animation: none;
+    }
+    body::before,
+    body::after {
+      content: none;
+      animation: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body {
+      background: var(--base-500);
+      background-size: auto;
+      animation: none;
+      overflow: auto;
+    }
+    body::before,
+    body::after {
+      content: none;
+      animation: none;
+    }
+  }
+
+  @keyframes osculate {
+    0%,
+    100% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+  }
+}

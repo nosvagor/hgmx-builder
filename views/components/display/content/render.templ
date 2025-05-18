@@ -1,0 +1,9 @@
+package content
+
+templ (c *Props) Render() {
+	if c.Text != "" {
+		<span>{ c.Text }</span>
+	} else {
+		@c.Component.Render()
+	}
+}

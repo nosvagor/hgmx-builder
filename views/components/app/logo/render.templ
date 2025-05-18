@@ -1,0 +1,25 @@
+package logo
+
+templ (p *Props) Render() {
+	<brand
+		class="text-lg font-semibold tracking-tight font-display"
+	>
+		<a href="/" class="transition-colors hover:text-primary-400">
+			if p.Name != "" {
+				{ p.Name }
+			} else {
+				@p.SVG
+			}
+		</a>
+	</brand>
+}
+
+templ LogoSVG() {
+	<svg viewBox="0 0 24 24" fill="currentColor">
+		<rect x="6" y="9" width="8" height="4" rx="1" transform="rotate(-25 10 11)"></rect>
+		<rect x="2" y="12.5" width="3" height="3" rx="1" transform="rotate(-25 3.5 13)"></rect>
+		<rect x="15" y="5" width="4" height="6" rx="2" transform="rotate(-25 17 9)"></rect>
+		<rect x="8.5" y="14" width="1.5" height="6" rx="0.75" transform="rotate(20 9.25 17)"></rect>
+		<rect x="13" y="13" width="1.5" height="7" rx="0.75" transform="rotate(-20 13.75 17)"></rect>
+	</svg>
+}
