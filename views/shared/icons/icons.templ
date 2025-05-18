@@ -1,0 +1,23 @@
+package icons
+
+type IconMap map[string]templ.Component
+
+var ICONS = IconMap{
+	"orbit":    orbit(),
+	"palette":  palette(),
+	"question": question(),
+	"rss":      rss(),
+	"scroll":   scroll(),
+}
+
+func Exists(icon string) bool {
+	return ICONS[icon] != nil
+}
+
+templ Render(icon string) {
+	if Exists(icon) {
+		<icon>
+			@ICONS[icon]
+		</icon>
+	}
+}

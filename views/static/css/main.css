@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@import "./colors.css";
+@import "./fonts.css";
+@import "./theme.css";
+@import "./base.css";
+@import "./components.css";
+@import "./utilities.css";
+/* @import "./safelist.css"; */

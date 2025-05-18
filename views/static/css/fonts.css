@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../fonts/Satoshi-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../fonts/Satoshi-VariableItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sentient";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("../fonts/Sentient-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sentient";
+  font-style: italic;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("../fonts/Sentient-VariableItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Chillax";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("../fonts/Chillax-Variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Iosevka Vagari";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/IosevkaVagari-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Iosevka Vagari";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/IosevkaVagari-Italic.woff2") format("woff2");
+}
+
+@theme {
+  --font-sans: "Satoshi", sans-serif;
+  --font-serif: "Sentient", serif;
+  --font-display: "Chillax", sans-serif;
+  --font-mono: "Iosevka Vagari", monospace;
+  --font-script: "Architects Daughter", cursive;
+}

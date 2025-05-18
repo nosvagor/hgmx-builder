@@ -1,0 +1,8 @@
+@layer components {
+}
+
+@layer components {
+  .navbar_scrolling {
+    @apply bg-base-600/15 backdrop-blur-md shadow-md;
+  }
+}

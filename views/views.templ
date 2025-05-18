@@ -1,0 +1,51 @@
+package views
+
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/navigation"
+	"github.com/nosvagor/hgmx-builder/views/shared"
+)
+
+templ Full(content templ.Component, navbar *navigation.NavbarProps) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			@Favicon()
+			@shared.Style("main.min.css")
+			@shared.Script(&shared.ScriptProps{Path: "vendor/htmx.min.js"})
+			@shared.Script(&shared.ScriptProps{Path: "vendor/hyperscript.min.js"})
+			@shared.Script(&shared.ScriptProps{Path: "vendor/motion.min.js", Module: true})
+		</head>
+		<body>
+			@navigation.Navbar(navbar)
+			@content
+		</body>
+		@Footer()
+	</html>
+}
+
+templ Title(title string) {
+	if len(title) > 0 {
+		<title>{ title }</title>
+	}
+}
+
+templ Main(content templ.Component, title string) {
+	@Title(title)
+	<main>
+		@content
+	</main>
+}
+
+templ Footer() {
+	<footer></footer>
+}
+
+templ Favicon() {
+	<link rel="icon" type="image/png" href="static/favicon/favicon-96x96.png" sizes="96x96"/>
+	<link rel="icon" type="image/svg+xml" href="static/favicon/favicon.svg"/>
+	<link rel="shortcut icon" href="static/favicon/favicon.ico"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png"/>
+	<link rel="manifest" href="/static/favicon/site.webmanifest"/>
+}

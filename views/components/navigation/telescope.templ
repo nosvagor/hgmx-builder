@@ -1,0 +1,17 @@
+package navigation
+
+// === telescope ===============================================================
+
+type TelescopeProps struct {
+}
+
+// Telescope is the telescope/search box for the navbar
+templ Telescope(p *TelescopeProps) {
+	<dialog
+		id="telescope"
+		class="rounded-xl shadow-xl w-[80svw] h-[75svh] p-4 m-auto"
+		_="on telescope:open from window call me.showModal()"
+	></dialog>
+}
+
+// === telescope components ====================================================
