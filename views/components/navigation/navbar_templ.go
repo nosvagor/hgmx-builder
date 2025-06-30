@@ -8,7 +8,11 @@ package navigation
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/nosvagor/hgmx-builder/views/shared"
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/display"
+	"github.com/nosvagor/hgmx-builder/views/shared"
+	"strings"
+)
 
 type NavbarProps struct {
 	App        string
@@ -20,7 +24,15 @@ type NavbarProps struct {
 
 type PageLink struct {
 	Label string
+	Icon  *string
 	URL   templ.SafeURL
+}
+
+func (p *PageLink) IconName() string {
+	if p.Icon != nil {
+		return *p.Icon
+	}
+	return strings.ToLower(p.Label)
 }
 
 func Navbar(p *NavbarProps) templ.Component {
@@ -122,7 +134,7 @@ func Brand(p *NavbarProps) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(p.App)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 68, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 80, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -198,7 +210,7 @@ func Bookmarks(p *NavbarProps) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(link.URL)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 123, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 135, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -208,12 +220,7 @@ func Bookmarks(p *NavbarProps) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var7 string
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(link.Label)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 124, Col: 16}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			templ_7745c5c3_Err = display.IconText(link.IconName(), link.Label, true).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -246,9 +253,9 @@ func NavMenu(p *NavbarProps) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var8 == nil {
-			templ_7745c5c3_Var8 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<navMenu id=\"navMenu\" tabindex=\"0\" class=\"relative w-10 h-10 rounded-full outline-none cursor-pointer centered bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"\n\t\ton click or keydown[key is &#39;Enter&#39; or key is &#39; &#39;]\n\t\t\thalt the event\n\t\t\ttoggle .menu-open on me\n\t\t\tcall window.toggleMenu()\n\t\tend\n\n\t\ton click from elsewhere\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\tend\n\t\tend\n\n\t\ton keydown[key is &#39;Escape&#39;] from window\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\texit\n\t\t\tend\n\n\t\t\tif not window.__lastEscapeTime then set window.__lastEscapeTime to 0 end\n\t\t\tset now to Date.now()\n\t\t\tif now - window.__lastEscapeTime &lt; 400\n\t\t\t\tadd .menu-open to me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\tset window.__lastEscapeTime to 0\n\t\t\telse\n\t\t\t\tset window.__lastEscapeTime to now\n\t\t\tend\n\t\tend\n\t\"><svg viewBox=\"0 0 32 32\" class=\"w-6 h-6 overflow-visible\"><path id=\"icon-p1\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,0, 23,0, 23,8\"></path> <path id=\"icon-p2\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,16, 23,16, 23,8\"></path> <path id=\"icon-p3\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 6,26 C 6,18, 26,18, 26,26\"></path></svg></navMenu>")
@@ -275,12 +282,12 @@ func ExpandedNavMenu(p *NavbarProps) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var9 == nil {
-			templ_7745c5c3_Var9 = templ.NopComponent
+		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var8 == nil {
+			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<expandedNavMenu id=\"expandedNavMenu\" class=\"fixed inset-0 z-40 pointer-events-none\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 bg-black/25\"></div><div id=\"menu-bg\" class=\"absolute top-0 -right-10 flex flex-col justify-between h-full p-10 pr-20 pt-16 pb-8 shadow-2xl min-w-fit bg-base-600\" style=\"transform: translateX(100%)\"><div class=\"flex flex-col items-end gap-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<expandedNavMenu id=\"expandedNavMenu\" class=\"fixed inset-0 z-40 pointer-events-none\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 bg-black/25\"></div><div id=\"menu-bg\" class=\"absolute top-0 -right-10 flex flex-col justify-between h-full p-10 pr-20 pt-16 pb-8 shadow-2xl min-w-fit bg-base-600\" style=\"transform: translateX(100%)\"><div class=\"flex flex-col items-start gap-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -290,8 +297,8 @@ func ExpandedNavMenu(p *NavbarProps) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var10 templ.SafeURL = link.URL
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var10)))
+				var templ_7745c5c3_Var9 templ.SafeURL = link.URL
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var9)))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -299,12 +306,7 @@ func ExpandedNavMenu(p *NavbarProps) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var11 string
-				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(link.Label)
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 183, Col: 150}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
+				templ_7745c5c3_Err = display.IconText(link.IconName(), link.Label, true).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -324,8 +326,8 @@ func ExpandedNavMenu(p *NavbarProps) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var12 templ.SafeURL = link.URL
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var12)))
+				var templ_7745c5c3_Var10 templ.SafeURL = link.URL
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var10)))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -333,12 +335,12 @@ func ExpandedNavMenu(p *NavbarProps) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var13 string
-				templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(link.Label)
+				var templ_7745c5c3_Var11 string
+				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(link.Label)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 190, Col: 153}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 205, Col: 153}
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -372,9 +374,9 @@ func CTA(p *NavbarProps) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var14 == nil {
-			templ_7745c5c3_Var14 = templ.NopComponent
+		templ_7745c5c3_Var12 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var12 == nil {
+			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		if p.CTA != nil {
@@ -382,12 +384,12 @@ func CTA(p *NavbarProps) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var15 string
-			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(p.CTA.URL)
+			var templ_7745c5c3_Var13 string
+			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(p.CTA.URL)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 203, Col: 22}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 218, Col: 22}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -395,12 +397,12 @@ func CTA(p *NavbarProps) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(p.CTA.Label)
+			var templ_7745c5c3_Var14 string
+			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(p.CTA.Label)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 206, Col: 17}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar.templ`, Line: 221, Col: 17}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

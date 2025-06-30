@@ -1,117 +1,61 @@
-# HGMX Component Library
+# HGMX
 
-> A boutique, command-driven component library built with Go Templ, HTMX, and Hyperscript
+> A boutique, open design system (ODS) built with Go Templ, HTMX, and Hyperscript, and Motion.js
 
 ## Vision
 
-In an age where UI can be instantly generated, this library takes a different approach - crafting thoughtful, unique components with small touches that make them special. 
-
+In an age where UI can be instantly generated, hgmx design system takes a different approach&mdash; _crafting_ a unique, yet cohesive, set of componenets with small touches that spark joy when used.
 
 ## Core Philosophy
 
-1. **Boutique Components**: Each component should feel artisan crafted, yet customizable
-2. **Opinionated First Principles**: Start minimal, with opinionated defaults to manage complexity
-3. **HATEOAS**: Hypermedia driven state management
-4. **Semantic Theming**: Rich color system with semantic variables for easy theme adjustments
-5. **Reimagining Navigation**: Encourage command-driven navigation and with beautiful and simple navigation elements.
-
-
-#### Navigation
-We're building toward a future where traditional navigation patterns are seen as temporary handicaps, replaced by fluid, command-driven interfaces inspired by tools like Neovim's Telescope. They will never be fully replaced, still essential for showing state and context, but ultimately we're exploring new ways of navigation.
+1. **Boutique Components**: Each component should feel artisan crafted, yet customizable.
+2. **Opinionated First Principles**: Start minimal, with opinionated defaults to manage complexity.
+3. **Semantic Theming**: Rich color system with semantic variables for easy theme adjustments.
+4. **HATEOAS**: Hypermedia driven state management.
 
 ### Theme
 
 Traditional dark/light mode toggles are a false dichotomy. Our theming system generates entire color palettes from a single seed color using the perceptually uniform OKLCH color space. This creates harmonious color relationships automatically.
 
 #### How It Works
-1. **Seed-Based Generation**: Provide one hex color, get 40+ colors across 11 shades each
-2. **Semantic Mappings**: Components use semantic names (primary, error, success) not specific colors
-3. **Automatic Relationships**: Colors are generated with proper contrast ratios and perceptual balance
-4. **Runtime Flexibility**: Swap entire themes by changing root CSS variables, no component changes needed
+
+1. **Seed-Based Generation**: inspired by 60/30/10 rule. choose background color (60%), primary accent (30%), and action color (10%). &rarr; get an cohesive palette.
+2. **Semantic Mappings**: Components use semantic names (primary, error, success); not specific colors. Geometrically determined from core choices.
+3. **Automatic Relationships**: Colors are generated with proper contrast ratios and perceptual balance.
+4. **Runtime Flexibility**: Swap entire themes by changing root CSS variables, no component changes needed.
 
 #### Semantic Motifs
+
 ```
 Signaling: info, success, warning, error
-Branding:  primary, secondary, accent  
+Branding:  primary, secondary, accent
 States:    positive/negative, true/false, in/out
 Actions:   change, link, delete
 ```
 
-Each motif maps to a color pair for subtle variations to add another simple dimension to add choice themes. 
-
-## Architecture
-
-```
-views/
-├── blocks/          # Component groups
-│   ├── content/      
-│   ├── forms/     
-│   ├── layouts/    
-│   └── navigation/
-├── components/      # Individual reusable components
-│   ├── action/      
-│   ├── display/     
-│   ├── feedback/    
-│   └── input/       
-├── static/          # Static assets (css, js, fonts, svgs, etc)
-└── views.templ      
-```
-
+Each motif maps to a color pair for subtle variations to add another simple dimension to add choice themes.
 
 ## Current Status
 
 ### Completed
+
 - [x] Base HTML structure with smart asset hashing
 - [x] Rich color system generated from seed color alone.
+- [x] Navbar
 
-### In Progress
-- [ ] Navigation container
+### Rough Roadmap
 
-### Roadmap
+#### Phase 0 (continuous; ongoing): Abstract or Enhance
+
+1. **Navbar decomposition** Identiy and create key components likely re-used in other places outside of navbar
+2. **Active state** Estalish shared visual lanugage for focus, active, hover, and other common interactive states.
 
 #### Phase 1: Navigation Foundation
-1. **Navbar**
-   - [ ] Collapsed 
-   - [ ] Inline
-   - [ ] Expanded 
 
-2. **Sidebar**
-   - [ ] Collapsed
-   - [ ] Inline
-   - [ ] Expanded
+1. **Sidebar**, for keeping track of current position if navigation is complex (like in a docs page).
 
-2. **Components on the Radar**:
-   - [ ] NavLogo
-   - [ ] NavItem
-   - [ ] NavButton
-   - [ ] NavAvatar
-   - [ ] NavSearch
-   - [ ] NavMenu
-
-#### Phase 2: Command-Driven Interface
-1. **Command Mode**
+2. **Command Mode**
    - Fuzzy search
    - Action shortcuts
    - Recent/frequent destinations
    - Context-aware suggestions
-
-
-## Development Approach
-
-### Component Creation Process
-1. **Identify Need**: What problem does this solve?
-2. **Design API**: How should developers use it?
-3. **Start Minimal**: What's the simplest useful version?
-4. **Add Thoughtfully**: Each feature should earn its complexity
-5. **Unique Touch**: What makes this component special?
-
-### State Management Philosophy
-- HTMX for server state 
-- Hyperscript for UI state 
-- CSS for visual state 
-- No client-side framework, small custom js if necessary.
-
-### Styling Strategy
-- Tailwind for dynamic and diverse utility classes
-- Tailwind layers for common/static or complex styles applied to components
-- Semantic color variables for consistency 

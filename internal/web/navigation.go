@@ -2,6 +2,7 @@ package web
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/nosvagor/hgmx-builder/internal/shared"
 	"github.com/nosvagor/hgmx-builder/views/components/navigation"
 )
 
@@ -10,14 +11,15 @@ func NewNavbar(c echo.Context) *navigation.NavbarProps {
 	return &navigation.NavbarProps{
 		App: "HGMX",
 		Links: []navigation.PageLink{
-			{Label: "Docs", URL: "/docs"},
+			{Label: "Docs", URL: "/docs", Icon: shared.Ref("scroll")},
 			{Label: "Palette", URL: "/palette"},
-			{Label: "Blog", URL: "/blog"},
+			{Label: "Icons", URL: "/icons", Icon: shared.Ref("orbit")},
+			{Label: "Blog", URL: "/blog", Icon: shared.Ref("rss")},
 		},
-		CTA: &navigation.PageLink{
-			Label: "Download",
-			URL:   "/download",
-		},
+		// CTA: &navigation.PageLink{
+		// 	Label: "Download",
+		// 	URL:   "/download",
+		// },
 		Account: []navigation.PageLink{
 			{Label: "Account", URL: "/account"},
 			{Label: "Settings", URL: "/settings"},

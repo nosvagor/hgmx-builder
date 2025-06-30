@@ -1,6 +1,10 @@
 package navigation
 
-import "github.com/nosvagor/hgmx-builder/views/shared"
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/display"
+	"github.com/nosvagor/hgmx-builder/views/shared"
+	"strings"
+)
 
 type NavbarProps struct {
 	App        string
@@ -12,7 +16,15 @@ type NavbarProps struct {
 
 type PageLink struct {
 	Label string
+	Icon  *string
 	URL   templ.SafeURL
+}
+
+func (p *PageLink) IconName() string {
+	if p.Icon != nil {
+		return *p.Icon
+	}
+	return strings.ToLower(p.Label)
 }
 
 templ Navbar(p *NavbarProps) {
@@ -121,7 +133,8 @@ templ Bookmarks(p *NavbarProps) {
 	<bookmarks class="flex items-center overflow-hidden font-medium font-display">
 		for _, link := range p.Links {
 			<bookmark hx-get={ link.URL } tabindex="0" class="ml-3 cursor-pointer bookmark_item whitespace-nowrap hover:text-primary-401 first:ml-0">
-				{ link.Label }
+				@display.IconText(link.IconName(), link.Label, true)
+				// { link.Label }
 			</bookmark>
 		}
 	</bookmarks>
@@ -177,10 +190,12 @@ templ ExpandedNavMenu(p *NavbarProps) {
 	<expandedNavMenu id="expandedNavMenu" class="fixed inset-0 z-40 pointer-events-none">
 		<div id="menu-backdrop" class="absolute inset-0 opacity-0 bg-black/25"></div>
 		<div id="menu-bg" class="absolute top-0 -right-10 flex flex-col justify-between h-full p-10 pr-20 pt-16 pb-8 shadow-2xl min-w-fit bg-base-600" style="transform: translateX(100%)">
-			<div class="flex flex-col items-end gap-4">
+			<div class="flex flex-col items-start gap-4">
 				if len(p.Links) > 0 {
 					for _, link := range p.Links {
-						<a href={ link.URL } class="text-xl font-medium transition-colors page-link font-display text-secondary-300 hover:text-primary-400">{ link.Label }</a>
+						<a href={ link.URL } class="text-xl font-medium transition-colors page-link font-display text-secondary-300 hover:text-primary-400">
+							@display.IconText(link.IconName(), link.Label, true)
+						</a>
 					}
 				}
 			</div>
