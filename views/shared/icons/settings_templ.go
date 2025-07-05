@@ -8,16 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Rss() *Icon {
+func Settings() *Icon {
 	return &Icon{
-		Name:    "rss",
+		Name:    "settings",
 		handler: templ.NewOnceHandle(),
-		script:  RssAnimation,
-		svg:     RssContent,
+		script:  SettingsAnimation,
+		svg:     SettingsContent,
 	}
 }
 
-func RssAnimation() templ.Component {
+func SettingsAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,7 +38,7 @@ func RssAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/vendor/motion.min.js\";\n\t\twindow.rssAnimate = (el) => {\n\t\t\tconst elements = Array.from(el.querySelectorAll('circle, path'));\n\t\t\tanimate(elements, \n\t\t\t\t{ scale: [0, 1.5, 1], opacity: [0, 1] }, \n\t\t\t\t{ delay: stagger(0.08), duration: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate } from \"/static/scripts/vendor/motion.min.js\";\n\t\twindow.settingsAnimate = (el) => {\n            const innerGear = el.querySelectorAll('circle');\n\t\t\tanimate(innerGear, \n\t\t\t\t{ scale: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ type: \"spring\", bounce: 0.25, duration: 0.42 }\n\t\t\t);\n\n\t\t\tconst outerGear = el.querySelector('path');\n\t\t\tconst Θ = Number(el.dataset.rotation || 0);\n\t\t\tconst Δ = Θ + 180 + Math.random() * 30;\n\t\t\tel.dataset.rotation = Δ;\n\t\t\tanimate(outerGear, \n                { rotate: [Θ, Δ] }, \n                { duration: 0.42, ease: \"easeOut\" }\n            );\n\t\t\tanimate(outerGear, \n\t\t\t\t{ scale: [0, 1.5, 1], opacity: [0, 1] },\n\t\t\t\t{ type: \"spring\", bounce: 0.42, duration: 0.69 }\n\t\t\t);\n\t\t};\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -46,7 +46,7 @@ func RssAnimation() templ.Component {
 	})
 }
 
-func RssContent() templ.Component {
+func SettingsContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -79,7 +79,7 @@ func RssContent() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<circle cx=\"5\" cy=\"19\" r=\"1\"></circle> <path d=\"M4 11a9 9 0 0 1 9 9\"></path> <path d=\"M4 4a16 16 0 0 1 16 16\"></path>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"></path> <circle cx=\"12\" cy=\"12\" r=\"3\"></circle>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

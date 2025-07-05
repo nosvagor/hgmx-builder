@@ -15,18 +15,21 @@ templ ScrollAnimation() {
 			window.scrollAnimate = (el) => {
 				const paths = el.querySelectorAll('path');
 
+				const scrollPaths = [paths[2], paths[3]];
+				animate(scrollPaths, 
+					{ y: [-20, 5, 0] }, 
+					{ type: "spring", bounce: 0.42, duration: 0.69 }
+				);
+				animate(scrollPaths, 
+					{ pathLength: [0, 1] }, 
+					{ duration: 0.42, ease: "easeInOut" }
+				);
+
 				const textPaths = [paths[0], paths[1]];
 				animate(textPaths,
 					{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },
 					{ delay: stagger(0.15), duration: 0.42, ease: "anticipate" },
 				);
-
-				const scrollPaths = [paths[2], paths[3]];
-				animate(scrollPaths, 
-					{ pathLength: [0, 1], y: [-15, 0], opacity: [0, 1] }, 
-					{ type: "spring", bounce: 0.42, duration: 0.69, ease: "backOut" }
-				);
-
 			};
 	</script>
 }

@@ -20,9 +20,6 @@ func NewNavbar(c echo.Context) *navigation.NavbarProps {
 		// 	Label: "Download",
 		// 	URL:   "/download",
 		// },
-		Account: []navigation.PageLink{
-			{Label: "Account", URL: "/account"},
-			{Label: "Settings", URL: "/settings"},
-		},
+		Settings: &navigation.PageLink{Label: "Settings", URL: "/settings", Icon: icons.Settings()},
 	}
 }

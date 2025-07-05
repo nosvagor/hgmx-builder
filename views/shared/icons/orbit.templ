@@ -19,13 +19,13 @@ templ OrbitAnimation() {
 			el.dataset.rotation = Δ;
 			animate(moons,
 				{ rotate: [Θ, Δ], opacity: [0, 1] },
-				{ duration: 0.5, ease: "easeInOut" }
+				{ duration: 0.42, ease: "easeOut" }
 			);
 
 			const planet = el.querySelector('circle[r="2"]');
 			animate(planet,
 				{ opacity: [0, 1] },
-				{ duration: 0.5, ease: "easeOut" }
+				{ duration: 0.69, ease: "easeOut" }
 			);
 		}
 	</script>

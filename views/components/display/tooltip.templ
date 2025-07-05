@@ -1,0 +1,61 @@
+package display
+
+import (
+	"github.com/nosvagor/hgmx-builder/views/shared/icons"
+	"strings"
+)
+
+type IconToolTipProps struct {
+	Icon      *icons.Icon
+	Tooltip   string
+	NoAnimate bool
+}
+
+func (p *IconToolTipProps) hyprscript() string {
+	var b strings.Builder
+	b.WriteString("on mouseenter get first <tooltip/> in me then call positionTooltip(it) end")
+
+	if !p.NoAnimate {
+		if script := triggerAnimation(p.Icon); script != "" {
+			b.WriteString(" ")
+			b.WriteString(script)
+		}
+	}
+
+	return b.String()
+}
+
+templ IconToolTip(p *IconToolTipProps) {
+	<iconToolTip
+		class="flex relative items-center gap-1 p-2 rounded-md hover:bg-base-400 hover:text-primary-400 group"
+		_={ p.hyprscript() }
+	>
+		@TooltipScript()
+		@p.Icon.Render()
+		@Tooltip(p.Tooltip)
+	</iconToolTip>
+}
+
+templ Tooltip(text string) {
+	if len(text) > 0 {
+		<tooltip class="hidden absolute z-50 p-2 text-xs rounded-md shadow-lg pointer-events-none bg-base-900 text-base-100 whitespace-nowrap">
+			{ text }
+		</tooltip>
+	}
+}
+
+var tooltipHandler = templ.NewOnceHandle()
+
+templ TooltipScript() {
+	@tooltipHandler.Once() {
+		<script>
+			window.positionTooltip = (tooltip) => {
+                console.log('positionTooltip', tooltip);
+			}
+
+			window.hideTooltip = (tooltip) => {
+                console.log('hideTooltip', tooltip);
+			}
+        </script>
+	}
+}

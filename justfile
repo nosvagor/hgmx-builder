@@ -5,6 +5,7 @@ VERSION_VAR_PATH    := "main.Version"
 GIT_VERSION         := `git describe --tags --always || echo dev`
 CSS_INPUT           := "views/static/css/main.css"
 CSS_OUTPUT          := "views/static/css/main.min.css"
+PATH_SCRIPTS        := "views/static/scripts/vendor"
 
 default:
     @just --list
@@ -73,3 +74,14 @@ release:
     @just patch 
     @git push
     @git push origin --tags
+
+ds *URL:
+    #!/usr/bin/env bash
+    name=$(basename {{URL}})
+    curl -o {{PATH_SCRIPTS}}/${name} {{URL}}
+    if [ $? -eq 0 ]; then
+        echo "downlaoded {{PATH_SCRIPTS}}/${name}"
+    else
+        echo "failed to download {{PATH_SCRIPTS}}/${name}"
+        exit 1
+    fi
