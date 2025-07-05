@@ -31,7 +31,7 @@ function setIcon(paths, options = {}) {
   animate(iconP3, { d: paths.p3 }, t);
 }
 
-function navbarScrolling(scrolling) {
+function navbarScrolling(scrolling, quick = false) {
   const bookmarks = document.querySelectorAll(".bookmark_item");
   const telescopeTrigger = document.querySelector("telescopeTrigger");
 
@@ -39,9 +39,9 @@ function navbarScrolling(scrolling) {
     animate(
       bookmarks,
       { width: 0, opacity: 0, marginLeft: 0 },
-      { duration: 0.75, delay: stagger(0.1, { from: "first" }), ease: "anticipate" }
+      { duration: quick ? 0.25 : 0.75, delay: stagger(quick ? 0.055 : 0.087, { from: "first" }), ease: "anticipate" }
     );
-    animate(telescopeTrigger, { x: "5.25rem" }, { duration: 1, ease: "anticipate" });
+    animate(telescopeTrigger, { x: "5.25rem" }, { duration: quick ? 0.37 : 1, ease: "anticipate" });
     if (!navMenu.classList.contains("menu-open")) {
       setIcon(iconPaths.hamburger);
     }
@@ -81,41 +81,37 @@ function toggleMenu() {
 
   if (isOpen) {
     navbar.classList.remove("navbar_scrolling");
-    let openDelay = 0;
     if (window.scrollY == 0) {
-      navbarScrolling(true);
-      openDelay = 420;
+      navbarScrolling(true, true);
     }
 
-    setTimeout(() => {
-      setIcon(iconPaths.close);
-      expandedNavMenu.style.pointerEvents = "auto";
+    setIcon(iconPaths.close);
+    expandedNavMenu.style.pointerEvents = "auto";
 
-      animate(menuBackdrop, { opacity: 1 }, { duration: 0.3 });
-      animate(menuBg, { transform: "translateX(0%)" }, { type: "spring", bounce: 0.4, duration: 0.7 });
-      if (navLinks) {
-        animate(
-          navLinks,
-          { opacity: [0, 1], x: [20, 0] },
-          {
-            ease: "backInOut",
-            duration: 0.3,
-            delay: stagger(0.1),
-          }
-        );
-      }
-      if (accountLinks) {
-        animate(
-          accountLinks,
-          { opacity: [0, 1], x: [20, 0] },
-          {
-            ease: "backInOut",
-            duration: 0.3,
-            delay: stagger(0.1, { from: "last" }),
-          }
-        );
-      }
-    }, openDelay);
+    animate(menuBackdrop, { opacity: 1 }, { duration: 0.3 });
+    animate(menuBg, { transform: "translateX(0%)" }, { type: "spring", bounce: 0.4, duration: 0.7 });
+    if (navLinks) {
+      animate(
+        navLinks,
+        { opacity: [0, 1], x: [20, 0] },
+        {
+          ease: "backInOut",
+          duration: 0.3,
+          delay: stagger(0.1),
+        }
+      );
+    }
+    if (accountLinks) {
+      animate(
+        accountLinks,
+        { opacity: [0, 1], x: [20, 0] },
+        {
+          ease: "backInOut",
+          duration: 0.3,
+          delay: stagger(0.1, { from: "last" }),
+        }
+      );
+    }
   }
 
   if (!isOpen) {

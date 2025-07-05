@@ -8,9 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-var scrollHandle = templ.NewOnceHandle()
+func Scroll() *Icon {
+	return &Icon{
+		Name:    "scroll",
+		handler: templ.NewOnceHandle(),
+		script:  ScrollAnimation,
+		svg:     ScrollContent,
+	}
+}
 
-func scroll() templ.Component {
+func ScrollAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,7 +38,36 @@ func scroll() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/vendor/motion.min.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\n\t\t\t\tconst textPaths = [paths[0], paths[1]];\n\t\t\t\tanimate(textPaths,\n\t\t\t\t\t{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },\n\t\t\t\t\t{ delay: stagger(0.15), duration: 0.42, ease: \"anticipate\" },\n\t\t\t\t);\n\n\t\t\t\tconst scrollPaths = [paths[2], paths[3]];\n\t\t\t\tanimate(scrollPaths, \n\t\t\t\t\t{ pathLength: [0, 1], y: [-15, 0], opacity: [0, 1] }, \n\t\t\t\t\t{ type: \"spring\", bounce: 0.42, duration: 0.69, ease: \"backOut\" }\n\t\t\t\t);\n\n\t\t\t};\n\t</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func ScrollContent() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var3 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -43,17 +79,13 @@ func scroll() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\t\timport { animate, stagger } from \"/static/scripts/vendor/motion.min.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\t\t\t\tconst textPaths = [paths[1], paths[0]];\n\t\t\t\tconst scrollPaths = [paths[3], paths[2]];\n\n\t\t\t\tanimate(scrollPaths, { pathLength: [0, 1], y: [-15, 0], opacity: [0, 1] }, { type: \"spring\", bounce: 0.42, duration: 0.69, ease: \"backOut\" });\n                animate(textPaths, { opacity: [0, 1], x: [-3, 0], y: [-2, 0] }, { delay: stagger(0.15), duration: 0.42, ease: \"anticipate\" });\n\t\t\t}\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M15 8h-5\"></path> <path d=\"M15 12h-5\"></path> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\"></path> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"></path>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = scrollHandle.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 12h-5\"></path> <path d=\"M15 8h-5\"></path> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\"></path> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"></path></svg>")
+		templ_7745c5c3_Err = svg().Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

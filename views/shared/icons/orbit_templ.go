@@ -8,9 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-var orbitHandle = templ.NewOnceHandle()
+func Orbit() *Icon {
+	return &Icon{
+		Name:    "orbit",
+		handler: templ.NewOnceHandle(),
+		script:  OrbitAnimation,
+		svg:     OrbitContent,
+	}
+}
 
-func orbit() templ.Component {
+func OrbitAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,7 +38,36 @@ func orbit() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate } from \"/static/scripts/vendor/motion.min.js\";\n\t\twindow.orbitAnimate = (el) => {\n\t\t\tconst moons = el.querySelector('g');\n\t\t\tconst Θ = Number(el.dataset.rotation || 0);\n\t\t\tconst Δ = Θ + 360 + Math.random() * 100;\n\t\t\tel.dataset.rotation = Δ;\n\t\t\tanimate(moons,\n\t\t\t\t{ rotate: [Θ, Δ], opacity: [0, 1] },\n\t\t\t\t{ duration: 0.5, ease: \"easeInOut\" }\n\t\t\t);\n\n\t\t\tconst planet = el.querySelector('circle[r=\"2\"]');\n\t\t\tanimate(planet,\n\t\t\t\t{ opacity: [0, 1] },\n\t\t\t\t{ duration: 0.5, ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func OrbitContent() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var3 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -43,17 +79,13 @@ func orbit() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\t\timport { animate } from \"/static/scripts/vendor/motion.min.js\";\n\t\t\twindow.orbitAnimate = (el) => {\n\t\t\t\tconst orbitingGroup = el.querySelector('g');\n\t\t\t\tconst centerCircle = el.querySelector('circle[r=\"3\"]');\n\n\t\t\t\tconst currentRotation = Number(el.dataset.rotation || 0);\n\t\t\t\tconst newRotation = currentRotation + 360 + Math.random() * 100;\n\t\t\t\tel.dataset.rotation = newRotation;\n\n\t\t\t\tanimate(orbitingGroup, { rotate: [currentRotation, newRotation], opacity: [0, 1] }, { duration: 0.5, ease: \"easeInOut\" });\n\t\t\t\tanimate(centerCircle, { opacity: [0, 1] }, { duration: 0.5, ease: \"easeOut\" });\n\t\t\t}\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<g><path d=\"M20.341 6.484A10 10 0 0 1 10.266 21.85\"></path> <path d=\"M3.659 17.516A10 10 0 0 1 13.74 2.152\"></path> <circle cx=\"19\" cy=\"5\" r=\"1.5\" fill=\"currentColor\"></circle> <circle cx=\"5\" cy=\"19\" r=\"1\" fill=\"currentColor\"></circle></g> <circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"currentColor\"></circle>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = orbitHandle.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><g><path d=\"M20.341 6.484A10 10 0 0 1 10.266 21.85\"></path> <path d=\"M3.659 17.516A10 10 0 0 1 13.74 2.152\"></path> <circle cx=\"19\" cy=\"5\" r=\"2\"></circle> <circle cx=\"5\" cy=\"19\" r=\"2\"></circle></g> <circle cx=\"12\" cy=\"12\" r=\"3\"></circle></svg>")
+		templ_7745c5c3_Err = svg().Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

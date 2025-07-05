@@ -5,18 +5,26 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/shared/icons"
 )
 
-func triggerAnimation(icon string) string {
-	return fmt.Sprintf(`on mouseenter get first <svg/> in me then call %sAnimate(it)`, icon)
+func triggerAnimation(icon *icons.Icon) string {
+	return fmt.Sprintf(`on mouseenter get first <svg/> in me then call %sAnimate(it)`, icon.Name)
 }
 
-templ IconText(icon, text string, animate bool) {
-	<iconText
-		class="flex items-center gap-1"
-		if animate && icons.Exists(icon) {
-			_={ triggerAnimation(icon) }
-		}
-	>
-		@icons.Render(icon)
-		<span>{ text }</span>
-	</iconText>
+type IconTextProps struct {
+	Icon      *icons.Icon
+	Text      string
+	NoAnimate bool
+}
+
+templ IconText(p *IconTextProps) {
+	if p.Icon != nil {
+		<iconText
+			class="flex items-center gap-1"
+			if !p.NoAnimate {
+				_={ triggerAnimation(p.Icon) }
+			}
+		>
+			@p.Icon.Render()
+			<span>{ p.Text }</span>
+		</iconText>
+	}
 }

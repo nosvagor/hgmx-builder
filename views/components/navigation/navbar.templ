@@ -3,7 +3,7 @@ package navigation
 import (
 	"github.com/nosvagor/hgmx-builder/views/components/display"
 	"github.com/nosvagor/hgmx-builder/views/shared"
-	"strings"
+	"github.com/nosvagor/hgmx-builder/views/shared/icons"
 )
 
 type NavbarProps struct {
@@ -16,15 +16,8 @@ type NavbarProps struct {
 
 type PageLink struct {
 	Label string
-	Icon  *string
+	Icon  *icons.Icon
 	URL   templ.SafeURL
-}
-
-func (p *PageLink) IconName() string {
-	if p.Icon != nil {
-		return *p.Icon
-	}
-	return strings.ToLower(p.Label)
 }
 
 templ Navbar(p *NavbarProps) {
@@ -133,8 +126,7 @@ templ Bookmarks(p *NavbarProps) {
 	<bookmarks class="flex items-center overflow-hidden font-medium font-display">
 		for _, link := range p.Links {
 			<bookmark hx-get={ link.URL } tabindex="0" class="ml-3 cursor-pointer bookmark_item whitespace-nowrap hover:text-primary-401 first:ml-0">
-				@display.IconText(link.IconName(), link.Label, true)
-				// { link.Label }
+				@display.IconText(&display.IconTextProps{Icon: link.Icon, Text: link.Label})
 			</bookmark>
 		}
 	</bookmarks>
@@ -194,7 +186,7 @@ templ ExpandedNavMenu(p *NavbarProps) {
 				if len(p.Links) > 0 {
 					for _, link := range p.Links {
 						<a href={ link.URL } class="text-xl font-medium transition-colors page-link font-display text-secondary-300 hover:text-primary-400">
-							@display.IconText(link.IconName(), link.Label, true)
+							@display.IconText(&display.IconTextProps{Icon: link.Icon, Text: link.Label})
 						</a>
 					}
 				}

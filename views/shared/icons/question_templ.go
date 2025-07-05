@@ -8,9 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-var questionHandle = templ.NewOnceHandle()
+func Question() *Icon {
+	return &Icon{
+		Name:    "question",
+		handler: templ.NewOnceHandle(),
+		script:  QuestionAnimation,
+		svg:     QuestionContent,
+	}
+}
 
-func question() templ.Component {
+func QuestionAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,7 +38,36 @@ func question() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate } from \"/static/scripts/vendor/motion.min.js\";\n\t\twindow.questionAnimate = (el) => {\n\t\t\tconst circle = el.querySelector('circle');\n\t\t\tconst π2r = 2 * Math.PI * circle.r.baseVal.value;\n\t\t\tcircle.style.strokeDasharray = π2r;\n\t\t\tanimate(circle,\n\t\t\t\t{ strokeDashoffset: [π2r, 0] },\n\t\t\t\t{ duration: 0.42, easing: \"easeInOut\" }\n\t\t\t);\n\n\t\t\tconst questionMark = el.querySelectorAll('path');\n\t\t\tconst Θy = Number(el.dataset.yRotation || 0);\n\t\t\tconst Δy = Θy + 360;\n\t\t\tel.dataset.yRotation = Δy;\n\t\t\tanimate(questionMark,\n\t\t\t\t{ rotateY: [`${Θy}deg`, `${Δy}deg`] },\n\t\t\t\t{ duration: 0.75, type: \"easeInOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func QuestionContent() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var3 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -43,17 +79,13 @@ func question() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate } from \"/static/scripts/vendor/motion.min.js\";\n\n\t\twindow.questionAnimate = (el) => {\n\t\t\tconst circle = el.querySelector('circle');\n\t\t\tconst questionMark = el.querySelectorAll('path');\n\n\t\t\tconst currentYRotation = Number(el.dataset.yRotation || 0);\n\t\t\tconst newYRotation = currentYRotation + 360;\n\t\t\tel.dataset.yRotation = newYRotation;\n\n\t\t\tconst circumference = 2 * Math.PI * circle.r.baseVal.value;\n\t\t\tcircle.style.strokeDasharray = circumference;\n\n\t\t\tanimate(circle, {\n\t\t\t\tstrokeDashoffset: [circumference, 0]\n\t\t\t}, {\n\t\t\t\tduration: 0.42,\n\t\t\t\teasing: \"easeInOut\"\n\t\t\t});\n\n\t\t\tanimate(questionMark, {\n\t\t\t\trotateY: [`${currentYRotation}deg`, `${newYRotation}deg`]\n\t\t\t}, {\n\t\t\t\tduration: 0.75,\n\t\t\t\ttype: \"easeInOut\",\n\t\t\t\t});\n\t\t\t}\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<circle cx=\"12\" cy=\"12\" r=\"10\"></circle> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\"></path> <path d=\"M12 17h.01\"></path>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = questionHandle.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\"></path><path d=\"M12 17h.01\"></path></svg>")
+		templ_7745c5c3_Err = svg().Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

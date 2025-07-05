@@ -1,25 +1,41 @@
 package icons
 
-var scrollHandle = templ.NewOnceHandle()
+func Scroll() *Icon {
+	return &Icon{
+		Name:    "scroll",
+		handler: templ.NewOnceHandle(),
+		script:  ScrollAnimation,
+		svg:     ScrollContent,
+	}
+}
 
-templ scroll() {
-	@scrollHandle.Once() {
-		<script type="module">
-			import { animate, stagger } from "/static/scripts/vendor/motion.min.js";
+templ ScrollAnimation() {
+	<script type="module">
+		import { animate, stagger } from "/static/scripts/vendor/motion.min.js";
 			window.scrollAnimate = (el) => {
 				const paths = el.querySelectorAll('path');
-				const textPaths = [paths[1], paths[0]];
-				const scrollPaths = [paths[3], paths[2]];
 
-				animate(scrollPaths, { pathLength: [0, 1], y: [-15, 0], opacity: [0, 1] }, { type: "spring", bounce: 0.42, duration: 0.69, ease: "backOut" });
-                animate(textPaths, { opacity: [0, 1], x: [-3, 0], y: [-2, 0] }, { delay: stagger(0.15), duration: 0.42, ease: "anticipate" });
-			}
-		</script>
-	}
-	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-		<path d="M15 12h-5"></path>
+				const textPaths = [paths[0], paths[1]];
+				animate(textPaths,
+					{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },
+					{ delay: stagger(0.15), duration: 0.42, ease: "anticipate" },
+				);
+
+				const scrollPaths = [paths[2], paths[3]];
+				animate(scrollPaths, 
+					{ pathLength: [0, 1], y: [-15, 0], opacity: [0, 1] }, 
+					{ type: "spring", bounce: 0.42, duration: 0.69, ease: "backOut" }
+				);
+
+			};
+	</script>
+}
+
+templ ScrollContent() {
+	@svg() {
 		<path d="M15 8h-5"></path>
+		<path d="M15 12h-5"></path>
 		<path d="M19 17V5a2 2 0 0 0-2-2H4"></path>
 		<path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"></path>
-	</svg>
+	}
 }
