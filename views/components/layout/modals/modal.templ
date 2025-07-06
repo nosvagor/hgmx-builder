@@ -1,0 +1,14 @@
+package modals
+
+type Props struct {
+	ID    string
+	Event string
+}
+
+templ Modal(p *Props) {
+	<dialog
+		id={ p.ID }
+		class="rounded-xl shadow-xl w-[80svw] h-[75svh] p-4 m-auto"
+		_={ "on " + p.Event + " from window call me.showModal()" }
+	></dialog>
+}

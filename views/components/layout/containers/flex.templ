@@ -1,0 +1,9 @@
+package containers
+
+import "strconv"
+
+templ Center(gap int) {
+	<center class={ "flex items-center gap-" + strconv.Itoa(gap) }>
+		{ children... }
+	</center>
+}

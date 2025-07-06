@@ -1,11 +1,11 @@
 package views
 
 import (
-	"github.com/nosvagor/hgmx-builder/views/components/navigation"
+	"github.com/nosvagor/hgmx-builder/views/components/navigation/navbar"
 	"github.com/nosvagor/hgmx-builder/views/shared"
 )
 
-templ Full(content templ.Component, navbar *navigation.NavbarProps) {
+templ Full(content templ.Component, nav *navbar.Props) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -18,7 +18,7 @@ templ Full(content templ.Component, navbar *navigation.NavbarProps) {
 			@shared.Script(&shared.ScriptProps{Path: "vendor/motion.min.js", Module: true})
 		</head>
 		<body>
-			@navigation.Navbar(navbar)
+			@navbar.Render(nav)
 			@content
 		</body>
 		@Footer()

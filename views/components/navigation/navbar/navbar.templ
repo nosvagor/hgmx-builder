@@ -1,0 +1,66 @@
+package navbar
+
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/app"
+	"github.com/nosvagor/hgmx-builder/views/components/app/actions"
+	"github.com/nosvagor/hgmx-builder/views/components/navigation/telescope"
+	"github.com/nosvagor/hgmx-builder/views/shared"
+	"github.com/nosvagor/hgmx-builder/views/shared/icons"
+)
+
+type Props struct {
+	Name              string
+	Links             *[]PageLink
+	Account, Settings *PageLink
+	CTA               *actions.Props
+}
+
+type PageLink struct {
+	Icon  *icons.Icon
+	Label string
+	Path  templ.SafeURL
+}
+
+templ Render(p *Props) {
+	if p != nil {
+		@shared.Script(&shared.ScriptProps{Path: "motion/navbar.js", Module: true, Defer: true})
+		<navbar
+			class="sticky top-0 z-50 flex items-center justify-between gap-4 px-8 py-3 transition duration-200 ease-out"
+			_="
+			init
+				if window.scrollY is 0 then
+					remove .navbar_scrolling from me
+				else
+					add .navbar_scrolling to me
+					call window.navbarScrolling(true)
+				end
+			end
+
+			on scroll from window	
+				get #navMenu
+				if it and it.matches('.menu-open') then
+					exit
+				end
+				if window.scrollY is 0 and me.matches('.navbar_scrolling') then
+					remove .navbar_scrolling from me
+					call window.navbarScrolling(false)
+				else if window.scrollY > 0 and not me.matches('.navbar_scrolling') then
+					add .navbar_scrolling to me
+					call window.navbarScrolling(true)
+				end
+			end
+		"
+		>
+			<div class="flex items-center gap-4">
+				@app.Brand(p.Name)
+				@actions.CTA(p.CTA)
+			</div>
+			<div class="flex items-center gap-4">
+				@telescope.Render()
+				@Bookmarks(p.Links)
+				@NavMenu(p)
+			</div>
+		</navbar>
+		@ExpandedNavMenu(p.Links, p.Settings)
+	}
+}
