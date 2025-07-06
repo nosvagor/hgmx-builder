@@ -8,7 +8,7 @@ package navbar
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/nosvagor/hgmx-builder/views/components/display"
+import "github.com/nosvagor/hgmx-builder/views/components/display/icon"
 
 func NavMenu(p *Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -74,7 +74,7 @@ func ExpandedNavMenu(links *[]PageLink, settings *PageLink) templ.Component {
 					var templ_7745c5c3_Var3 string
 					templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(link.Path)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/menu.templ`, Line: 59, Col: 33}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/navmenu.templ`, Line: 59, Col: 33}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 					if templ_7745c5c3_Err != nil {
@@ -84,7 +84,7 @@ func ExpandedNavMenu(links *[]PageLink, settings *PageLink) templ.Component {
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					templ_7745c5c3_Err = display.IconText(&display.IconTextProps{Icon: link.Icon, Text: link.Label}).Render(ctx, templ_7745c5c3_Buffer)
+					templ_7745c5c3_Err = icon.IconText(icon.TextBasic(link.Icon, link.Label)).Render(ctx, templ_7745c5c3_Buffer)
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -106,7 +106,7 @@ func ExpandedNavMenu(links *[]PageLink, settings *PageLink) templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(settings.Path)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/menu.templ`, Line: 67, Col: 36}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/navmenu.templ`, Line: 67, Col: 36}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -116,7 +116,7 @@ func ExpandedNavMenu(links *[]PageLink, settings *PageLink) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = display.IconToolTip(&display.IconToolTipProps{Icon: settings.Icon, Tooltip: settings.Label}).Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = icon.IconText(icon.TipBasic(settings.Icon, settings.Label)).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

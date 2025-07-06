@@ -1,0 +1,28 @@
+package tooltip
+
+import "github.com/nosvagor/hgmx-builder/views/components/display/content"
+
+templ Render(c *content.TextOrContent) {
+	if c != nil {
+		<tooltip class="hidden absolute z-50 p-2 text-xs rounded-md shadow-lg pointer-events-none bg-base-900 text-base-100 whitespace-nowrap">
+			@javascript()
+			@c.Render()
+		</tooltip>
+	}
+}
+
+var tooltipHandler = templ.NewOnceHandle()
+
+templ javascript() {
+	@tooltipHandler.Once() {
+		<script>
+			window.positionTooltip = (tooltip) => {
+                console.log('positionTooltip', tooltip);
+			}
+
+			window.hideTooltip = (tooltip) => {
+                console.log('hideTooltip', tooltip);
+			}
+        </script>
+	}
+}

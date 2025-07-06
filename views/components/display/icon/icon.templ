@@ -1,0 +1,59 @@
+package icon
+
+import (
+	"fmt"
+	"github.com/nosvagor/hgmx-builder/views/components/display/content"
+	"github.com/nosvagor/hgmx-builder/views/components/display/tooltip"
+	"github.com/nosvagor/hgmx-builder/views/components/icons"
+	"strings"
+)
+
+type IconTextProps struct {
+	Icon      *icons.Icon
+	Content   *content.TextOrContent
+	Tooltip   *content.TextOrContent
+	NoAnimate bool
+}
+
+func TextBasic(icon *icons.Icon, text string) *IconTextProps {
+	return &IconTextProps{Icon: icon, Content: content.Text(text)}
+}
+
+func TextStyled(icon *icons.Icon, text string, class string) *IconTextProps {
+	return &IconTextProps{Icon: icon, Content: content.Styled(text, class)}
+}
+
+func TipBasic(icon *icons.Icon, text string) *IconTextProps {
+	return &IconTextProps{Icon: icon, Tooltip: content.Text(text)}
+}
+
+func (p *IconTextProps) hyprscript() string {
+	b := strings.Builder{}
+	if !p.NoAnimate {
+		b.WriteString(fmt.Sprintf(`on mouseenter get first <svg/> in me then call %sAnimate(it) end`, p.Icon.Name))
+	}
+	if p.Tooltip != nil {
+		if !p.NoAnimate {
+			b.WriteString(" ")
+		}
+		b.WriteString(`on mouseenter get first <tooltip/> in me then call positionTooltip(it) end`)
+	}
+	return b.String()
+}
+
+templ IconText(p *IconTextProps) {
+	<iconText
+		class="flex items-center gap-1"
+		_={ p.hyprscript() }
+	>
+		if p.Icon != nil {
+			@p.Icon.Render()
+		}
+		if p.Content != nil {
+			@p.Content.Render()
+		}
+		if p.Tooltip != nil {
+			@tooltip.Render(p.Tooltip)
+		}
+	</iconText>
+}

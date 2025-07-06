@@ -1,6 +1,6 @@
 package navbar
 
-import "github.com/nosvagor/hgmx-builder/views/components/display"
+import "github.com/nosvagor/hgmx-builder/views/components/display/icon"
 
 templ NavMenu(p *Props) {
 	<navMenu
@@ -57,7 +57,7 @@ templ ExpandedNavMenu(links *[]PageLink, settings *PageLink) {
 					if len(*links) > 0 {
 						for _, link := range *links {
 							<button hx-get={ link.Path } class="text-xl font-medium transition-colors page-link font-display text-secondary-300 hover:text-primary-400">
-								@display.IconText(&display.IconTextProps{Icon: link.Icon, Text: link.Label})
+								@icon.IconText(icon.TextBasic(link.Icon, link.Label))
 							</button>
 						}
 					}
@@ -65,7 +65,7 @@ templ ExpandedNavMenu(links *[]PageLink, settings *PageLink) {
 				if settings != nil {
 					<div class="flex flex-col items-end gap-4">
 						<button hx-get={ settings.Path }>
-							@display.IconToolTip(&display.IconToolTipProps{Icon: settings.Icon, Tooltip: settings.Label})
+							@icon.IconText(icon.TipBasic(settings.Icon, settings.Label))
 						</button>
 					</div>
 				}

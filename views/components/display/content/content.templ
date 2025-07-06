@@ -1,0 +1,27 @@
+package content
+
+type TextOrContent struct {
+	Text    *string
+	Content templ.Component
+	Class   string
+}
+
+func Text(text string) *TextOrContent {
+	return &TextOrContent{Text: &text}
+}
+
+func Styled(text string, class string) *TextOrContent {
+	return &TextOrContent{Text: &text, Class: class}
+}
+
+func Content(c templ.Component) *TextOrContent {
+	return &TextOrContent{Content: c}
+}
+
+templ (c *TextOrContent) Render() {
+	if c.Text != nil {
+		<span class={ c.Class }>{ *c.Text }</span>
+	} else if c.Content != nil {
+		@c.Content
+	}
+}
