@@ -30,11 +30,7 @@ func InitLogger() {
 	}
 	zerolog.SetGlobalLevel(lvl)
 
-	if cfg.ENV == "PROD" {
-		log.Logger = log.Output(zerolog.New(os.Stderr).With().Timestamp().Logger())
-	} else {
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.DateTime})
-	}
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.DateTime})
 }
 
 func ZerologRequestLogger() echo.MiddlewareFunc {
@@ -45,20 +41,37 @@ func ZerologRequestLogger() echo.MiddlewareFunc {
 			res := c.Response()
 
 			err := next(c)
-
-			duration := time.Since(start)
-			logger := log.Info()
 			if err != nil {
-				logger = log.Error().Err(err)
 				c.Error(err)
 			}
 
-			logger.Str("hx", req.Method).
+			duration := time.Since(start)
+
+			var event *zerolog.Event
+			if err != nil {
+				event = log.Error()
+				if he, ok := err.(*echo.HTTPError); ok {
+					if msg, ok := he.Message.(string); ok {
+						event.Str("e", msg)
+					} else {
+						event.Err(err)
+					}
+				} else {
+					event.Err(err)
+				}
+			} else {
+				event = log.Info()
+			}
+
+			event.
+				Str("hx", req.Method).
 				Int("c", res.Status).
 				Str("uri", req.RequestURI).
 				Str("ip", c.RealIP()).
+				Str("ref", req.Referer()).
+				Str("host", req.Host).
 				Dur("ms", duration).
-				Msg(" ")
+				Msg("")
 
 			return nil
 		}
