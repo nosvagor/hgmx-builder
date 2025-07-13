@@ -85,3 +85,46 @@ ds *URL:
         echo "failed to download {{PATH_SCRIPTS}}/${name}"
         exit 1
     fi
+
+
+new NAME:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    COMPONENT_PATH={{NAME}}
+    PACKAGE_NAME=$(basename "${COMPONENT_PATH}")
+    COMPONENT_DIR="views/components/${COMPONENT_PATH}"
+
+    if [ -d "${COMPONENT_DIR}" ]; then
+        echo "Error: Component directory already exists: ${COMPONENT_DIR}"
+        exit 1
+    fi
+
+    mkdir -p "${COMPONENT_DIR}"
+
+    {
+        echo "package ${PACKAGE_NAME}"
+        echo ""
+        echo "func Method() *Props {"
+        echo "	return &Props{}"
+        echo "}"
+    } > "${COMPONENT_DIR}/factories.go"
+
+    {
+        echo "package ${PACKAGE_NAME}"
+        echo ""
+        echo "type Props struct {"
+        echo "	// components properties"
+        echo "}"
+    } > "${COMPONENT_DIR}/properties.go"
+
+    {
+        echo "package ${PACKAGE_NAME}"
+        echo ""
+        echo "templ (p *Props) Render() {"
+        echo "	// html to render via templ"
+        echo "}"
+    } > "${COMPONENT_DIR}/render.templ"
+
+    echo "Created component skeleton in ${COMPONENT_DIR}"
+
