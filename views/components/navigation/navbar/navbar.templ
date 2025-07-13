@@ -1,18 +1,12 @@
 package navbar
 
 import (
-	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/components/icons"
+	_ "embed"
+
+	"github.com/nosvagor/hgmx-builder/views/components/layout/flex"
 	"github.com/nosvagor/hgmx-builder/views/components/navigation/telescope"
 	"github.com/nosvagor/hgmx-builder/views/utils/include"
 )
-
-type Props struct {
-	Links             []PageLink
-	Account, Settings PageLink
-	CTA               components.Customizable
-	Logo              components.Standard
-}
 
 func (p *Props) hyperscript() string {
 	return `
@@ -41,33 +35,25 @@ func (p *Props) hyperscript() string {
 	`
 }
 
-type PageLink struct {
-	Icon  icons.Icon
-	Label string
-	Path  templ.SafeURL
-}
-
 templ Render(p *Props) {
-	if p != nil {
-		@include.ModuleScript("motion/navbar.js")
-		<navbar
-			class="flex sticky top-0 z-50 gap-4 justify-between items-center px-8 py-3 transition duration-200 ease-out"
-			_={ p.hyperscript() }
-		>
-			<div class="flex gap-4 items-center">
-				if p.Logo != nil {
-					@p.Logo.Render()
-				}
-				if p.CTA != nil {
-					@p.CTA.Render()
-				}
-			</div>
-			<div class="flex gap-4 items-center">
-				@telescope.Render()
-				@Bookmarks(p.Links)
-				@NavMenu(p)
-			</div>
-		</navbar>
-		@ExpandedNavMenu(p.Links, p.Settings)
-	}
+	<navbar
+		class="flex sticky top-0 z-50 justify-between items-center px-8 py-3 transition duration-200 ease-out"
+		_={ p.hyperscript() }
+	>
+		@include.ModuleScript("/motion/navbar.js")
+		@flex.Center() {
+			if p.Logo != nil {
+				@p.Logo.Render()
+			}
+			if p.CTA != nil {
+				@p.CTA
+			}
+		}
+		@flex.Center() {
+			@telescope.Render()
+			@Bookmarks(p.Links)
+			@NavMenu(p)
+		}
+	</navbar>
+	@ExpandedNavMenu(p.Links, p.Settings)
 }

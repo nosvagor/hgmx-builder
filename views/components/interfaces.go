@@ -8,5 +8,5 @@ type Standard interface {
 
 type Customizable interface {
 	Standard
-	Classes() string
+	Classes(extra ...string) string
 }

@@ -1,6 +1,7 @@
 package navbar
 
 import (
+	"github.com/nosvagor/hgmx-builder/views/components/display/button"
 	"github.com/nosvagor/hgmx-builder/views/components/display/content"
 	"github.com/nosvagor/hgmx-builder/views/components/display/icon"
 )
@@ -9,7 +10,7 @@ templ NavMenu(p *Props) {
 	<navMenu
 		id="navMenu"
 		tabindex="0"
-		class="relative w-10 h-10 rounded-full cursor-pointer outline-none flex items-center justify-center bg-base-600 text-secondary-601 hover:text-primary-401"
+		class="flex relative justify-center items-center w-10 h-10 rounded-full cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
 		_="
 		on click or keydown[key is 'Enter' or key is ' ']
 			halt the event
@@ -59,16 +60,12 @@ templ ExpandedNavMenu(links []PageLink, settings PageLink) {
 				<div class="flex flex-col gap-4 items-start">
 					if len(links) > 0 {
 						for _, link := range links {
-							<button hx-get={ link.Path } class="text-xl font-medium transition-colors cursor-pointer page-link font-display text-secondary-300 hover:text-primary-400">
-								@icon.Render(icon.Text(link.Icon, link.Label))
-							</button>
+							@button.Get(link.Path, icon.Text(link.Icon, link.Label))
 						}
 					}
 				</div>
 				<div class="flex flex-col gap-4 items-end">
-					<button hx-get={ settings.Path }>
-						@icon.Render(icon.IconTip(settings.Icon, content.Text(settings.Label)))
-					</button>
+					@button.Get(settings.Path, icon.IconTip(settings.Icon, content.Text(settings.Label)), "py-2")
 				</div>
 			</div>
 		</expandedNavMenu>

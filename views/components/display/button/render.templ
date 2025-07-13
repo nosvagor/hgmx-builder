@@ -1,0 +1,59 @@
+package button
+
+import "strings"
+
+func (p *Props) Classes(extra ...string) string {
+	return strings.Join(extra, " ") + " cursor-pointer flex items-center justify-center px-2 py-1 rounded-md transition-colors duration-200 ease-out whitespace-nowrap " + p.variant()
+}
+
+func (p *Props) variant() string {
+	switch p.Variant {
+	case Primary:
+		return "text-base-950 bg-primary-501 hover:bg-primary-401"
+	case Destructive:
+		return "hover:text-delete-501 hover:bg-delete-101"
+	default: // Base
+		return "hover:text-primary-401 hover:bg-base-400"
+	}
+}
+
+func (p *Props) hyprscript() string {
+	return `on mouseenter send hovered to the first <div/> in me`
+}
+
+templ (p *Props) Render() {
+	<button
+		if p.HX == GET {
+			hx-get={ p.Path }
+		}
+		else
+		if p.HX == POST {
+			hx-post={ p.Path }
+		}
+		else
+		if p.HX == PUT {
+			hx-put={ p.Path }
+		}
+		else
+		if p.HX == PATCH {
+			hx-patch={ p.Path }
+		}
+		else
+		if p.HX == DELETE {
+			hx-delete={ p.Path }
+		}
+		if p.Trigger != "" {
+			hx-trigger={ p.Trigger }
+		}
+		if p.Target != "" {
+			hx-target={ p.Target }
+		}
+		if p.Swap != "" {
+			hx-swap={ p.Swap }
+		}
+		class={ p.Classes(p.ExtraClasses...) }
+		_={ p.hyprscript() }
+	>
+		@p.Content.Render()
+	</button>
+}
