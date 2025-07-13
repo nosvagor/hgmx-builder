@@ -1,7 +1,7 @@
 import { animate, stagger } from "/static/scripts/motion.min.js";
 
-const navMenu = document.getElementById("navMenu");
-const expandedNavMenu = document.getElementById("expandedNavMenu");
+const navMenu = document.getElementById("nav-menu");
+const expandedNavMenu = document.getElementById("expanded-nav-menu");
 const iconP1 = document.getElementById("icon-p1");
 const iconP2 = document.getElementById("icon-p2");
 const iconP3 = document.getElementById("icon-p3");
@@ -72,12 +72,12 @@ function closeMenu() {
 
 function toggleMenu() {
   const isOpen = navMenu.classList.contains("menu-open");
-  const navbar = document.querySelector("navbar");
+  const navbar = document.getElementById("navbar");
 
   const menuBackdrop = document.getElementById("menu-backdrop");
   const menuBg = document.getElementById("menu-bg");
-  const navLinks = menuBg?.querySelectorAll(".page-link");
-  const accountLinks = menuBg?.querySelectorAll(".account-link");
+  const expandedBookmarks = document.getElementById("expanded-nav-bookmarks");
+  const menuSettings = document.getElementById("menu-settings");
 
   if (isOpen) {
     navbar.classList.remove("navbar_scrolling");
@@ -89,10 +89,10 @@ function toggleMenu() {
     expandedNavMenu.style.pointerEvents = "auto";
 
     animate(menuBackdrop, { opacity: 1 }, { duration: 0.3 });
-    animate(menuBg, { transform: "translateX(0%)" }, { type: "spring", bounce: 0.4, duration: 0.7 });
-    if (navLinks) {
+    animate(menuBg, { transform: "translateX(0%)" }, { type: "spring", bounce: 0.2, duration: 0.42 });
+    if (expandedBookmarks) {
       animate(
-        navLinks,
+        expandedBookmarks,
         { opacity: [0, 1], x: [20, 0] },
         {
           ease: "backInOut",
@@ -101,9 +101,9 @@ function toggleMenu() {
         }
       );
     }
-    if (accountLinks) {
+    if (menuSettings) {
       animate(
-        accountLinks,
+        menuSettings,
         { opacity: [0, 1], x: [20, 0] },
         {
           ease: "backInOut",
@@ -126,8 +126,8 @@ function toggleMenu() {
     animate(navMenu, { rotate: 0 }, { ease: "easeOut", duration: 0.3 });
     animate(menuBackdrop, { opacity: 0 }, { duration: 0.3, delay: 0.1 });
     animate(menuBg, { transform: "translateX(100%)" }, { type: "spring" });
-    if (navLinks) {
-      animate(navLinks, { opacity: 0, x: 20 }, { ease: "easeOut", duration: 0.2, delay: stagger(0.08) });
+    if (expandedBookmarks) {
+      animate(expandedBookmarks, { opacity: 0, x: 20 }, { ease: "easeOut", duration: 0.2, delay: stagger(0.08) });
     }
   }
 }

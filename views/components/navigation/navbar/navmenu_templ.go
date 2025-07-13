@@ -8,11 +8,6 @@ package navbar
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/nosvagor/hgmx-builder/views/components/display/content"
-	"github.com/nosvagor/hgmx-builder/views/components/display/icon"
-)
-
 func NavMenu(p *Props) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -34,7 +29,7 @@ func NavMenu(p *Props) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<navMenu id=\"navMenu\" tabindex=\"0\" class=\"relative w-10 h-10 rounded-full cursor-pointer outline-none flex items-center justify-center bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"\n\t\ton click or keydown[key is &#39;Enter&#39; or key is &#39; &#39;]\n\t\t\thalt the event\n\t\t\ttoggle .menu-open on me\n\t\t\tcall window.toggleMenu()\n\t\tend\n\n\t\ton click from elsewhere\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\tend\n\t\tend\n\n\t\ton keydown[key is &#39;Escape&#39;] from window\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\texit\n\t\t\tend\n\n\t\t\tif not window.__lastEscapeTime then set window.__lastEscapeTime to 0 end\n\t\t\tset now to Date.now()\n\t\t\tif now - window.__lastEscapeTime &lt; 400\n\t\t\t\tadd .menu-open to me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\tset window.__lastEscapeTime to 0\n\t\t\telse\n\t\t\t\tset window.__lastEscapeTime to now\n\t\t\tend\n\t\tend\n\t\"><svg viewBox=\"0 0 32 32\" class=\"overflow-visible w-6 h-6\"><path id=\"icon-p1\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,0, 23,0, 23,8\"></path> <path id=\"icon-p2\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,16, 23,16, 23,8\"></path> <path id=\"icon-p3\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 6,26 C 6,18, 26,18, 26,26\"></path></svg></navMenu>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"nav-menu\" tabindex=\"0\" class=\"flex relative justify-center items-center w-10 h-10 rounded-full cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"\n\t\ton click or keydown[key is &#39;Enter&#39; or key is &#39; &#39;]\n\t\t\thalt the event\n\t\t\ttoggle .menu-open on me\n\t\t\tcall window.toggleMenu()\n\t\tend\n\n\t\ton click from elsewhere\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\tend\n\t\tend\n\n\t\ton keydown[key is &#39;Escape&#39;] from window\n\t\t\tif me.matches(&#39;.menu-open&#39;)\n\t\t\t\tremove .menu-open from me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\texit\n\t\t\tend\n\n\t\t\tif not window.__lastEscapeTime then set window.__lastEscapeTime to 0 end\n\t\t\tset now to Date.now()\n\t\t\tif now - window.__lastEscapeTime &lt; 400\n\t\t\t\tadd .menu-open to me\n\t\t\t\tcall window.toggleMenu()\n\t\t\t\tset window.__lastEscapeTime to 0\n\t\t\telse\n\t\t\t\tset window.__lastEscapeTime to now\n\t\t\tend\n\t\tend\n\t\"><svg viewBox=\"0 0 32 32\" class=\"overflow-visible w-6 h-6\"><path id=\"icon-p1\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,0, 23,0, 23,8\"></path> <path id=\"icon-p2\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 9,8 C 9,16, 23,16, 23,8\"></path> <path id=\"icon-p3\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" fill=\"none\" d=\"M 6,26 C 6,18, 26,18, 26,26\"></path></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -42,7 +37,7 @@ func NavMenu(p *Props) templ.Component {
 	})
 }
 
-func ExpandedNavMenu(links []PageLink, settings PageLink) templ.Component {
+func ExpandedNavMenu(links []templ.Component, settings templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -64,61 +59,23 @@ func ExpandedNavMenu(links []PageLink, settings PageLink) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if links != nil {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<expandedNavMenu id=\"expandedNavMenu\" class=\"fixed inset-0 z-40 pointer-events-none\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 bg-black/25\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 -right-10 flex-col justify-between p-10 pt-16 pr-20 pb-8 h-full shadow-2xl min-w-fit bg-base-600\" style=\"transform: translateX(100%)\"><div class=\"flex flex-col gap-4 items-start\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"expanded-nav-menu\" class=\"fixed inset-0 z-40 pointer-events-none\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 bg-black/25\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 -right-10 flex-col justify-between p-10 pt-16 pr-20 pb-8 h-full shadow-2xl min-w-fit bg-base-600\" style=\"transform: translateX(100%)\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if len(links) > 0 {
-				for _, link := range links {
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<button hx-get=\"")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					var templ_7745c5c3_Var3 string
-					templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(link.Path)
-					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/navmenu.templ`, Line: 62, Col: 33}
-					}
-					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" class=\"text-xl font-medium transition-colors cursor-pointer page-link font-display text-secondary-300 hover:text-primary-400\">")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = icon.Render(icon.Text(link.Icon, link.Label)).Render(ctx, templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</button>")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"flex flex-col gap-4 items-end\"><button hx-get=\"")
+			templ_7745c5c3_Err = ExpandedBookmarks(links).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(settings.Path)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/navigation/navbar/navmenu.templ`, Line: 69, Col: 35}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div id=\"menu-settings\" class=\"flex flex-col gap-4 items-end\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\">")
+			templ_7745c5c3_Err = settings.Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = icon.Render(icon.IconTip(settings.Icon, content.Text(settings.Label))).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</button></div></div></expandedNavMenu>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

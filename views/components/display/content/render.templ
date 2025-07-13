@@ -2,7 +2,7 @@ package content
 
 templ (c *Props) Render() {
 	if c.Text != "" {
-		<span>{ c.Text }</span>
+		<span class={ c.Styler.Build() }>{ c.Text }</span>
 	} else {
 		@c.Component.Render()
 	}

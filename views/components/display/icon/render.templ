@@ -8,13 +8,13 @@ import (
 func (p *Props) hyprscript() string {
 	b := strings.Builder{}
 	if !p.NoAnimate {
-		b.WriteString(fmt.Sprintf(`on mouseenter get first <svg/> in me then call %sAnimate(it) end`, p.Icon.Name))
+		b.WriteString(fmt.Sprintf(`on hovered get first <svg/> in me then call %sAnimate(it) end`, p.Icon.Name))
 	}
 	if p.Tooltip != nil {
 		if !p.NoAnimate {
 			b.WriteString(" ")
 		}
-		b.WriteString(`on mouseenter get first <tooltip/> in me then call positionTooltip(it) end`)
+		b.WriteString(`on hovered get first <tooltip/> in me then call positionTooltip(it) then wait 200ms end`)
 	}
 	return b.String()
 }
@@ -37,9 +37,9 @@ templ (p *Props) javascript() {
 	}
 }
 
-templ Render(p *Props) {
+templ (p *Props) Render() {
 	<div
-		class="flex relative gap-1 items-center"
+		class={ p.Styler.Build("flex relative gap-1 items-center") }
 		_={ p.hyprscript() }
 	>
 		@p.Icon.Render()

@@ -1,0 +1,36 @@
+package button
+
+func (p *Props) classes() string {
+	return p.Styler.Build(
+		"cursor-pointer flex items-center justify-center px-2 py-1 rounded-md transition-colors duration-200 ease-out whitespace-nowrap",
+		p.variant(),
+	)
+}
+
+func (p *Props) variant() string {
+	switch p.Variant {
+	case Primary:
+		return "text-base-950 bg-primary-501 hover:bg-primary-401"
+	case Destructive:
+		return "hover:text-delete-501 hover:bg-delete-101"
+	default:
+		return "hover:text-primary-401 hover:bg-base-400"
+	}
+}
+
+func (p *Props) hyprscript() string {
+	return `on mouseenter send hovered to the first <div/> in me`
+}
+
+func options(p *Props) templ.Attributes {
+	if p.HX != nil {
+		return p.HX.Opts()
+	}
+	return templ.Attributes{}
+}
+
+templ (p *Props) Render() {
+	<button _={ p.hyprscript() } class={ p.classes() } { options(p)... }>
+		@p.Content.Render()
+	</button>
+}

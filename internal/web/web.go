@@ -6,6 +6,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/nosvagor/hgmx-builder/views"
+	"github.com/nosvagor/hgmx-builder/views/components/navigation/navbar"
 )
 
 func render(ctx echo.Context, statusCode int, t templ.Component) error {
@@ -19,19 +20,18 @@ func render(ctx echo.Context, statusCode int, t templ.Component) error {
 
 func Page(c echo.Context, content templ.Component, title string) error {
 	req := c.Request()
+
 	hxRequest := req.Header.Get("HX-Request") == "true"
-	hxRefresh := req.Header.Get("HX-Refresh") == "true"
-	hxBoosted := req.Header.Get("HX-Boosted") == "true"
-	hxHistoryRestoreRequest := req.Header.Get("HX-History-Restore-Request") == "true"
 
 	if t, ok := c.Get("title").(string); ok && t != "" {
 		title = t
 	}
 
-	if !hxRequest || hxRefresh || hxHistoryRestoreRequest || !hxBoosted {
-		return OK(c, views.Full(views.Main(content, title), NewNavbar(c)))
+	if hxRequest {
+		return OK(c, views.Main(content, title))
 	}
-	return OK(c, views.Main(content, title))
+
+	return OK(c, views.Full(views.Main(content, title), navbar.New()))
 }
 
 func OK(c echo.Context, templ templ.Component) error {

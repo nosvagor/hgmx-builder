@@ -1,11 +1,11 @@
 package views
 
 import (
-	"github.com/nosvagor/hgmx-builder/views/components/navigation/navbar"
+	"github.com/nosvagor/hgmx-builder/views/components"
 	"github.com/nosvagor/hgmx-builder/views/utils/include"
 )
 
-templ Full(content templ.Component, nav *navbar.Props) {
+templ Full(content templ.Component, navbar components.Customizeable) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -17,11 +17,11 @@ templ Full(content templ.Component, nav *navbar.Props) {
 			@include.DeferedScript("hyperscript.min.js")
 			@include.ModuleScript("motion.min.js")
 		</head>
-		<body>
-			@navbar.Render(nav)
+		<body class="flex flex-col min-h-screen">
+			@navbar.Render()
 			@content
+			@Footer()
 		</body>
-		@Footer()
 	</html>
 }
 
@@ -33,13 +33,25 @@ templ Title(title string) {
 
 templ Main(content templ.Component, title string) {
 	@Title(title)
-	<main>
+	<main
+		id="main"
+		class="w-[98%] max-w-7xl mx-auto mb-4 px-2 flex flex-1 flex-col"
+	>
 		@content
 	</main>
 }
 
 templ Footer() {
-	<footer></footer>
+	<footer class="flex flex-col justify-start items-center py-4 text-sm h-fit">
+		<div class="flex flex-row gap-4 justify-center items-center">
+			<a href="https://github.com/nosvagor">
+				github.com/nosvagor
+			</a>
+			<a href="https://x.com/nosvagor">
+				x.com/nosvagor/
+			</a>
+		</div>
+	</footer>
 }
 
 templ Favicon() {

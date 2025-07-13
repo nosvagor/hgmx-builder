@@ -19,7 +19,7 @@
     color: var(--color-surface-400);
     min-height: 100svh;
     width: 100svw;
-    background: linear-gradient(60deg, var(--color-base-400), var(--color-base-600));
+    background: linear-gradient(60deg, var(--color-base-500), var(--color-base-600));
     background-color: var(--color-base-600);
     background-size: 500% 500%;
     animation: osculate 8s ease-in-out infinite;

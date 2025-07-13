@@ -3,7 +3,6 @@ package icon
 import (
 	"github.com/a-h/templ"
 	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/components/display/tooltip"
 	"github.com/nosvagor/hgmx-builder/views/components/icons"
 )
 
@@ -15,19 +14,24 @@ const (
 )
 
 type Props struct {
-	Icon icons.Icon
+	components.Styler
 
-	Type    Display
-	Content components.Customizable
-	Tooltip components.Customizable
-
+	Icon      icons.Icon
+	Type      Display
+	Content   components.Customizeable
+	Tooltip   components.Customizeable
 	NoAnimate bool
 }
 
+func (p *Props) Style(classes ...string) components.Customizeable {
+	p.Styler.Add(classes...)
+	return p
+}
+
 func (p *Props) RenderTooltip() templ.Component {
-	if p.Tooltip != nil {
-		return tooltip.Render(p.Tooltip)
-	}
+	// if p.Tooltip != nil {
+	// 	return tooltip.Render(p.Tooltip) // TODO: implement tooltip
+	// }
 	return templ.NopComponent
 }
 

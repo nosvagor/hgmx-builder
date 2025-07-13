@@ -1,6 +1,6 @@
 package flex
 
-templ Render(p *Props) {
+templ (p *Props) Render() {
 	<div role="group" data-layout="flex" class={ p.Classes() }>
 		{ children... }
 	</div>

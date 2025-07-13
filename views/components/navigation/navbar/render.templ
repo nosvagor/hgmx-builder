@@ -1,0 +1,57 @@
+package navbar
+
+import (
+	_ "embed"
+
+	"github.com/nosvagor/hgmx-builder/views/components/layout/flex"
+	"github.com/nosvagor/hgmx-builder/views/components/navigation/telescope"
+	"github.com/nosvagor/hgmx-builder/views/utils/include"
+)
+
+func (p *Props) hyperscript() string {
+	return `
+		init
+			if window.scrollY is 0 then
+				remove .navbar_scrolling from me
+			else
+				add .navbar_scrolling to me
+				call window.navbarScrolling(true)
+			end
+		end
+
+		on scroll from window	
+			get #navMenu
+			if it and it.matches('.menu-open') then
+				exit
+			end
+			if window.scrollY is 0 and me.matches('.navbar_scrolling') then
+				remove .navbar_scrolling from me
+				call window.navbarScrolling(false)
+			else if window.scrollY > 0 and not me.matches('.navbar_scrolling') then
+				add .navbar_scrolling to me
+				call window.navbarScrolling(true)
+			end
+		end
+	`
+}
+
+func (p *Props) classes() string {
+	return p.Styler.Build("hidden md:flex sticky top-0 z-50 justify-between items-center px-8 py-3 transition duration-200 ease-out")
+}
+
+templ (p *Props) Render() {
+	<nav id="navbar" class={ p.classes() } _={ p.hyperscript() }>
+		@include.ModuleScript("/motion/navbar.js")
+		@flex.Center() {
+			if p.CTA != nil {
+				@p.CTA
+			}
+		}
+		@flex.Center() {
+			@telescope.Render()
+			@Bookmarks(p.Links)
+			@NavMenu(p)
+		}
+	</nav>
+	@ExpandedNavMenu(p.Links, p.Settings)
+}
