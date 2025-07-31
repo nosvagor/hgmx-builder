@@ -40,7 +40,7 @@ func (p *Props) toClasses() []string {
 }
 
 // String returns the full class string, including any custom overrides.
-func (p *Props) Classes() string {
+func (p *Props) classes() string {
 	allClasses := p.toClasses()
 	if p.Class != nil {
 		allClasses = append(allClasses, *p.Class)
