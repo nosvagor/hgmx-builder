@@ -128,3 +128,28 @@ new NAME:
 
     echo "Created component skeleton in ${COMPONENT_DIR}"
 
+page NAME:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    PAGE_PATH={{NAME}}
+    PAGE_DIR="views/pages/${PAGE_PATH}"
+
+    if [ -d "${PAGE_DIR}" ]; then
+        echo "Error: Page directory already exists: ${PAGE_DIR}"
+        exit 1
+    fi
+
+    mkdir -p "${PAGE_DIR}"
+
+    {
+        echo "package ${PAGE_PATH}"
+        echo ""
+        echo "templ Main() {"
+        echo "	<div>"
+        echo "		<h1>${PAGE_PATH}</h1>"
+        echo "	</div>"
+        echo "}"
+    } > "${PAGE_DIR}/${PAGE_PATH}.templ"
+
+    echo "Created page skeleton in ${PAGE_DIR}"
