@@ -9,8 +9,8 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/htmx"
 )
 
-func New() *Props {
-	return &Props{
+func Init() templ.Component {
+	p := &Props{
 		Links: []templ.Component{
 			button.Get("/docs", icon.Text(icons.Scroll(), "Docs")),
 			button.Get("/palette", icon.Text(icons.Palette(), "Palette")),
@@ -23,4 +23,5 @@ func New() *Props {
 			htmx.Swap("outerHTML"),
 		),
 	}
+	return p.Render()
 }

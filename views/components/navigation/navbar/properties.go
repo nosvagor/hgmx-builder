@@ -8,6 +8,7 @@ import (
 )
 
 type Props struct {
+	components.Standard
 	components.Styler
 
 	Links    []templ.Component

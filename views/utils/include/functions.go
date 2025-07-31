@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+	"time"
 )
 
 var (
@@ -41,4 +42,8 @@ func getFileHash(filePath string) string {
 	fileHashes[filePath] = hash
 	fileHashesMutex.Unlock()
 	return hash
+}
+
+func Bust() string {
+	return fmt.Sprintf("?v=%d", time.Now().UnixNano())
 }

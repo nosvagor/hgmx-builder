@@ -1,7 +1,15 @@
 package htmx
 
+import "github.com/nosvagor/hgmx-builder/views/utils/include"
+
 func Get(url string, opts ...Options) *Props {
+	opts = append(opts, Preload("mousedown"))
 	return Init(GET, url, opts...)
+}
+
+func Bust(url string, opts ...Options) *Props {
+	opts = append(opts, Preload("mousedown"))
+	return Init(GET, url+include.Bust(), opts...)
 }
 
 func Post(url string, opts ...Options) *Props {

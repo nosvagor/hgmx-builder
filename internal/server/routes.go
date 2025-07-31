@@ -7,11 +7,14 @@ import (
 
 func RegisterRoutes(e *echo.Echo) {
 	e.GET("/", pages.Home)
-	e.GET("/settings", pages.Settings)
+
+	e.GET("/docs", pages.Docs)
 	e.GET("/palette", pages.Palette)
 	e.GET("/icons", pages.Icons)
 	e.GET("/blog", pages.Blog)
-	e.GET("/docs", pages.Docs)
+
+	e.GET("/account", pages.Account)
+	e.GET("/settings", pages.Settings)
 }
 
 func RegisterStaticRoutes(e *echo.Echo) {

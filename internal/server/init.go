@@ -18,6 +18,7 @@ import (
 func New() *echo.Echo {
 	e := echo.New()
 
+	e.HTTPErrorHandler = CustomHTTPErrorHandler
 	e.Use(ZerologRecoverer())
 	e.Use(ZerologRequestLogger())
 

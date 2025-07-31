@@ -101,6 +101,18 @@ func (o *Options) PushURL(val string) {
 	o.Merge(Options{"hx-push-url": val})
 }
 
+// ReplaceURL replaces the URL in the browser location bar.
+// Can be a URL string, "true", or "false".
+//
+// https://htmx.org/attributes/hx-replace-url/
+func ReplaceURL(val string) Options {
+	return Options{"hx-replace-url": val}
+}
+
+func (o *Options) ReplaceURL(value string) {
+	o.Merge(ReplaceURL(value))
+}
+
 // Indicator shows a loading indicator during the AJAX request.
 // The value should be a CSS selector for the indicator element.
 //
@@ -230,17 +242,6 @@ func (o *Options) Encoding(encoding string) {
 	o.Merge(Encoding(encoding))
 }
 
-// Ext specifies extensions to use for this element.
-//
-// https://htmx.org/attributes/hx-ext/
-func Ext(extension string) Options {
-	return Options{"hx-ext": extension}
-}
-
-func (o *Options) Ext(extension string) {
-	o.Merge(Ext(extension))
-}
-
 // Headers adds to the headers that will be submitted with the request.
 // The value should be a JSON string.
 //
@@ -251,29 +252,6 @@ func Headers(json string) Options {
 
 func (o *Options) Headers(json string) {
 	o.Merge(Headers(json))
-}
-
-// History prevents sensitive data being saved to the history cache.
-// Set to "false" to disable history for an element.
-//
-// https://htmx.org/attributes/hx-history/
-func History(value string) Options {
-	return Options{"hx-history": value}
-}
-
-func (o *Options) History(value string) {
-	o.Merge(History(value))
-}
-
-// HistoryElt specifies the element to snapshot and restore during history navigation.
-//
-// https://htmx.org/attributes/hx-history-elt/
-func HistoryElt() Options {
-	return Options{"hx-history-elt": "true"}
-}
-
-func (o *Options) HistoryElt() {
-	o.Merge(HistoryElt())
 }
 
 // Include includes additional data in requests. The value is a CSS selector.
@@ -333,18 +311,6 @@ func (o *Options) Prompt(message string) {
 	o.Merge(Prompt(message))
 }
 
-// ReplaceURL replaces the URL in the browser location bar.
-// Can be a URL string, "true", or "false".
-//
-// https://htmx.org/attributes/hx-replace-url/
-func ReplaceURL(value string) Options {
-	return Options{"hx-replace-url": value}
-}
-
-func (o *Options) ReplaceURL(value string) {
-	o.Merge(ReplaceURL(value))
-}
-
 // Request configures various aspects of the request.
 // The value should be a JSON string.
 //
@@ -377,4 +343,24 @@ func Validate() Options {
 
 func (o *Options) Validate() {
 	o.Merge(Validate())
+}
+
+// Preload enables the preload extension which allows you to load content
+// in advance of user interaction.
+//
+// e.g., "mouseenter" for hover preloading, which has built in 100ms threshold.
+//
+// The default event is "mousedown" which gives about 100ms of preloading.
+//
+// https://htmx.org/extensions/preload/
+func Preload(event ...string) Options {
+	if len(event) == 0 || event[0] == "" {
+		return Options{"preload": "mousedown"}
+	}
+
+	return Options{"preload": event[0]}
+}
+
+func (o *Options) Preload(event ...string) {
+	o.Merge(Preload(event...))
 }

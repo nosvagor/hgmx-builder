@@ -1,26 +1,24 @@
 package views
 
-import (
-	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/utils/include"
-)
+import "github.com/nosvagor/hgmx-builder/views/utils/include"
 
-templ Full(content templ.Component, navbar components.Customizeable) {
+templ Full(content, navbar templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<meta name="htmx-config" content='{"refreshOnHistoryMiss": true, "historyRestoreAsHxRequest": false}'/>
 			@Favicon()
 			@include.Style("main.min.css")
-			@include.Script("htmx-ext-sse.js")
 			@include.Script("htmx.min.js")
+			@include.DeferedScript("htmx-ext-sse.js")
+			@include.DeferedScript("htmx-ext-preload.js")
 			@include.DeferedScript("hyperscript.min.js")
 			@include.ModuleScript("motion.min.js")
 		</head>
-		// see base.css for body styling
-		<body>
-			@navbar.Render()
+		<body hx-ext="preload">
+			@navbar
 			@content
 			@Footer()
 		</body>
@@ -29,13 +27,14 @@ templ Full(content templ.Component, navbar components.Customizeable) {
 
 templ Title(title string) {
 	if len(title) > 0 {
-		<title>{ title }</title>
+		<title>{ title } - hgmx</title>
 	}
 }
 
 templ Main(content templ.Component, title string) {
 	@Title(title)
 	<main
+		hx-history-elt
 		id="main"
 		class="w-[98%] max-w-7xl mx-auto mb-4 px-2 flex flex-1 flex-col"
 	>
