@@ -13,13 +13,17 @@ func (p *Props) variant() string {
 		return "text-base-950 bg-primary-501 hover:bg-primary-401"
 	case Destructive:
 		return "hover:text-delete-501 hover:bg-delete-101"
-	default:
+	default: // Base
 		return "hover:text-primary-401 hover:bg-base-400"
 	}
 }
 
 func (p *Props) hyprscript() string {
-	return `on mouseenter send hovered to the first <div/> in me`
+	return `on mouseenter 
+		set target to the first <div/> in me
+		if target exists
+			send hovered to target
+		end`
 }
 
 func options(p *Props) templ.Attributes {

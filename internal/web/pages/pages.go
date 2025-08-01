@@ -29,15 +29,15 @@ func Home(c echo.Context) error {
 }
 
 func Docs(c echo.Context) error {
-	return web.Page(c, docs.Main(), "Docs", 10*Minute)
+	return web.Page(c, docs.Main(), "Docs", Hour)
 }
 
 func Palette(c echo.Context) error {
-	return web.Page(c, palette.Main(), "Palette", 10*Minute)
+	return web.Page(c, palette.Main(), "Palette", Hour)
 }
 
 func Icons(c echo.Context) error {
-	return web.Page(c, icons.Main(), "Icons", 10*Minute)
+	return web.Page(c, icons.Main(), "Icons", Hour)
 }
 
 func Blog(c echo.Context) error {

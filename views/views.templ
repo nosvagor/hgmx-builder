@@ -1,8 +1,11 @@
 package views
 
-import "github.com/nosvagor/hgmx-builder/views/utils/include"
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/nav/footer"
+	"github.com/nosvagor/hgmx-builder/views/include"
+)
 
-templ Full(content, navbar templ.Component) {
+templ Full(components ...templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -18,9 +21,10 @@ templ Full(content, navbar templ.Component) {
 			@include.ModuleScript("motion.min.js")
 		</head>
 		<body hx-ext="preload">
-			@navbar
-			@content
-			@Footer()
+			for _, component := range components {
+				@component
+			}
+			@footer.Init()
 		</body>
 	</html>
 }
@@ -31,28 +35,15 @@ templ Title(title string) {
 	}
 }
 
-templ Main(content templ.Component, title string) {
+templ Main(page templ.Component, title string) {
 	@Title(title)
 	<main
 		hx-history-elt
 		id="main"
 		class="w-[98%] max-w-7xl mx-auto mb-4 px-2 flex flex-1 flex-col"
 	>
-		@content
+		@page
 	</main>
-}
-
-templ Footer() {
-	<footer class="flex flex-col justify-start items-center py-4 text-sm h-fit">
-		<div class="flex flex-row gap-4 justify-center items-center">
-			<a href="https://github.com/nosvagor">
-				github.com/nosvagor
-			</a>
-			<a href="https://x.com/nosvagor">
-				x.com/nosvagor/
-			</a>
-		</div>
-	</footer>
 }
 
 templ Favicon() {

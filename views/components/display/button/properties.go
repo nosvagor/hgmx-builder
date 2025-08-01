@@ -9,7 +9,9 @@ type Variant int
 
 const (
 	Base Variant = iota
+
 	Primary
+	Secondary
 
 	Constructive
 	Transformative

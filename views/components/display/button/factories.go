@@ -11,6 +11,12 @@ func Get(path string, content components.Customizeable, opts ...htmx.Options) te
 	return p.Render()
 }
 
+func GetCustom(path string, content components.Customizeable, variant Variant, classes string, opts ...htmx.Options) templ.Component {
+	p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: variant}
+	p.Styler.Add(classes)
+	return p.Render()
+}
+
 func Bust(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
 	p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Base}
 	return p.Render()

@@ -4,14 +4,13 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/nosvagor/hgmx-builder/views"
-	"github.com/nosvagor/hgmx-builder/views/components/navigation/navbar"
+	"github.com/nosvagor/hgmx-builder/views/components/nav"
 )
 
 func render(ctx echo.Context, statusCode int, t templ.Component) error {
@@ -47,11 +46,6 @@ func Page(c echo.Context, content templ.Component, title string, maxAge ...int) 
 
 	hxRequest := req.Header.Get("HX-Request") == "true"
 
-	headers := req.Header
-	for k, v := range headers {
-		log.Println(k, v)
-	}
-
 	if len(maxAge) > 0 {
 		maxAge := maxAge[0]
 		switch maxAge {
@@ -74,7 +68,7 @@ func Page(c echo.Context, content templ.Component, title string, maxAge ...int) 
 		return OK(c, views.Main(content, title))
 	}
 
-	return OK(c, views.Full(views.Main(content, title), navbar.Init()))
+	return OK(c, views.Full(nav.Init(), views.Main(content, title)))
 }
 
 func OK(c echo.Context, templ templ.Component) error {
