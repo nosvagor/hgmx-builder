@@ -4,12 +4,12 @@ func Question() *Icon {
 	return &Icon{
 		Name:    "question",
 		handler: templ.NewOnceHandle(),
-		script:  QuestionAnimation,
-		svg:     QuestionContent,
+		script:  questionAnimation,
+		svg:     questionContent,
 	}
 }
 
-templ QuestionAnimation() {
+templ questionAnimation() {
 	<script type="module">
 		import { animate } from "/static/scripts/motion.min.js";
 		window.questionAnimate = (el) => {
@@ -33,7 +33,7 @@ templ QuestionAnimation() {
 	</script>
 }
 
-templ QuestionContent() {
+templ questionContent() {
 	@svg() {
 		<circle cx="12" cy="12" r="10"></circle>
 		<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>

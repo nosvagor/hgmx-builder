@@ -1,0 +1,52 @@
+package icons
+
+func Users() *Icon {
+	return &Icon{
+		Name:    "users",
+		handler: templ.NewOnceHandle(),
+		script:  usersAnimation,
+		svg:     usersContent,
+	}
+}
+
+templ usersAnimation() {
+	<script type="module">
+		// Duration guidelines: 0.42 for faster parts, 0.69 max duration for consistency
+		// Staggers may need different values depending on icon complexity
+        import { animate, stagger } from "/static/scripts/motion.min.js";
+		window.usersAnimate = (el) => {
+			const secondUserHead = el.querySelector('path[d*="16 3.128"]');
+			animate(secondUserHead, 
+				{ pathLength: [0, 1], opacity: [0, 1], translateX: [3, 0] },
+				{ duration: 0.42, delay: 0.1, ease: "easeOut" }
+			);
+			
+			const secondUserBody = el.querySelector('path[d*="22 21v-2"]');
+			animate(secondUserBody, 
+				{ pathLength: [0, 1], opacity: [0, 1], translateX: [3, 0] },
+				{ duration: 0.42, delay: 0.2, ease: "easeOut" }
+			);
+
+			const mainHead = el.querySelector('circle');
+			animate(mainHead, 
+				{ translateY: [1, -2, 0] },
+				{ duration: 0.27, delay: 0.42, ease: "easeOut" }
+			);
+			
+			const mainBody = el.querySelector('path[d*="16 21v-2"]');
+			animate(mainBody, 
+				{ pathLength: [0, 1], opacity: [0, 1] },
+				{ duration: 0.42, ease: "easeOut" }
+			);
+		}
+	</script>
+}
+
+templ usersContent() {
+	@svg() {
+		<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+		<path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+		<path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+		<circle cx="9" cy="7" r="4"></circle>
+	}
+}

@@ -8,16 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Scroll() *Icon {
+func UserX() *Icon {
 	return &Icon{
-		Name:    "scroll",
+		Name:    "userX",
 		handler: templ.NewOnceHandle(),
-		script:  scrollAnimation,
-		svg:     scrollContent,
+		script:  userXAnimation,
+		svg:     userXContent,
 	}
 }
 
-func scrollAnimation() templ.Component {
+func userXAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,7 +38,7 @@ func scrollAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\n\t\t\t\tconst scrollPaths = [paths[2], paths[3]];\n\t\t\t\tanimate(scrollPaths, \n\t\t\t\t\t{ y: [-20, 5, 0] }, \n\t\t\t\t\t{ type: \"spring\", bounce: 0.42, duration: 0.69 }\n\t\t\t\t);\n\t\t\t\tanimate(scrollPaths, \n\t\t\t\t\t{ pathLength: [0, 1] }, \n\t\t\t\t\t{ duration: 0.42, ease: \"easeInOut\" }\n\t\t\t\t);\n\n\t\t\t\tconst textPaths = [paths[0], paths[1]];\n\t\t\t\tanimate(textPaths,\n\t\t\t\t\t{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },\n\t\t\t\t\t{ delay: stagger(0.15), duration: 0.42, ease: \"anticipate\" },\n\t\t\t\t);\n\t\t\t};\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.userXAnimate = (el) => {\n\t\t\tconst body = el.querySelector('path');\n\t\t\tanimate(body, \n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst x = el.querySelectorAll('line');\n\t\t\tanimate(x, \n\t\t\t\t{ scale: [0, 1.25, 1], rotate: [0, 180] },\n\t\t\t\t{ duration: 0.42, delay: 0.27, ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle');\n\t\t\tanimate(head, \n\t\t\t\t{ translateY: [1, -2, 0] },\n\t\t\t\t{ duration: 0.27, delay: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -46,7 +46,7 @@ func scrollAnimation() templ.Component {
 	})
 }
 
-func scrollContent() templ.Component {
+func userXContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -79,7 +79,7 @@ func scrollContent() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M15 8h-5\"></path> <path d=\"M15 12h-5\"></path> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\"></path> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"></path>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"></path> <circle cx=\"9\" cy=\"7\" r=\"4\"></circle> <line x1=\"18\" x2=\"23\" y1=\"8\" y2=\"13\"></line> <line x1=\"23\" x2=\"18\" y1=\"8\" y2=\"13\"></line>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

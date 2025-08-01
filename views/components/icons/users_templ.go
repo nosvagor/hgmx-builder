@@ -8,16 +8,16 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Scroll() *Icon {
+func Users() *Icon {
 	return &Icon{
-		Name:    "scroll",
+		Name:    "users",
 		handler: templ.NewOnceHandle(),
-		script:  scrollAnimation,
-		svg:     scrollContent,
+		script:  usersAnimation,
+		svg:     usersContent,
 	}
 }
 
-func scrollAnimation() templ.Component {
+func usersAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,7 +38,7 @@ func scrollAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\n\t\t\t\tconst scrollPaths = [paths[2], paths[3]];\n\t\t\t\tanimate(scrollPaths, \n\t\t\t\t\t{ y: [-20, 5, 0] }, \n\t\t\t\t\t{ type: \"spring\", bounce: 0.42, duration: 0.69 }\n\t\t\t\t);\n\t\t\t\tanimate(scrollPaths, \n\t\t\t\t\t{ pathLength: [0, 1] }, \n\t\t\t\t\t{ duration: 0.42, ease: \"easeInOut\" }\n\t\t\t\t);\n\n\t\t\t\tconst textPaths = [paths[0], paths[1]];\n\t\t\t\tanimate(textPaths,\n\t\t\t\t\t{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },\n\t\t\t\t\t{ delay: stagger(0.15), duration: 0.42, ease: \"anticipate\" },\n\t\t\t\t);\n\t\t\t};\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\t// Duration guidelines: 0.42 for faster parts, 0.69 max duration for consistency\n\t\t// Staggers may need different values depending on icon complexity\n        import { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.usersAnimate = (el) => {\n\t\t\tconst secondUserHead = el.querySelector('path[d*=\"16 3.128\"]');\n\t\t\tanimate(secondUserHead, \n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1], translateX: [3, 0] },\n\t\t\t\t{ duration: 0.42, delay: 0.1, ease: \"easeOut\" }\n\t\t\t);\n\t\t\t\n\t\t\tconst secondUserBody = el.querySelector('path[d*=\"22 21v-2\"]');\n\t\t\tanimate(secondUserBody, \n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1], translateX: [3, 0] },\n\t\t\t\t{ duration: 0.42, delay: 0.2, ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst mainHead = el.querySelector('circle');\n\t\t\tanimate(mainHead, \n\t\t\t\t{ translateY: [1, -2, 0] },\n\t\t\t\t{ duration: 0.27, delay: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\t\t\t\n\t\t\tconst mainBody = el.querySelector('path[d*=\"16 21v-2\"]');\n\t\t\tanimate(mainBody, \n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -46,7 +46,7 @@ func scrollAnimation() templ.Component {
 	})
 }
 
-func scrollContent() templ.Component {
+func usersContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -79,7 +79,7 @@ func scrollContent() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M15 8h-5\"></path> <path d=\"M15 12h-5\"></path> <path d=\"M19 17V5a2 2 0 0 0-2-2H4\"></path> <path d=\"M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3\"></path>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"></path> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"></path> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"></path> <circle cx=\"9\" cy=\"7\" r=\"4\"></circle>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

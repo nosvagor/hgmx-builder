@@ -12,12 +12,12 @@ func Question() *Icon {
 	return &Icon{
 		Name:    "question",
 		handler: templ.NewOnceHandle(),
-		script:  QuestionAnimation,
-		svg:     QuestionContent,
+		script:  questionAnimation,
+		svg:     questionContent,
 	}
 }
 
-func QuestionAnimation() templ.Component {
+func questionAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -46,7 +46,7 @@ func QuestionAnimation() templ.Component {
 	})
 }
 
-func QuestionContent() templ.Component {
+func questionContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

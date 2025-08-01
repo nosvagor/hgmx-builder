@@ -12,12 +12,12 @@ func Orbit() *Icon {
 	return &Icon{
 		Name:    "orbit",
 		handler: templ.NewOnceHandle(),
-		script:  OrbitAnimation,
-		svg:     OrbitContent,
+		script:  orbitAnimation,
+		svg:     orbitContent,
 	}
 }
 
-func OrbitAnimation() templ.Component {
+func orbitAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -46,7 +46,7 @@ func OrbitAnimation() templ.Component {
 	})
 }
 
-func OrbitContent() templ.Component {
+func orbitContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

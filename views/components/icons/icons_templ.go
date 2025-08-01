@@ -115,82 +115,75 @@ func svg() templ.Component {
 // Icon Development Guide
 //
 // 1. Find an SVG
-//   - Start by finding an SVG for your icon. A great resource for high-quality,
-//     consistent icons is https://lucide.dev/.
-//   - When you have the SVG code, you will only need the inner elements like
-//     <path>, <circle>, etc., not the surrounding <svg> tag.
+//    - Start by finding an SVG for your icon. A great resource for high-quality,
+//      consistent icons is https://lucide.dev/.
+//    - When you have the SVG code, you will only need the inner elements like
+//      <path>, <circle>, etc., not the surrounding <svg> tag.
 //
 // 2. Create a New Icon File
-//   - In the `views/shared/icons/` directory, create a new file with a
-//     descriptive name that matches icon appearance or intended action it's
-//     ment to represent, e.g., `click.templ` or 'orbit.templ'.
+//    - In the `views/shared/icons/` directory, create a new file with a
+//      descriptive name that matches icon appearance or intended action it's
+//      ment to represent, e.g., `click.templ` or 'orbit.templ'.
 //
 // 3. Define the Icon Struct
+//    - In your new file, define a public function that returns an `*Icon` pointer.
+//    - This function will instantiate and return an `Icon` struct. I.e.,
 //
-//   - In your new file, define a public function that returns an `*Icon` pointer.
+//    func {IconName}() *Icon {
+//        return &Icon{
+//            Name:    "{iconName}",
+//            handler: templ.NewOnceHandle(),
+//            script:  {iconName}Animation,
+//            svg:     {iconName}Content,
+//        }
+//    }
 //
-//   - This function will instantiate and return an `Icon` struct. I.e.,
+//    - `Name`: A unique, lowerCamelCase name for the icon.
+//    - `handler`: Use `templ.NewOnceHandle()` to ensure scripts are only rendered once.
+//    - `script`: A reference to the templ component containing the animation script.
+//    - `svg`: A reference to the templ component containing the SVG markup.
 //
-//     func {IconName}() *Icon {
-//     return &Icon{
-//     Name:    "{iconName}",
-//     handler: templ.NewOnceHandle(),
-//     script:  {iconName}Animation,
-//     svg:     {iconName}Content,
-//     }
-//     }
-//
-//   - `Name`: A unique, lowerCamelCase name for the icon.
-//
-//   - `handler`: Use `templ.NewOnceHandle()` to ensure scripts are only rendered once.
-//
-//   - `script`: A reference to the templ component containing the animation script.
-//
-//   - `svg`: A reference to the templ component containing the SVG markup.
 //
 // 4. Create the SVG Content Component
+//    - Define a templ component for the SVG markup.
+//    - The component name should be in the format `{iconName}Content`.
+//    - This component will use the `@svg()` helper templ, which provides the
+//      standard <svg> wrapper.
+//    - iconName function should be camelCase.
 //
-//   - Define a templ component for the SVG markup.
+//    templ {iconName}Content() {
+//        @svg() {
+//            // Paste the inner SVG elements here.
+//            <path d="..."/>
+//            <circle cx="..." cy="..." r="..."/>
+//        }
+//    }
 //
-//   - The component name should be in the format `{iconName}Content`.
-//
-//   - This component will use the `@svg()` helper templ, which provides the
-//     standard <svg> wrapper.
-//
-//     templ {iconName}Content() {
-//     @svg() {
-//     // Paste the inner SVG elements here.
-//     <path d="..."/>
-//     <circle cx="..." cy="..." r="..."/>
-//     }
-//     }
 //
 // 5. Create the Animation Component
+//    - Define a templ component for the icon's animation.
+//    - The component name should be in the format `{iconName}Animation`.
+//    - iconName fucnction should be camelCase.
 //
-//   - Define a templ component for the icon's animation.
+//    templ {iconName}Animation() {
+//        <script type="module">
+//            import { animate } from "/static/scripts/motion.min.js";
 //
-//   - The component name should be in the format `{iconName}Animation`.
-//
-//     templ {iconName}Animation() {
-//     <script type="module">
-//     import { animate } from "/static/scripts/motion.min.js";
-//
-//     // The animation function must be attached to the `window` object.
-//     // The function name must be in the format `{iconName}Animate`.
-//     window.{iconName}Animate = (el) => {
-//     // `el` is the <icon> element. You can query its children.
-//     const path = el.querySelector('path');
-//
-//     // or query parts of path, since tighlty coupled with script above
-//     // e.g., centerCircle = el.querySelector('circle[r="2"]');
-//
-//     animate(path,
-//     { opacity: [0, 1] }, // properties to animate
-//     { duration: 0.42, easing: "easeInOut" } // animation settings
-//     );
-//     };
-//     </script>
-//     }
+//            // The animation function must be attached to the `window` object.
+//            // The function name must be in the format `{iconName}Animate`.
+//            window.{iconName}Animate = (el) => {
+//                // `el` is the <icon> element. You can query its children.
+//                const path = el.querySelector('path');
+//                animate(path,
+//                    { opacity: [0, 1] }, // properties to animate
+//                    { duration: 0.42, easing: "easeInOut" } // animation settings
+//                );
+
+//					  // or query parts of path, since tighlty coupled with script above
+//	               // e.g., centerCircle = el.querySelector('circle[r="2"]');
+//	           };
+//	       </script>
+//	   }
 //
 // 5.b (style tip for script):
 //
@@ -198,6 +191,10 @@ func svg() templ.Component {
 //	like rotations or translations, using Greek letters for variables is
 //	encouraged. This creates a highly readable and distinct style, making it
 //	clear that the code is dealing with geometric properties.
+//
+//	Select svg el as constant right above aniamtion function that animates it.
+//	If parts of animation have delay, try to order animatinos so that you read
+//	the sequence from top to bottom.
 //
 //	Commonly used letters and their conventional meanings:
 //	- Θ (Theta), α (Alpha), β (Beta): Angles or rotation values.
@@ -211,4 +208,19 @@ func svg() templ.Component {
 //	const Θ = Number(el.dataset.rotation || 0);
 //	const Δ = Θ + 360 + Math.random() * 100;
 //	animate(moons, { rotate: [Θ, Δ] });
+//
+// 5.c duration guidelines:
+//   - 0.27 for quick parts
+//   - 0.42 for standard speed (maybe delayed by quick parts)
+//   - 0.69 max duration for consistency
+//   - If there is a delay, total should not exceed 0.69
+//   - Staggers may need different values depending on icon complexity
+//
+// 5.d animation suggestions:
+//   - Opacity and pathLength are great for creating drawing effect for simpler icons
+//   - Animating scale can create nice subtle bounce in effect.
+//   - Rotations and translations are great for creating movement for more complex icons
+//   - Staggers are great for icons with lots of parts.
+//   - General easeOut is good easing function.
+//   - good starting poitn for spring: { type: "spring", bounce: 0.22, duration: 0.69 }
 var _ = templruntime.GeneratedTemplate

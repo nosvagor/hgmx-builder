@@ -4,12 +4,12 @@ func Rss() *Icon {
 	return &Icon{
 		Name:    "rss",
 		handler: templ.NewOnceHandle(),
-		script:  RssAnimation,
-		svg:     RssContent,
+		script:  rssAnimation,
+		svg:     rssContent,
 	}
 }
 
-templ RssAnimation() {
+templ rssAnimation() {
 	<script type="module">
 		import { animate, stagger } from "/static/scripts/motion.min.js";
 		window.rssAnimate = (el) => {
@@ -22,7 +22,7 @@ templ RssAnimation() {
 	</script>
 }
 
-templ RssContent() {
+templ rssContent() {
 	@svg() {
 		<circle cx="5" cy="19" r="1"></circle>
 		<path d="M4 11a9 9 0 0 1 9 9"></path>

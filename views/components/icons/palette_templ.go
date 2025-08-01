@@ -12,12 +12,12 @@ func Palette() *Icon {
 	return &Icon{
 		Name:    "palette",
 		handler: templ.NewOnceHandle(),
-		script:  PaletteAnimation,
-		svg:     PaletteContent,
+		script:  paletteAnimation,
+		svg:     paletteContent,
 	}
 }
 
-func PaletteAnimation() templ.Component {
+func paletteAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -46,7 +46,7 @@ func PaletteAnimation() templ.Component {
 	})
 }
 
-func PaletteContent() templ.Component {
+func paletteContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

@@ -4,12 +4,12 @@ func Orbit() *Icon {
 	return &Icon{
 		Name:    "orbit",
 		handler: templ.NewOnceHandle(),
-		script:  OrbitAnimation,
-		svg:     OrbitContent,
+		script:  orbitAnimation,
+		svg:     orbitContent,
 	}
 }
 
-templ OrbitAnimation() {
+templ orbitAnimation() {
 	<script type="module">
 		import { animate } from "/static/scripts/motion.min.js";
 		window.orbitAnimate = (el) => {
@@ -31,7 +31,7 @@ templ OrbitAnimation() {
 	</script>
 }
 
-templ OrbitContent() {
+templ orbitContent() {
 	@svg() {
 		<g>
 			<path d="M20.341 6.484A10 10 0 0 1 10.266 21.85"></path>

@@ -12,12 +12,12 @@ func Settings() *Icon {
 	return &Icon{
 		Name:    "settings",
 		handler: templ.NewOnceHandle(),
-		script:  SettingsAnimation,
-		svg:     SettingsContent,
+		script:  settingsAnimation,
+		svg:     settingsContent,
 	}
 }
 
-func SettingsAnimation() templ.Component {
+func settingsAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -46,7 +46,7 @@ func SettingsAnimation() templ.Component {
 	})
 }
 
-func SettingsContent() templ.Component {
+func settingsContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
