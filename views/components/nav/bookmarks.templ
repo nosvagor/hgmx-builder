@@ -1,0 +1,36 @@
+package nav
+
+templ (p *Props) NavbarBookmarks() {
+	if p.Bookmarks != nil {
+		<div
+			id="navbar-bookmarks"
+			class="z-20 flex overflow-hidden gap-2 items-center font-medium font-display"
+			hx-target="#main"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			for i, link := range p.Bookmarks {
+				if i >= 4 {
+					{{ break }}
+				}
+				@link
+			}
+		</div>
+	}
+}
+
+templ (p *Props) MenuBookmarks() {
+	if p.Bookmarks != nil {
+		<div
+			id="menu-bookmarks"
+			class="flex flex-col gap-4"
+			hx-target="#main"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			for _, link := range p.Bookmarks {
+				@link
+			}
+		</div>
+	}
+}

@@ -1,0 +1,75 @@
+package nav
+
+var scrollControllerScript = templ.NewOnceHandle()
+
+templ scrollController() {
+	@scrollControllerScript.Once() {
+		<script type="module">
+			import { animate, stagger } from "/static/scripts/motion.min.js";
+			const nav = document.getElementById("navbar");
+		</script>
+	}
+}
+
+templ (p *Props) styles() {
+	<style>
+		.navbar_scrolling {
+			background-color: color-mix(in oklab, var(--color-base-700) 37%, transparent);
+			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+			backdrop-filter: blur(8px);
+			--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);	
+		}
+	</style>
+}
+
+func (p *Props) classes() string {
+	return "z-50 flex w-full sticky top-0 items-center justify-between px-4 py-2 transition duration-250 ease-in-out"
+}
+
+func (p *Props) navbarHyperscript() string {
+	return `
+		init
+			if window.scrollY is 0 then
+				remove .navbar_scrolling from me
+			else
+				add .navbar_scrolling to me
+			end
+			wait 100ms
+			call #nav-menu.setMenuIcon('user')
+			call #nav-menu.delayedMenu()
+		end
+
+		on scroll from window
+			get #nav-menu
+			if it and it.matches('.menu-open') then
+				exit
+			end
+			if window.scrollY is 0 and me.matches('.navbar_scrolling') then
+				remove .navbar_scrolling from me
+				call it.delayedMenu()
+			else if window.scrollY > 0 and not me.matches('.navbar_scrolling') then
+				add .navbar_scrolling to me
+				call it.setMenuIcon('hamburger')
+			end
+		end
+	`
+}
+
+templ (p *Props) Navbar() {
+	@scrollController()
+	@p.styles()
+	<nav
+		id="navbar"
+		class={ p.classes() }
+		style="isolation: isolate;"
+		_={ p.navbarHyperscript() }
+	>
+		<div class="flex items-center gap-2">
+			@p.Menu()
+			@p.NavbarBookmarks()
+		</div>
+		@p.Logo
+	</nav>
+	@p.MenuExpanded()
+}

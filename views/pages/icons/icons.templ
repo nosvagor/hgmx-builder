@@ -1,7 +1,13 @@
 package icons
 
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+	"github.com/nosvagor/hgmx-builder/views/icons"
+)
+
 templ Main() {
-	<div>
-		<h1>icons</h1>
+	<div class="flex items-center text-[10rem]">
+		@button.Link("github.com/nosvagor", icon.Text(icons.BrandGithub(), "GitHub"))
 	</div>
 }

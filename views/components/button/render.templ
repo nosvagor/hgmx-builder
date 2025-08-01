@@ -1,0 +1,49 @@
+package button
+
+import "github.com/nosvagor/hgmx-builder/views/utilities/html"
+
+func (p *Props) classes() string {
+	return p.Styler.Build(p.variant())
+}
+
+func (p *Props) variant() string {
+	switch p.Variant {
+	case Primary:
+		return "text-base-950 bg-primary-501 hover:bg-primary-401"
+	case Destructive:
+		return "hover:text-delete-501 hover:bg-delete-101"
+	case External:
+		return "hover:text-link-501 hover:bg-link-101/5"
+	default: // Base
+		return "hover:text-primary-401 hover:bg-base-400"
+	}
+}
+
+func (p *Props) hyprscript() string {
+	return `on mouseenter 
+		set target to the first <div/> in me
+		if target exists
+			send hovered to target
+		end`
+}
+
+func options(p *Props) templ.Attributes {
+	if p.HX != nil {
+		return p.HX.Opts()
+	}
+	return templ.Attributes{}
+}
+
+templ (p *Props) Render() {
+	if len(p.Href) > 0 {
+		@html.Link(p.Href) {
+			<button _={ p.hyprscript() } class={ p.classes() }>
+				@p.Content.Render()
+			</button>
+		}
+	} else {
+		<button _={ p.hyprscript() } class={ p.classes() } { options(p)... }>
+			@p.Content.Render()
+		</button>
+	}
+}

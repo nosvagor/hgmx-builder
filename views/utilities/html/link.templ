@@ -1,0 +1,24 @@
+package html
+
+import (
+	"fmt"
+	"strings"
+)
+
+func FormatURL(href string) templ.SafeURL {
+	if href == "" {
+		return templ.SafeURL("/")
+	}
+
+	if strings.HasPrefix(href, "http://") || strings.HasPrefix(href, "https://") {
+		return templ.SafeURL(href)
+	} else {
+		return templ.SafeURL(fmt.Sprintf("https://%s", href))
+	}
+}
+
+templ Link(href string) {
+	<a href={ FormatURL(href) }>
+		{ children... }
+	</a>
+}

@@ -1,15 +1,15 @@
 package views
 
-import "github.com/nosvagor/hgmx-builder/views/utils/include"
+import "github.com/nosvagor/hgmx-builder/views/utilities/include"
 
-templ Full(content, navbar templ.Component) {
+templ Full(components ...templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<meta name="htmx-config" content='{"refreshOnHistoryMiss": true, "historyRestoreAsHxRequest": false}'/>
-			@Favicon()
+			@favicon()
 			@include.Style("main.min.css")
 			@include.Script("htmx.min.js")
 			@include.DeferedScript("htmx-ext-sse.js")
@@ -18,9 +18,10 @@ templ Full(content, navbar templ.Component) {
 			@include.ModuleScript("motion.min.js")
 		</head>
 		<body hx-ext="preload">
-			@navbar
-			@content
-			@Footer()
+			for _, component := range components {
+				@component
+			}
+			@footer()
 		</body>
 	</html>
 }
@@ -31,19 +32,19 @@ templ Title(title string) {
 	}
 }
 
-templ Main(content templ.Component, title string) {
+templ Main(page templ.Component, title string) {
 	@Title(title)
 	<main
 		hx-history-elt
 		id="main"
-		class="w-[98%] max-w-7xl mx-auto mb-4 px-2 flex flex-1 flex-col"
+		class="w-[98%] max-w-7xl mx-auto flex flex-1 flex-col"
 	>
-		@content
+		@page
 	</main>
 }
 
-templ Footer() {
-	<footer class="flex flex-col justify-start items-center py-4 text-sm h-fit">
+templ footer() {
+	<footer class="hidden md:flex flex-col justify-start items-center py-4 text-sm h-fit">
 		<div class="flex flex-row gap-4 justify-center items-center">
 			<a href="https://github.com/nosvagor">
 				github.com/nosvagor
@@ -55,7 +56,7 @@ templ Footer() {
 	</footer>
 }
 
-templ Favicon() {
+templ favicon() {
 	<link rel="icon" type="image/png" href="static/favicon/favicon-96x96.png" sizes="96x96"/>
 	<link rel="icon" type="image/svg+xml" href="static/favicon/favicon.svg"/>
 	<link rel="shortcut icon" href="static/favicon/favicon.ico"/>

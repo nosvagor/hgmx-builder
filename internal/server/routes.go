@@ -12,6 +12,7 @@ func RegisterRoutes(e *echo.Echo) {
 	e.GET("/palette", pages.Palette)
 	e.GET("/icons", pages.Icons)
 	e.GET("/blog", pages.Blog)
+	e.GET("/faq", pages.FAQ)
 
 	e.GET("/account", pages.Account)
 	e.GET("/settings", pages.Settings)

@@ -1,0 +1,191 @@
+package nav
+
+var menuControllerScript = templ.NewOnceHandle()
+
+templ (p *Props) menuController() {
+	@menuControllerScript.Once() {
+		<script type="module">
+			import { animate } from "/static/scripts/motion.min.js";
+			
+			const menu = document.getElementById('nav-menu');
+			let currentIcon = 'hamburger';
+			let menuDelayTimer;
+			
+			const iconPaths = {
+				user: {
+					top: "M 7,6 C 7,0, 17,0, 17,6",
+					mid: "M 7,6 C 7,12, 17,12, 17,6",
+					bot: "M 4,20 C 4,14, 20,14, 20,20",
+				},
+				hamburger: {
+					top: "M 3,7 C 8,7 16,7 21,7",
+					mid: "M 3,12 C 8,12 16,12 21,12",
+					bot: "M 3,17 C 8,17 16,17 21,17",
+				},
+				close: {
+					top: "M 6,6 C 9,9 15,15 18,18",
+					mid: "M 26,12 C 26,12 26,12 26,12",
+					bot: "M 6,18 C 9,15 15,9 18,6",
+				}
+			};
+			
+			function setMenuIcon(icon) {
+				const top = document.getElementById('menu-top');
+				const mid = document.getElementById('menu-mid');
+				const bot = document.getElementById('menu-bot');
+				const t = { duration: 0.3, ease: "easeOut" };
+
+				animate(top, { d: iconPaths[icon].top }, t);
+				animate(mid, { d: iconPaths[icon].mid }, t);
+				animate(bot, { d: iconPaths[icon].bot }, t);
+				currentIcon = icon;
+			}
+			
+			function toggleMenu() {
+				const open = menu.classList.contains('menu-open');
+				const expandedMenu = document.getElementById('nav-menu-expanded');
+				const menuBackdrop = document.getElementById('menu-backdrop');
+				const menuBg = document.getElementById('menu-bg');
+
+				function closeMenu() {
+					menu.classList.remove('menu-open');
+					setMenuIcon('hamburger');
+					
+					const escIndicator = document.getElementById('esc-indicator');
+					if (escIndicator) {
+						animate(escIndicator, { opacity: 0, transform: 'translate(-100%)' }, { duration: 0.1 });
+					}
+					
+					expandedMenu.style.pointerEvents = 'none';
+					animate(menuBackdrop, { opacity: 0 }, { duration: 0.16, delay: 0.1 });
+					animate(menuBg, { transform: 'translateX(-100%)' }, { type: 'spring', bounce: 0.2, duration: 0.25 });
+				}
+
+				function openMenu() {
+					menu.classList.add('menu-open');
+					setMenuIcon('close');
+					
+					expandedMenu.style.pointerEvents = 'auto'; 
+					animate(menuBackdrop, { opacity: 1 }, { duration: 0.25 });
+					animate(menuBg, { transform: 'translateX(0%)' }, { type: 'spring', bounce: 0.2, duration: 0.42 })
+
+					const escIndicator = document.getElementById('esc-indicator');
+					if (escIndicator && menu.classList.contains('menu-open')) {
+						animate(escIndicator, { opacity: 1, transform: 'translate(0)' }, { duration: 0.2, ease: "easeOut" });
+					}
+				}
+
+				open ? closeMenu() : openMenu();
+			}
+
+			function delayedMenu(delay = 3000) {
+				const menuOpen = menu.classList.contains('menu-open');
+				if (menuOpen) {
+					return;
+				}
+
+				clearTimeout(menuDelayTimer);
+
+				const scrollPosition = window.scrollY;
+				if (scrollPosition === 0) {
+					setMenuIcon('user');
+				}
+
+				menuDelayTimer = setTimeout(() => {
+					setMenuIcon('hamburger');
+				}, delay);
+			}
+
+			menu.delayedMenu = delayedMenu;
+			menu.setMenuIcon = setMenuIcon;
+			menu.toggleMenu = toggleMenu;
+			menu.getCurrentIcon = () => currentIcon;
+		</script>
+	}
+}
+
+func (p *Props) menuHyperscript() string {
+	return `
+	on click or keydown[key is 'Enter' or key is ' ']
+		halt the event
+		call me.toggleMenu()
+	end
+
+	on click from elsewhere
+		if me.matches('.menu-open') and not event.target.closest('#menu-bg')
+			call me.toggleMenu()
+		end
+	end
+
+	on htmx:afterRequest from window
+		if me.matches('.menu-open')
+			call me.toggleMenu()
+		end
+	end 
+
+	on mouseenter
+		if me.getCurrentIcon() is 'user'
+			call me.setMenuIcon('hamburger')
+		end
+	end
+
+	on keydown[key is 'Escape'] from window
+		if me.matches('.menu-open')
+			call me.toggleMenu()
+			exit
+		end
+
+		set now to Date.now()
+		if now - me.lastEscapeTime < 500
+			call me.toggleMenu()
+			set me.lastEscapeTime to 0
+		else
+			set me.lastEscapeTime to now
+		end
+	end
+	`
+}
+
+templ (p *Props) Menu() {
+	<div
+		id="nav-menu"
+		tabindex="0"
+		class="z-50 flex relative justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
+		_={ p.menuHyperscript() }
+	>
+		@p.menuController()
+		<svg viewBox="0 0 24 24" width="1.5rem" height="1.5rem" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+			<path id="menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
+			<path id="menu-mid" d="M 3,12 C 8,12 16,12 21,12"></path>
+			<path id="menu-bot" d="M 3,17 C 8,17 16,17 21,17"></path>
+		</svg>
+		<kbd
+			id="esc-indicator"
+			class="absolute top-2.5 left-8 text-[0.625rem] font-mono pointer-events-none opacity-0"
+			style="transform: translate(-100%);"
+		>
+			esc
+		</kbd>
+	</div>
+}
+
+templ (p *Props) MenuExpanded() {
+	<div id="nav-menu-expanded" class="z-[60] fixed inset-0 pointer-events-none h-svh">
+		<div id="menu-backdrop" class="z-[60] absolute inset-0 opacity-0 min-h-svh bg-black/5 backdrop-blur cursor-w-resize"></div>
+		<div
+			id="menu-bg"
+			class="z-[70] flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-14 pb-8 h-full min-w-fit bg-base-600"
+			style="transform: translateX(-100%);"
+		>
+			@p.MenuBookmarks()
+			@p.MenuAccount()
+		</div>
+	</div>
+}
+
+templ (p *Props) MenuAccount() {
+	<div id="menu-account" class="flex w-full flex-col gap-2">
+		@p.Account
+		@p.Settings
+	</div>
+}

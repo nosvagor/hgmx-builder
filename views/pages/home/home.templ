@@ -1,5 +1,7 @@
 package home
 
+import "github.com/nosvagor/hgmx-builder/views/components/logo"
+
 templ Main() {
 	// for range 50 {
 	// 	<div class="py-2 w-full h-10 rounded-md bg-base-400">
@@ -8,6 +10,9 @@ templ Main() {
 	// 		</p>
 	// 	</div>
 	// }
+	<div class="text-9xl flex items-center justify-center w-full my-8">
+		@logo.Full().Render()
+	</div>
 	for i := range 500 {
 		<div class="py-2 w-full h-10 rounded-md text-base-100">{ i }</div>
 	}
