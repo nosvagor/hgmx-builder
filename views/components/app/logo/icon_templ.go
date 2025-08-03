@@ -8,9 +8,9 @@ package logo
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-var IconControllerHandler = templ.NewOnceHandle()
+var iconControllerHandler = templ.NewOnceHandle()
 
-func IconController() templ.Component {
+func iconController() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -49,7 +49,7 @@ func IconController() templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = IconControllerHandler.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = iconControllerHandler.Once().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -57,7 +57,7 @@ func IconController() templ.Component {
 	})
 }
 
-func Icon() templ.Component {
+func icon() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -78,11 +78,11 @@ func Icon() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = IconController().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = iconController().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" width=\"1em\" height=\"1em\"><path fill=\"#6c88f4\" d=\"M2.63 14.75c-.266 0-.645.163-.754.376l-.846 1.649c-.11.213.04.472.307.472l16.387.003a6.675 6.675 0 0 1 .017-2.5z\"></path> <path fill=\"#d7dbee\" d=\"M6 28h5.817c1.375-2.76 2.815-5.49 4.142-8.273 1.28-2.824.898-6.186-.656-8.822L11.717 4H6c1.798 3.294 3.656 6.557 5.412 9.874.758 1.342.61 3.014-.189 4.302C9.457 21.436 7.744 24.727 6 28Z\"></path> <path fill=\"#6c88f4\" d=\"M6.655 7.5c-.266 0-.645.162-.754.375l-.846 1.65c-.11.213.04.473.307.473L19.293 10l1.297-2.5zM11 22c-.266 0-.644.162-.754.375l-.846 1.65c-.11.213.041.473.307.473l10.83.002c-.423-.832-.843-1.665-1.26-2.5Z\"></path> <path fill=\"#d7dbee\" d=\"M29 28h-5.817c-1.375-2.76-2.815-5.49-4.142-8.273-1.28-2.824-.898-6.186.656-8.822L23.283 4H29c-1.798 3.294-3.656 6.557-5.412 9.874-.758 1.342-.61 3.014.189 4.302C25.543 21.436 27.256 24.727 29 28Z\"></path></svg>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<svg id=\"logo-icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" width=\"1em\" height=\"1em\"><path fill=\"#6c88f4\" d=\"M2.63 14.75c-.266 0-.645.163-.754.376l-.846 1.649c-.11.213.04.472.307.472l16.387.003a6.675 6.675 0 0 1 .017-2.5z\"></path> <path fill=\"currentColor\" d=\"M6 28h5.817c1.375-2.76 2.815-5.49 4.142-8.273 1.28-2.824.898-6.186-.656-8.822L11.717 4H6c1.798 3.294 3.656 6.557 5.412 9.874.758 1.342.61 3.014-.189 4.302C9.457 21.436 7.744 24.727 6 28Z\"></path> <path fill=\"#6c88f4\" d=\"M6.655 7.5c-.266 0-.645.162-.754.375l-.846 1.65c-.11.213.04.473.307.473L19.293 10l1.297-2.5zM11 22c-.266 0-.644.162-.754.375l-.846 1.65c-.11.213.041.473.307.473l10.83.002c-.423-.832-.843-1.665-1.26-2.5Z\"></path> <path fill=\"currentColor\" d=\"M29 28h-5.817c-1.375-2.76-2.815-5.49-4.142-8.273-1.28-2.824-.898-6.186.656-8.822L23.283 4H29c-1.798 3.294-3.656 6.557-5.412 9.874-.758 1.342-.61 3.014.189 4.302C25.543 21.436 27.256 24.727 29 28Z\"></path></svg>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
