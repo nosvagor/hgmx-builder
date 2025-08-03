@@ -1,0 +1,21 @@
+package logo
+
+var IconControllerHandler = templ.NewOnceHandle()
+
+templ IconController() {
+	@IconControllerHandler.Once() {
+		<script type="module">
+			import { animate, stagger } from "/static/scripts/motion.min.js";
+		</script>
+	}
+}
+
+templ Icon() {
+	@IconController()
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em">
+		<path fill="#6c88f4" d="M2.63 14.75c-.266 0-.645.163-.754.376l-.846 1.649c-.11.213.04.472.307.472l16.387.003a6.675 6.675 0 0 1 .017-2.5z"></path>
+		<path fill="#d7dbee" d="M6 28h5.817c1.375-2.76 2.815-5.49 4.142-8.273 1.28-2.824.898-6.186-.656-8.822L11.717 4H6c1.798 3.294 3.656 6.557 5.412 9.874.758 1.342.61 3.014-.189 4.302C9.457 21.436 7.744 24.727 6 28Z"></path>
+		<path fill="#6c88f4" d="M6.655 7.5c-.266 0-.645.162-.754.375l-.846 1.65c-.11.213.04.473.307.473L19.293 10l1.297-2.5zM11 22c-.266 0-.644.162-.754.375l-.846 1.65c-.11.213.041.473.307.473l10.83.002c-.423-.832-.843-1.665-1.26-2.5Z"></path>
+		<path fill="#d7dbee" d="M29 28h-5.817c-1.375-2.76-2.815-5.49-4.142-8.273-1.28-2.824-.898-6.186.656-8.822L23.283 4H29c-1.798 3.294-3.656 6.557-5.412 9.874-.758 1.342-.61 3.014.189 4.302C25.543 21.436 27.256 24.727 29 28Z"></path>
+	</svg>
+}

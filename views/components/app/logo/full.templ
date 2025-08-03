@@ -1,9 +1,9 @@
 package logo
 
-var fullScriptHandle = templ.NewOnceHandle()
+var FullControllerHandler = templ.NewOnceHandle()
 
-templ fullController() {
-	@fullScriptHandle.Once() {
+templ FullController() {
+	@FullControllerHandler.Once() {
 		<script type="module">
 			import { animate, stagger } from "/static/scripts/motion.min.js";
 			const logo = document.getElementById('logo-full');
