@@ -12,6 +12,8 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/nosvagor/hgmx-builder/internal/database"
+	"github.com/nosvagor/hgmx-builder/internal/services/stats"
 	"github.com/nosvagor/hgmx-builder/internal/utils"
 )
 
@@ -23,23 +25,26 @@ func New() *echo.Echo {
 	e.Use(ZerologRequestLogger())
 
 	RegisterStaticRoutes(e)
-	RegisterRoutes(e)
+	RegisterWebRoutes(e)
+	RegisterHealthRoutes(e)
 
 	return e
 }
+
+const (
+	blue   = "\033[34m"
+	yellow = "\033[33m"
+	faint  = "\033[2;37m"
+	red    = "\033[31m"
+	purple = "\033[35m"
+	green  = "\033[32m"
+	reset  = "\033[0m"
+)
 
 func printBanner(cfg utils.Config) {
 	now := time.Now()
 	zone, _ := now.Zone()
 	tzOffset := now.Format("-07:00")
-
-	blue := "\033[34m"
-	yellow := "\033[33m"
-	faint := "\033[2;37m"
-	red := "\033[31m"
-	purple := "\033[35m"
-	green := "\033[32m"
-	reset := "\033[0m"
 
 	ascii := `
     ██╗  ██╗ ██████╗ ███╗   ███╗██╗  ██╗
@@ -80,7 +85,42 @@ func printBanner(cfg utils.Config) {
 	fmt.Print(yellow, builder, reset, "\n")
 	fmt.Printf("%s%s%s%s%s\n", green, left, reset, strings.Repeat(" ", padding), right)
 	fmt.Printf("%s%s%s%s%s\n", faint, left2, strings.Repeat(" ", padding2), right2, reset)
-	fmt.Println()
+}
+
+func printDBHealth(cfg utils.Config) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	hs, err := database.Health(ctx)
+	if err != nil || !hs.OK {
+		msg := ""
+		if err != nil {
+			msg = err.Error()
+		}
+		if msg == "" {
+			msg = "unhealthy"
+		}
+		fmt.Printf("%s    db: %s%s%s\n", red, msg, reset, faint)
+		return
+	}
+
+	prod := utils.If(cfg.ENV == "DEV", "DEV ", "PROD")
+	color := utils.If(cfg.ENV == "DEV", blue, red)
+	open := fmt.Sprintf("%d", hs.OpenConnections)
+	alive := fmt.Sprintf("%d", hs.InUse)
+	idle := fmt.Sprintf("%d", hs.Idle)
+	op := fmt.Sprintf("%s@%s", hs.User, hs.Database)
+	write := utils.If(hs.ReadOnly, fmt.Sprintf("%sread%s", red, color), fmt.Sprintf("%swrite%s", yellow, color))
+
+	fmt.Printf(`%s
+    |------------------------------------------------
+    | %s%s%s_________ open:%s alive:%s idle:%s | %s
+    |________  /_____________________________________
+    |__  ___/  __/  __ \_  ___/  _ \  %s
+    |_(__  )/ /_ / /_/ /  /   /  __/  %s 
+    |/____/ \__/ \____//_/    \___/  󱐌 %s
+    |------------------------------------------------ %s
+
+`, color, yellow, prod, color, open, alive, idle, write, op, hs.Version, hs.Latency.String(), reset)
 }
 
 func stripAnsi(str string) string {
@@ -103,7 +143,10 @@ func stripAnsi(str string) string {
 func Start(e *echo.Echo) error {
 	cfg := utils.LoadConfig()
 
+	_ = database.MustOpen()
+	_ = stats.Migrate()
 	printBanner(cfg)
+	printDBHealth(cfg)
 
 	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: e, ReadTimeout: 5 * time.Second, WriteTimeout: 10 * time.Second, IdleTimeout: 120 * time.Second}
 
@@ -113,6 +156,7 @@ func Start(e *echo.Echo) error {
 		<-quit
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
+		_ = database.Close()
 		_ = srv.Shutdown(ctx)
 	}()
 

@@ -38,7 +38,7 @@ func rssAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.rssAnimate = (el) => {\n\t\t\tconst circles = el.querySelectorAll('circle');\n\t\t\tanimate(circles, \n\t\t\t\t{ scale: [0, 1.5, 1], opacity: [0, 1] }, \n\t\t\t\t{ delay: stagger(0.08), ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst elements = Array.from(el.querySelectorAll('circle, path'));\n\t\t\tanimate(elements, \n\t\t\t\t{ scale: [0, 1.5, 1], opacity: [0, 1] }, \n\t\t\t\t{ delay: stagger(0.08), ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.rssAnimate = (el) => {\n\t\t\tconst elements = Array.from(el.querySelectorAll('circle, path'));\n\t\t\tanimate(elements, \n\t\t\t\t{ scale: [0, 1.5, 1], opacity: [0, 1] }, \n\t\t\t\t{ delay: stagger(0.1), ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

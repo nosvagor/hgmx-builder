@@ -1,0 +1,63 @@
+package web
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"github.com/a-h/templ"
+	"github.com/nosvagor/hgmx-builder/internal/services/stats"
+	"github.com/nosvagor/hgmx-builder/views/components/app/logo"
+	"github.com/nosvagor/hgmx-builder/views/components/app/source"
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+	"github.com/nosvagor/hgmx-builder/views/components/nav"
+	"github.com/nosvagor/hgmx-builder/views/icons"
+	"github.com/nosvagor/hgmx-builder/views/utilities/htmx"
+)
+
+func fmtStars(stars int) string {
+	if stars > 1000 {
+		return fmt.Sprintf("%dK", stars/1000)
+	}
+	return fmt.Sprintf("%d", stars)
+}
+
+func navbar() templ.Component {
+	opts := []htmx.Options{htmx.Target("#main"), htmx.Swap("outerHTML"), htmx.PushURL("true")}
+
+	github := stats.Github{}
+	stars, err := github.GetRepoStats(context.Background(), "nosvagor", "hgmx-builder", 1*time.Hour)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	p := &nav.Props{
+		Logo:     button.GetCustom("/", logo.Full("text-surface-50", "text-lg"), button.Primary, "p-2", opts...),
+		Settings: button.Get("/settings", icon.Text(icons.Settings(), "Settings"), opts...),
+		Account:  button.Get("/account", icon.Text(icons.User(), "Account"), opts...),
+		Source:   source.Source("github.com/nosvagor/hgmx-builder", icons.BrandGithub(), fmtStars(stars.Stars)),
+	}
+
+	bookmarks := []nav.Link{
+		{Path: "docs", Icon: icons.Scroll()},
+		{Path: "palette", Icon: icons.Palette()},
+		{Path: "icons", Icon: icons.Orbit()},
+		{Path: "blog", Icon: icons.Rss()},
+		{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
+		{Path: "users", Icon: icons.Users(), Label: "Users"},
+	}
+
+	for _, link := range bookmarks {
+		p.Bookmarks = append(p.Bookmarks,
+			button.GetCustom(
+				"/"+link.Path,
+				icon.Text(link.Icon, link.Text()),
+				button.Primary,
+				"justify-start",
+			),
+		)
+	}
+
+	return p.Render()
+}

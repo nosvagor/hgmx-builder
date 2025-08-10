@@ -5,55 +5,135 @@ var scrollControllerScript = templ.NewOnceHandle()
 templ scrollController() {
 	@scrollControllerScript.Once() {
 		<script type="module">
-			import { animate, stagger } from "/static/scripts/motion.min.js";
-			const nav = document.getElementById("navbar");
+			const nav = document.getElementById('navbar');
+			const menu = document.getElementById('nav-menu');
+
+			let hidden = false;
+			let lastY = window.scrollY;
+			let lastTick = performance.now();
+			let dir = null;
+			let Σd = 0;
+			let Σu = 0;
+
+			const Λ = 400;
+			const τ = 500;
+
+			const reset = (y, t) => { lastY = y; lastTick = t; Σd = 0; Σu = 0; };
+
+			const hide = () => {
+				if (!nav || hidden) return;
+				menu.animateBookmarksOut();
+				hidden = true;
+			};
+
+			const reveal = () => {
+				if (!nav || !hidden) return;
+				menu.animateBookmarksIn();
+				menu.delayedMenu();
+				hidden = false;
+			};
+
+			function onScroll() {
+				if (!nav || menu.classList.contains('menu-open')) return;
+
+				const y = window.scrollY;
+				const t = performance.now();
+
+				if (y <= 1) {
+					nav.classList.remove('navbar_scrolling');
+					reveal();
+					reset(y, t);
+					return;
+				}
+
+				const doc = document.documentElement;
+				const atBottom = Math.ceil(y + window.innerHeight) >= doc.scrollHeight;
+				if (atBottom && hidden) {
+					reveal();
+					reset(y, t);
+					return;
+				}
+
+				nav.classList.add('navbar_scrolling');
+
+				const Δy = y - lastY;
+				const Δt = t - lastTick;
+
+				if (Δy > 0) {
+					if (dir !== 'down' || Δt > τ) Σd = 0;
+					Σd += Δy;
+					Σu = 0;
+					if (Σd >= Λ && !hidden) {
+						hide();
+						Σd = 0;
+					}
+					dir = 'down';
+				} else if (Δy < 0) {
+					if (dir !== 'up' || Δt > τ) Σu = 0;
+					Σu += -Δy;
+					Σd = 0;
+					if (Σu >= (Λ / 2) && hidden) {
+						reveal();
+						Σu = 0;
+					}
+					dir = 'up';
+				}
+
+				lastY = y;
+				lastTick = t;
+			}
+
+			(function init() {
+				const y = window.scrollY;
+				lastY = y;
+				lastTick = performance.now();
+				if (!nav) return;
+				menu.setMenuIcon('user');
+				nav.classList.toggle('navbar_scrolling', y > 1);
+				hidden = false;
+				menu.delayedMenu();
+				window.addEventListener('scroll', onScroll, { passive: true });
+			})();
 		</script>
 	}
 }
 
 templ (p *Props) styles() {
 	<style>
-		.navbar_scrolling {
-			background-color: color-mix(in oklab, var(--color-base-700) 37%, transparent);
-			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+		#navbar {
+			background-color: color-mix(in oklab, var(--color-base-500) 95%, transparent);
 			backdrop-filter: blur(8px);
+		}
+		.navbar_scrolling {
+			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 			--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);	
+		}
+
+		#navbar-bookmarks, #menu-bookmarks, #menu-account { position: relative; }
+		#navbar-bookmarks button div > span, #menu-bookmarks button div > span, #menu-account button div > span { position: relative; }
+		#navbar-bookmarks button div > span::after, #menu-bookmarks button div > span::after, #menu-account button div > span::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 1px;
+			width: 100%;
+			height: 1px;
+			background: currentColor;
+			border-radius: 2px;
+			opacity: 0;
+			transform: scaleX(0);
+			transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.27s ease-out;
+		}
+		#navbar-bookmarks button.bookmark-active div > span::after, #menu-bookmarks button.bookmark-active div > span::after, #menu-account button.bookmark-active div > span::after {
+			opacity: 1;
+			transform: scaleX(1.05);
+		}
+		#navbar-bookmarks button[data-active="true"]:hover,
+		#menu-bookmarks button[data-active="true"]:hover,
+		#menu-account button[data-active="true"]:hover {
+			color: var(--color-accent-401);
 		}
 	</style>
-}
-
-func (p *Props) classes() string {
-	return "z-50 flex w-full sticky top-0 items-center justify-between px-4 py-2 transition duration-250 ease-in-out"
-}
-
-func (p *Props) navbarHyperscript() string {
-	return `
-		init
-			if window.scrollY is 0 then
-				remove .navbar_scrolling from me
-			else
-				add .navbar_scrolling to me
-			end
-			wait 100ms
-			call #nav-menu.setMenuIcon('user')
-			call #nav-menu.delayedMenu()
-		end
-
-		on scroll from window
-			get #nav-menu
-			if it and it.matches('.menu-open') then
-				exit
-			end
-			if window.scrollY is 0 and me.matches('.navbar_scrolling') then
-				remove .navbar_scrolling from me
-				call it.delayedMenu()
-			else if window.scrollY > 0 and not me.matches('.navbar_scrolling') then
-				add .navbar_scrolling to me
-				call it.setMenuIcon('hamburger')
-			end
-		end
-	`
 }
 
 templ (p *Props) Navbar() {
@@ -61,15 +141,9 @@ templ (p *Props) Navbar() {
 	@p.styles()
 	<nav
 		id="navbar"
-		class={ p.classes() }
-		style="isolation: isolate;"
-		_={ p.navbarHyperscript() }
+		class="z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 transition ease-in-out isolate"
 	>
-		<div class="flex items-center gap-2">
-			@p.Menu()
-			@p.NavbarBookmarks()
-		</div>
-		@p.Logo
+		@p.NavbarBookmarks()
+		@p.Source
 	</nav>
-	@p.MenuExpanded()
 }

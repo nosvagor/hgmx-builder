@@ -6,16 +6,18 @@ templ Full(components ...templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
+			<style>html{visibility:hidden}</style>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<meta name="htmx-config" content='{"refreshOnHistoryMiss": true, "historyRestoreAsHxRequest": false}'/>
 			@favicon()
 			@include.Style("main.min.css")
-			@include.Script("htmx.min.js")
+			@include.DeferedScript("htmx.min.js")
 			@include.DeferedScript("htmx-ext-sse.js")
 			@include.DeferedScript("htmx-ext-preload.js")
 			@include.DeferedScript("hyperscript.min.js")
 			@include.ModuleScript("motion.min.js")
+			<script>window.addEventListener('load',()=>{document.documentElement.style.visibility='visible'})</script>
 		</head>
 		<body hx-ext="preload">
 			for _, component := range components {

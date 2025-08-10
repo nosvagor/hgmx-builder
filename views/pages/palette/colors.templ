@@ -1,4 +1,4 @@
-package colors
+package palette
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type ColorScaleView struct {
 }
 
 templ Palette(colors []ColorScaleView, hex string) {
-	<div class="p-4 mx-auto max-w-6xl font-sans bg-bgc-600 text-fgc-600">
+	<div class="p-4 mx-auto max-w-6xl w-full font-sans bg-bgc-600 text-fgc-600 isolate">
 		<div class="flex flex-col space-y-3">
 			<div class="flex items-center">
 				<div class="w-16 shrink-0"></div>
@@ -120,6 +120,7 @@ templ Defs(hex string) {
 }
 
 templ HexPalette(hex string, colors []ColorScaleView, perspective string) {
+	<h3 class="text-2xl font-bold mx-auto">{ perspective }</h3>
 	<div class="flex justify-center items-center p-4 bg-bgc-600">
 		<svg viewBox="0 10 100 82" width="1000" height="800">
 			@Defs(hex)
@@ -135,11 +136,11 @@ func renderCircles(colors []ColorScaleView, perspective string) string {
 			if shade.Hex == "#000000" {
 				continue
 			}
-			isBw := slices.Contains([]string{"blk", "wht"}, color.Code)
+			isBw := slices.Contains([]string{"black", "white"}, color.Code)
 			if isBw {
 				continue
 			}
-			isGray := slices.Contains([]string{"bgc", "fgc", "brk", "rst", "olv", "mss", "slt", "gry", "stn", "ash", "bej", "znc"}, color.Code)
+			isGray := slices.Contains([]string{"base", "surface", "white", "black", "brick", "rust", "olive", "moss", "slate", "stone", "ash", "beige", "zinc", "gray"}, color.Code)
 			if isGray && perspective != "Gray" {
 				continue
 			}
@@ -175,18 +176,27 @@ type Shade struct {
 	Clx, Cly      float64
 }
 
-func tern(cond bool, a, b string) string {
-	if cond {
-		return a
+func hoverColor(s Shade) string {
+	if s.CR <= 2.00 {
+		return "text-surface-600"
 	}
-	return b
+	return "text-base-600"
+}
+
+func labelColor(s Shade) string {
+	if s.Code == "base" {
+		return "text-surface-600"
+	}
+	if s.CR <= 2.00 {
+		return fmt.Sprintf("text-%s-500", s.Code)
+	}
+	return fmt.Sprintf("text-%s-%d", s.Code, s.Value)
 }
 
 templ ColorSwatch(s Shade) {
-	<div class={ fmt.Sprintf("h-12 w-full text-[10px] font-mono %s rounded bg-%s-%d relative", tern(s.CR <= 2.00, "text-fgc-600", "text-bgc-600"), s.Code, s.Value) }>
+	<div class={ fmt.Sprintf("h-12 w-full text-[10px] font-mono %s rounded bg-%s-%d relative", hoverColor(s), s.Code, s.Value) }>
 		<div
-			class={ fmt.Sprintf("absolute -top-5 left-0 right-0 text-center text-[10px] font-semibold %s", tern( s.Code == "bgc", "text-fgc-600", 
-		                                                                                                   tern(s.CR <= 2.00, fmt.Sprintf("text-%s-%d", s.Code, 500), fmt.Sprintf("text-%s-%d", s.Code, s.Value)))) }
+			class={ fmt.Sprintf("absolute -top-5 left-0 right-0 text-center text-[10px] font-semibold %s", labelColor(s)) }
 		>
 			// { fmt.Sprintf("%04.2f", s.CR) }
 			// { s.L }

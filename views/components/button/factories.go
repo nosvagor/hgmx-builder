@@ -7,7 +7,7 @@ import (
 )
 
 func Get(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: Base}
+	p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: Primary}
 	return p.Render()
 }
 
@@ -23,7 +23,7 @@ func Link(href string, content components.Customizeable) templ.Component {
 }
 
 func Bust(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Base}
+	p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Primary}
 	return p.Render()
 }
 

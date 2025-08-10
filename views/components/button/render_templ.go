@@ -17,22 +17,20 @@ func (p *Props) classes() string {
 func (p *Props) variant() string {
 	switch p.Variant {
 	case Primary:
-		return "text-base-950 bg-primary-501 hover:bg-primary-401"
+		return "hover:text-primary-401 active:text-accent-401"
 	case Destructive:
-		return "hover:text-delete-501 hover:bg-delete-101"
+		return "text-delete-301 hover:text-delete-501 active:text-delete-601"
 	case External:
-		return "hover:text-link-501 hover:bg-link-101/5"
-	default: // Base
-		return "hover:text-primary-401 hover:bg-base-400"
+		return "hover:text-link-401 active:text-link-401"
+	case Special:
+		return "hover:text-honey-400 active:text-honey-400"
+	default:
+		return "hover:text-primary-401 active:text-accent-401"
 	}
 }
 
 func (p *Props) hyprscript() string {
-	return `on mouseenter 
-		set target to the first <div/> in me
-		if target exists
-			send hovered to target
-		end`
+	return `on mouseenter or mousedown or touchstart queue none send hovered to first <svg/> in me then wait 1000ms`
 }
 
 func options(p *Props) templ.Attributes {
@@ -88,7 +86,7 @@ func (p *Props) Render() templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(p.hyprscript())
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/button/render.templ`, Line: 40, Col: 29}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/button/render.templ`, Line: 38, Col: 29}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -138,7 +136,7 @@ func (p *Props) Render() templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(p.hyprscript())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/button/render.templ`, Line: 45, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/button/render.templ`, Line: 43, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {

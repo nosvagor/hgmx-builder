@@ -15,20 +15,20 @@ templ paletteAnimation() {
 		window.paletteAnimate = (el) => {
 			const path = el.querySelector('path');
 			animate(path, 
-				{ pathLength: [0, 1] },
+				{ pathLength: [0, 1], opacity: [0.5, 1] },
 				{ duration: 0.42, ease: "easeOut" }
 			);
 
 			const circles = el.querySelectorAll('circle');
 			animate(circles, 
-				{ scale: [0, 1.5, 1] }, 
-				{ delay: stagger(0.069), ease: "easeInOut" }
+				{ scale: [0, 1.75, 1] }, 
+				{ delay: stagger(0.05), ease: "easeOut" }
 			);
 
 			const group = el.querySelector('g');
 			animate(group, 
-				{ scale: [1, 1.15, 1] },
-				{ duration: 0.27, delay: 0.42, ease: "easeInOut" }
+				{ scale: [1, 0.85, 1.15, 1] },
+				{ duration: 0.27, delay: 0.27, ease: "easeOut" }
 			);
 		}
 	</script>

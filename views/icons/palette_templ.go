@@ -38,7 +38,7 @@ func paletteAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.paletteAnimate = (el) => {\n\t\t\tconst path = el.querySelector('path');\n\t\t\tanimate(path, \n\t\t\t\t{ pathLength: [0, 1] },\n\t\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst circles = el.querySelectorAll('circle');\n\t\t\tanimate(circles, \n\t\t\t\t{ scale: [0, 1.5, 1] }, \n\t\t\t\t{ delay: stagger(0.069), ease: \"easeInOut\" }\n\t\t\t);\n\n\t\t\tconst group = el.querySelector('g');\n\t\t\tanimate(group, \n\t\t\t\t{ scale: [1, 1.15, 1] },\n\t\t\t\t{ duration: 0.27, delay: 0.42, ease: \"easeInOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\twindow.paletteAnimate = (el) => {\n\t\t\tconst path = el.querySelector('path');\n\t\t\tanimate(path, \n\t\t\t\t{ pathLength: [0, 1], opacity: [0.5, 1] },\n\t\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst circles = el.querySelectorAll('circle');\n\t\t\tanimate(circles, \n\t\t\t\t{ scale: [0, 1.75, 1] }, \n\t\t\t\t{ delay: stagger(0.05), ease: \"easeOut\" }\n\t\t\t);\n\n\t\t\tconst group = el.querySelector('g');\n\t\t\tanimate(group, \n\t\t\t\t{ scale: [1, 0.85, 1.15, 1] },\n\t\t\t\t{ duration: 0.27, delay: 0.27, ease: \"easeOut\" }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

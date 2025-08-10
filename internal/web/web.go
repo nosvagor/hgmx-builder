@@ -10,7 +10,6 @@ import (
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/nosvagor/hgmx-builder/views"
-	"github.com/nosvagor/hgmx-builder/views/components/nav"
 )
 
 func render(ctx echo.Context, statusCode int, t templ.Component) error {
@@ -68,7 +67,7 @@ func Page(c echo.Context, content templ.Component, title string, maxAge ...int) 
 		return OK(c, views.Main(content, title))
 	}
 
-	return OK(c, views.Full(nav.Init(), views.Main(content, title)))
+	return OK(c, views.Full(navbar(), views.Main(content, title)))
 }
 
 func OK(c echo.Context, templ templ.Component) error {

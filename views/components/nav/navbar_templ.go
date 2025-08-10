@@ -43,7 +43,7 @@ func scrollController() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n\t\t\tconst nav = document.getElementById(\"navbar\");\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\t\tconst nav = document.getElementById('navbar');\n\t\t\tconst menu = document.getElementById('nav-menu');\n\n\t\t\tlet hidden = false;\n\t\t\tlet lastY = window.scrollY;\n\t\t\tlet lastTick = performance.now();\n\t\t\tlet dir = null;\n\t\t\tlet Σd = 0;\n\t\t\tlet Σu = 0;\n\n\t\t\tconst Λ = 400;\n\t\t\tconst τ = 500;\n\n\t\t\tconst reset = (y, t) => { lastY = y; lastTick = t; Σd = 0; Σu = 0; };\n\n\t\t\tconst hide = () => {\n\t\t\t\tif (!nav || hidden) return;\n\t\t\t\tmenu.animateBookmarksOut();\n\t\t\t\thidden = true;\n\t\t\t};\n\n\t\t\tconst reveal = () => {\n\t\t\t\tif (!nav || !hidden) return;\n\t\t\t\tmenu.animateBookmarksIn();\n\t\t\t\tmenu.delayedMenu();\n\t\t\t\thidden = false;\n\t\t\t};\n\n\t\t\tfunction onScroll() {\n\t\t\t\tif (!nav || menu.classList.contains('menu-open')) return;\n\n\t\t\t\tconst y = window.scrollY;\n\t\t\t\tconst t = performance.now();\n\n\t\t\t\tif (y <= 1) {\n\t\t\t\t\tnav.classList.remove('navbar_scrolling');\n\t\t\t\t\treveal();\n\t\t\t\t\treset(y, t);\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tconst doc = document.documentElement;\n\t\t\t\tconst atBottom = Math.ceil(y + window.innerHeight) >= doc.scrollHeight;\n\t\t\t\tif (atBottom && hidden) {\n\t\t\t\t\treveal();\n\t\t\t\t\treset(y, t);\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tnav.classList.add('navbar_scrolling');\n\n\t\t\t\tconst Δy = y - lastY;\n\t\t\t\tconst Δt = t - lastTick;\n\n\t\t\t\tif (Δy > 0) {\n\t\t\t\t\tif (dir !== 'down' || Δt > τ) Σd = 0;\n\t\t\t\t\tΣd += Δy;\n\t\t\t\t\tΣu = 0;\n\t\t\t\t\tif (Σd >= Λ && !hidden) {\n\t\t\t\t\t\thide();\n\t\t\t\t\t\tΣd = 0;\n\t\t\t\t\t}\n\t\t\t\t\tdir = 'down';\n\t\t\t\t} else if (Δy < 0) {\n\t\t\t\t\tif (dir !== 'up' || Δt > τ) Σu = 0;\n\t\t\t\t\tΣu += -Δy;\n\t\t\t\t\tΣd = 0;\n\t\t\t\t\tif (Σu >= (Λ / 2) && hidden) {\n\t\t\t\t\t\treveal();\n\t\t\t\t\t\tΣu = 0;\n\t\t\t\t\t}\n\t\t\t\t\tdir = 'up';\n\t\t\t\t}\n\n\t\t\t\tlastY = y;\n\t\t\t\tlastTick = t;\n\t\t\t}\n\n\t\t\t(function init() {\n\t\t\t\tconst y = window.scrollY;\n\t\t\t\tlastY = y;\n\t\t\t\tlastTick = performance.now();\n\t\t\t\tif (!nav) return;\n\t\t\t\tmenu.setMenuIcon('user');\n\t\t\t\tnav.classList.toggle('navbar_scrolling', y > 1);\n\t\t\t\thidden = false;\n\t\t\t\tmenu.delayedMenu();\n\t\t\t\twindow.addEventListener('scroll', onScroll, { passive: true });\n\t\t\t})();\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -78,45 +78,12 @@ func (p *Props) styles() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t.navbar_scrolling {\n\t\t\tbackground-color: color-mix(in oklab, var(--color-base-700) 37%, transparent);\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\t\t\tbackdrop-filter: blur(8px);\n\t\t\t--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\t\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t#navbar {\n\t\t\tbackground-color: color-mix(in oklab, var(--color-base-500) 95%, transparent);\n\t\t\tbackdrop-filter: blur(8px);\n\t\t}\n\t\t.navbar_scrolling {\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\t\t\t--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));\n\t\t}\n\n\t\t#navbar-bookmarks, #menu-bookmarks, #menu-account { position: relative; }\n\t\t#navbar-bookmarks button div > span, #menu-bookmarks button div > span, #menu-account button div > span { position: relative; }\n\t\t#navbar-bookmarks button div > span::after, #menu-bookmarks button div > span::after, #menu-account button div > span::after {\n\t\t\tcontent: \"\";\n\t\t\tposition: absolute;\n\t\t\tleft: 0;\n\t\t\tbottom: 1px;\n\t\t\twidth: 100%;\n\t\t\theight: 1px;\n\t\t\tbackground: currentColor;\n\t\t\tborder-radius: 2px;\n\t\t\topacity: 0;\n\t\t\ttransform: scaleX(0);\n\t\t\ttransition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.27s ease-out;\n\t\t}\n\t\t#navbar-bookmarks button.bookmark-active div > span::after, #menu-bookmarks button.bookmark-active div > span::after, #menu-account button.bookmark-active div > span::after {\n\t\t\topacity: 1;\n\t\t\ttransform: scaleX(1.05);\n\t\t}\n\t\t#navbar-bookmarks button[data-active=\"true\"]:hover,\n\t\t#menu-bookmarks button[data-active=\"true\"]:hover,\n\t\t#menu-account button[data-active=\"true\"]:hover {\n\t\t\tcolor: var(--color-accent-401);\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		return nil
 	})
-}
-
-func (p *Props) classes() string {
-	return "z-50 flex w-full sticky top-0 items-center justify-between px-4 py-2 transition duration-250 ease-in-out"
-}
-
-func (p *Props) navbarHyperscript() string {
-	return `
-		init
-			if window.scrollY is 0 then
-				remove .navbar_scrolling from me
-			else
-				add .navbar_scrolling to me
-			end
-			wait 100ms
-			call #nav-menu.setMenuIcon('user')
-			call #nav-menu.delayedMenu()
-		end
-
-		on scroll from window
-			get #nav-menu
-			if it and it.matches('.menu-open') then
-				exit
-			end
-			if window.scrollY is 0 and me.matches('.navbar_scrolling') then
-				remove .navbar_scrolling from me
-				call it.delayedMenu()
-			else if window.scrollY > 0 and not me.matches('.navbar_scrolling') then
-				add .navbar_scrolling to me
-				call it.setMenuIcon('hamburger')
-			end
-		end
-	`
 }
 
 func (p *Props) Navbar() templ.Component {
@@ -148,42 +115,7 @@ func (p *Props) Navbar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 = []any{p.classes()}
-		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var5).String())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/navbar.templ`, Line: 1, Col: 0}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" style=\"isolation: isolate;\" _=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(p.navbarHyperscript())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/navbar.templ`, Line: 66, Col: 27}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"><div class=\"flex items-center gap-2\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = p.Menu().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 transition ease-in-out isolate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -191,19 +123,11 @@ func (p *Props) Navbar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
+		templ_7745c5c3_Err = p.Source.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = p.Logo.Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</nav>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = p.MenuExpanded().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

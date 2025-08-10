@@ -5,12 +5,43 @@ var menuControllerScript = templ.NewOnceHandle()
 templ (p *Props) menuController() {
 	@menuControllerScript.Once() {
 		<script type="module">
-			import { animate } from "/static/scripts/motion.min.js";
+			import { animate, stagger } from "/static/scripts/motion.min.js";
 			
 			const menu = document.getElementById('nav-menu');
 			let currentIcon = 'hamburger';
 			let menuDelayTimer;
 			
+			function firstSegment(path) {
+				return (path || '').replace(/\/+$/, '').split('/').filter(Boolean)[0] || '';
+			}
+			
+			function updateActiveBookmarks() {
+				const currentSeg = firstSegment(window.location.pathname);
+				const containers = [
+					document.getElementById('navbar-bookmarks'),
+					document.getElementById('menu-bookmarks'),
+					document.getElementById('menu-account'),
+				].filter(Boolean);
+
+				containers.forEach(container => {
+					const buttons = Array.from(container.querySelectorAll('button'));
+					buttons.forEach(btn => {
+						const hx = btn.getAttribute('hx-get') || '';
+						const hrefSeg = firstSegment(hx);
+						const isActive = hrefSeg && currentSeg === hrefSeg;
+						if (isActive) {
+							btn.classList.add('text-accent-401');
+							btn.classList.add('bookmark-active');
+							btn.dataset.active = 'true';
+						} else {
+							btn.classList.remove('text-accent-401');
+							btn.classList.remove('bookmark-active');
+							btn.dataset.active = 'false';
+						}
+					});
+				});
+			}
+
 			const iconPaths = {
 				user: {
 					top: "M 7,6 C 7,0, 17,0, 17,6",
@@ -40,7 +71,38 @@ templ (p *Props) menuController() {
 				animate(bot, { d: iconPaths[icon].bot }, t);
 				currentIcon = icon;
 			}
-			
+
+			function animateBookmarksOut() {
+				const container = document.getElementById('navbar-bookmarks');
+				if (!container) return;
+				if (container.dataset.state === 'out') return;
+				const items = Array.from(container.querySelectorAll(':scope > button'));
+				if (!items.length) return;
+
+				container.dataset.state = 'out';
+
+				items.forEach((el, i) => {
+					const rect = el.getBoundingClientRect();
+					const dl = 0 - rect.left;
+					animate(el, 
+						{ x: [0, dl], scale: [1, 1, 1, 1, 1.25, 0] }, 
+						{ delay: i * 0.069, ease: "easeInOut" }
+					);
+				});
+			}
+
+			function animateBookmarksIn() {
+				const container = document.getElementById('navbar-bookmarks');
+				if (!container) return;
+				if (container.dataset.state === 'in') return;
+				const items = Array.from(container.querySelectorAll(':scope > button'));
+				if (!items.length) return;
+
+				container.dataset.state = 'in';
+
+				animate(items, { x: 0, scale: 1 }, { delay: stagger(0.03), type: 'spring', bounce: 0.4, duration: 0.5 })
+			}
+
 			function toggleMenu() {
 				const open = menu.classList.contains('menu-open');
 				const expandedMenu = document.getElementById('nav-menu-expanded');
@@ -50,10 +112,14 @@ templ (p *Props) menuController() {
 				function closeMenu() {
 					menu.classList.remove('menu-open');
 					setMenuIcon('hamburger');
+
+					if (window.scrollY === 0) {
+						animateBookmarksIn();
+					}
 					
 					const escIndicator = document.getElementById('esc-indicator');
 					if (escIndicator) {
-						animate(escIndicator, { opacity: 0, transform: 'translate(-100%)' }, { duration: 0.1 });
+						animate(escIndicator, { width: '0ch', opacity: 0, transform: 'translate(-100%)' }, { duration: 0.15, easing: 'steps(1, end)' });
 					}
 					
 					expandedMenu.style.pointerEvents = 'none';
@@ -64,6 +130,10 @@ templ (p *Props) menuController() {
 				function openMenu() {
 					menu.classList.add('menu-open');
 					setMenuIcon('close');
+
+					if (window.scrollY === 0) {
+						animateBookmarksOut();
+					}
 					
 					expandedMenu.style.pointerEvents = 'auto'; 
 					animate(menuBackdrop, { opacity: 1 }, { duration: 0.25 });
@@ -71,7 +141,11 @@ templ (p *Props) menuController() {
 
 					const escIndicator = document.getElementById('esc-indicator');
 					if (escIndicator && menu.classList.contains('menu-open')) {
+						escIndicator.style.width = '0ch';
+						escIndicator.style.overflow = 'hidden';
+						escIndicator.style.whiteSpace = 'nowrap';
 						animate(escIndicator, { opacity: 1, transform: 'translate(0)' }, { duration: 0.2, ease: "easeOut" });
+						animate(escIndicator, { width: '3ch' }, { duration: 0.4, easing: 'steps(3, end)', delay: 0.05 });
 					}
 				}
 
@@ -92,7 +166,9 @@ templ (p *Props) menuController() {
 				}
 
 				menuDelayTimer = setTimeout(() => {
-					setMenuIcon('hamburger');
+					if (currentIcon === 'user') {
+						setMenuIcon('hamburger');
+					}
 				}, delay);
 			}
 
@@ -100,6 +176,20 @@ templ (p *Props) menuController() {
 			menu.setMenuIcon = setMenuIcon;
 			menu.toggleMenu = toggleMenu;
 			menu.getCurrentIcon = () => currentIcon;
+			menu.animateBookmarksOut = animateBookmarksOut;
+			menu.animateBookmarksIn = animateBookmarksIn;
+			menu.updateActiveBookmarks = updateActiveBookmarks;
+
+			updateActiveBookmarks();
+			window.addEventListener('popstate', updateActiveBookmarks);
+			document.addEventListener('htmx:afterSwap', (e) => {
+				try {
+					const target = e?.detail?.target;
+					if (!target) return;
+					if (target.id === 'main') updateActiveBookmarks();
+				} catch {}
+			});
+			document.addEventListener('htmx:pushedIntoHistory', updateActiveBookmarks);
 		</script>
 	}
 }
@@ -150,11 +240,11 @@ templ (p *Props) Menu() {
 	<div
 		id="nav-menu"
 		tabindex="0"
-		class="z-50 flex relative justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
+		class="z-50 fixed top-[0.2rem] left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
 		_={ p.menuHyperscript() }
 	>
 		@p.menuController()
-		<svg viewBox="0 0 24 24" width="1.5rem" height="1.5rem" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+		<svg viewBox="0 0 24 24" width="1.6rem" height="1.6rem" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 			<path id="menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
 			<path id="menu-mid" d="M 3,12 C 8,12 16,12 21,12"></path>
 			<path id="menu-bot" d="M 3,17 C 8,17 16,17 21,17"></path>
@@ -167,14 +257,15 @@ templ (p *Props) Menu() {
 			esc
 		</kbd>
 	</div>
+	@p.MenuExpanded()
 }
 
 templ (p *Props) MenuExpanded() {
-	<div id="nav-menu-expanded" class="z-[60] fixed inset-0 pointer-events-none h-svh">
-		<div id="menu-backdrop" class="z-[60] absolute inset-0 opacity-0 min-h-svh bg-black/5 backdrop-blur cursor-w-resize"></div>
+	<div id="nav-menu-expanded" class="z-40 fixed inset-0 pointer-events-none h-svh">
+		<div id="menu-backdrop" class="absolute inset-0 opacity-0 min-h-svh bg-black/10 backdrop-blur cursor-w-resize"></div>
 		<div
 			id="menu-bg"
-			class="z-[70] flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-14 pb-8 h-full min-w-fit bg-base-600"
+			class="flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600"
 			style="transform: translateX(-100%);"
 		>
 			@p.MenuBookmarks()

@@ -2,6 +2,7 @@ package pages
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/nosvagor/hgmx-builder/internal/services/colors"
 	"github.com/nosvagor/hgmx-builder/internal/web"
 	"github.com/nosvagor/hgmx-builder/views/pages/account"
 	"github.com/nosvagor/hgmx-builder/views/pages/blog"
@@ -35,7 +36,12 @@ func Docs(c echo.Context) error {
 }
 
 func Palette(c echo.Context) error {
-	return web.Page(c, palette.Main(), "Palette", Preload)
+	hex := c.QueryParam("hex")
+	if hex == "" {
+		hex = "#222536"
+	}
+	view := colors.Generate(hex).ToView()
+	return web.Page(c, palette.Main(view, hex), "Palette", Preload)
 }
 
 func Icons(c echo.Context) error {

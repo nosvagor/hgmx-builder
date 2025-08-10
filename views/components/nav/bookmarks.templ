@@ -4,7 +4,7 @@ templ (p *Props) NavbarBookmarks() {
 	if p.Bookmarks != nil {
 		<div
 			id="navbar-bookmarks"
-			class="z-20 flex overflow-hidden gap-2 items-center font-medium font-display"
+			class="flex gap-1 items-center font-medium font-display pl-1"
 			hx-target="#main"
 			hx-swap="outerHTML"
 			hx-push-url="true"
@@ -28,6 +28,7 @@ templ (p *Props) MenuBookmarks() {
 			hx-swap="outerHTML"
 			hx-push-url="true"
 		>
+			@p.Logo
 			for _, link := range p.Bookmarks {
 				@link
 			}

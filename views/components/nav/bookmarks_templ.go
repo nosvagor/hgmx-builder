@@ -30,7 +30,7 @@ func (p *Props) NavbarBookmarks() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if p.Bookmarks != nil {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"navbar-bookmarks\" class=\"z-20 flex overflow-hidden gap-2 items-center font-medium font-display\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"navbar-bookmarks\" class=\"flex gap-1 items-center font-medium font-display pl-1\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -79,6 +79,10 @@ func (p *Props) MenuBookmarks() templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		if p.Bookmarks != nil {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"menu-bookmarks\" class=\"flex flex-col gap-4\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = p.Logo.Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

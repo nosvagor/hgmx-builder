@@ -1,0 +1,27 @@
+package source
+
+import (
+	"github.com/nosvagor/hgmx-builder/views/components"
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/content"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+	"github.com/nosvagor/hgmx-builder/views/icons"
+)
+
+func repo(href string, i *icons.Icon, stars string) components.Customizeable {
+	p := &button.Props{Variant: button.Special, Href: href}
+	p.Content = content.Component(stats(i, stars))
+	p.Styler.Add("border-none hover:bg-transparent")
+	return p
+}
+
+templ stats(i *icons.Icon, stars string) {
+	<div class="flex items-center gap-1">
+		@icon.Icon(i).Render()
+		<div class="tabular-nums text-xs -mb-1 font-display">{ stars }</div>
+	</div>
+}
+
+templ Source(href string, i *icons.Icon, stars string) {
+	@repo(href, i, stars).Render()
+}
