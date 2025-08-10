@@ -30,7 +30,7 @@ func (p *Props) NavbarBookmarks() templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if p.Bookmarks != nil {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"navbar-bookmarks\" class=\"z-20 flex overflow-hidden gap-2 items-center font-medium font-display\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"navbar-bookmarks\" class=\"flex overflow-hidden gap-2 items-center font-medium font-display px-2 py-1\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

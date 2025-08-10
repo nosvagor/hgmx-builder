@@ -8,11 +8,10 @@ import (
 type Variant int
 
 const (
-	Base Variant = iota
-
-	Primary
+	Primary Variant = iota
 	Secondary
 	External
+	Special
 
 	Constructive
 	Transformative

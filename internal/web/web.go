@@ -10,7 +10,13 @@ import (
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/nosvagor/hgmx-builder/views"
+	"github.com/nosvagor/hgmx-builder/views/components/app/logo"
+	"github.com/nosvagor/hgmx-builder/views/components/app/source"
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
 	"github.com/nosvagor/hgmx-builder/views/components/nav"
+	"github.com/nosvagor/hgmx-builder/views/icons"
+	"github.com/nosvagor/hgmx-builder/views/utilities/htmx"
 )
 
 func render(ctx echo.Context, statusCode int, t templ.Component) error {
@@ -68,7 +74,40 @@ func Page(c echo.Context, content templ.Component, title string, maxAge ...int) 
 		return OK(c, views.Main(content, title))
 	}
 
-	return OK(c, views.Full(nav.Init(), views.Main(content, title)))
+	return OK(c, views.Full(navbar(), views.Main(content, title)))
+}
+
+func navbar() templ.Component {
+	opts := []htmx.Options{htmx.Target("#main"), htmx.Swap("outerHTML"), htmx.PushURL("true")}
+
+	p := &nav.Props{
+		Logo:     button.GetCustom("/", logo.Icon("text-surface-50", "text-[2rem]"), button.Primary, "pl-1 pr-1", opts...),
+		Settings: button.Get("/settings", icon.Text(icons.Settings(), "Settings"), opts...),
+		Account:  button.Get("/account", icon.Text(icons.User(), "Account"), opts...),
+		Source:   source.Source("github.com/nosvagor/hgmx-builder", icons.BrandGithub(), "15.3k"),
+	}
+
+	bookmarks := []nav.Link{
+		{Path: "docs", Icon: icons.Scroll()},
+		{Path: "palette", Icon: icons.Palette()},
+		{Path: "icons", Icon: icons.Orbit()},
+		{Path: "blog", Icon: icons.Rss()},
+		{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
+		{Path: "users", Icon: icons.Users(), Label: "Users"},
+	}
+
+	for _, link := range bookmarks {
+		p.Bookmarks = append(p.Bookmarks,
+			button.GetCustom(
+				"/"+link.Path,
+				icon.Text(link.Icon, link.Text()),
+				button.Primary,
+				"justify-start",
+			),
+		)
+	}
+
+	return p.Render()
 }
 
 func OK(c echo.Context, templ templ.Component) error {

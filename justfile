@@ -6,6 +6,8 @@ GIT_VERSION         := `git describe --tags --always || echo dev`
 CSS_INPUT           := "views/static/css/main.css"
 CSS_OUTPUT          := "views/static/css/main.min.css"
 PATH_SCRIPTS        := "views/static/scripts"
+COMPOSE             := "docker compose"
+DB_SERVICE          := "hgmx-pg"
 
 default:
     @just --list
@@ -153,3 +155,57 @@ page NAME:
     } > "${PAGE_DIR}/${PAGE_PATH}.templ"
 
     echo "Created page skeleton in ${PAGE_DIR}"
+
+
+db-up:
+    @{{COMPOSE}} up -d {{DB_SERVICE}}
+
+db-down:
+    @{{COMPOSE}} down
+
+db-restart:
+    @{{COMPOSE}} restart {{DB_SERVICE}}
+
+db-reset:
+    @{{COMPOSE}} down
+    @{{COMPOSE}} up -d {{DB_SERVICE}}
+
+db-logs:
+    @{{COMPOSE}} logs -f {{DB_SERVICE}}
+
+db-url:
+    #!/usr/bin/env sh
+    set -eu
+    SERVICE={{DB_SERVICE}}
+    CID=$({{COMPOSE}} ps -q "$SERVICE" || true)
+    if [ -z "${CID}" ]; then
+        echo "${SERVICE} not running; starting..." >&2
+        {{COMPOSE}} up -d "$SERVICE" >/dev/null
+        CID=$({{COMPOSE}} ps -q "$SERVICE")
+    fi
+    host=127.0.0.1
+    port=$({{COMPOSE}} port "$SERVICE" 5432 2>/dev/null | head -n1 | awk -F: '{print $NF}')
+    if [ -z "${port:-}" ]; then port=5432; fi
+    env_out=$({{COMPOSE}} exec -T "$SERVICE" env)
+    user=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_USER=' | tail -n1 | cut -d= -f2)
+    pass=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_PASSWORD=' | tail -n1 | cut -d= -f2)
+    db=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_DB=' | tail -n1 | cut -d= -f2)
+    user=${user:-postgres}
+    pass=${pass:-postgres}
+    db=${db:-postgres}
+    echo "postgres://${user}:${pass}@${host}:${port}/${db}?sslmode=disable"
+
+db-psql:
+    #!/usr/bin/env sh
+    set -eu
+    SERVICE={{DB_SERVICE}}
+    CID=$({{COMPOSE}} ps -q "$SERVICE" || true)
+    if [ -z "${CID}" ]; then
+        {{COMPOSE}} up -d "$SERVICE" >/dev/null
+        CID=$({{COMPOSE}} ps -q "$SERVICE")
+    fi
+    env_out=$({{COMPOSE}} exec -T "$SERVICE" env)
+    user=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_USER=' | tail -n1 | cut -d= -f2)
+    pass=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_PASSWORD=' | tail -n1 | cut -d= -f2)
+    db=$(printf "%s\n" "$env_out" | grep -E '^POSTGRES_DB=' | tail -n1 | cut -d= -f2)
+    {{COMPOSE}} exec -e PGPASSWORD="${pass:-postgres}" "$SERVICE" psql -U "${user:-postgres}" -d "${db:-postgres}"

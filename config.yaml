@@ -1,0 +1,12 @@
+env: DEV
+host: localhost
+port: "3008"
+log_level: INFO
+static_dir: static
+
+db_host: localhost
+db_port: "5420"
+db_user: admin
+db_password: foobar
+db_name: hgmx-pg
+db_sslmode: disable

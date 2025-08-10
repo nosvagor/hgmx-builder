@@ -1,5 +1,0 @@
-package palette
-
-func Generate() {
-
-}

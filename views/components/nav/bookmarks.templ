@@ -4,7 +4,7 @@ templ (p *Props) NavbarBookmarks() {
 	if p.Bookmarks != nil {
 		<div
 			id="navbar-bookmarks"
-			class="z-20 flex overflow-hidden gap-2 items-center font-medium font-display"
+			class="flex overflow-hidden gap-2 items-center font-medium font-display px-2 py-1"
 			hx-target="#main"
 			hx-swap="outerHTML"
 			hx-push-url="true"

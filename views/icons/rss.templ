@@ -13,16 +13,10 @@ templ rssAnimation() {
 	<script type="module">
 		import { animate, stagger } from "/static/scripts/motion.min.js";
 		window.rssAnimate = (el) => {
-			const circles = el.querySelectorAll('circle');
-			animate(circles, 
-				{ scale: [0, 1.5, 1], opacity: [0, 1] }, 
-				{ delay: stagger(0.08), ease: "easeOut" }
-			);
-
 			const elements = Array.from(el.querySelectorAll('circle, path'));
 			animate(elements, 
 				{ scale: [0, 1.5, 1], opacity: [0, 1] }, 
-				{ delay: stagger(0.08), ease: "easeOut" }
+				{ delay: stagger(0.1), ease: "easeOut" }
 			);
 		}
 	</script>

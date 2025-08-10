@@ -78,16 +78,12 @@ func (p *Props) styles() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t.navbar_scrolling {\n\t\t\tbackground-color: color-mix(in oklab, var(--color-base-700) 37%, transparent);\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\t\t\tbackdrop-filter: blur(8px);\n\t\t\t--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\t\n\t\t}\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n\t\t#navbar {\n\t\t\tbackground-color: color-mix(in oklab, var(--color-base-500) 95%, transparent);\n\t\t\tbackdrop-filter: blur(8px);\n\t\t}\n\t\t.navbar_scrolling {\n\t\t\tbox-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\t\t\t--tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));\n\t\t}\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		return nil
 	})
-}
-
-func (p *Props) classes() string {
-	return "z-50 flex w-full sticky top-0 items-center justify-between px-4 py-2 transition duration-250 ease-in-out"
 }
 
 func (p *Props) navbarHyperscript() string {
@@ -148,42 +144,20 @@ func (p *Props) Navbar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 = []any{p.classes()}
-		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 transition ease-in-out isolate\" _=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"")
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(p.navbarHyperscript())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/navbar.templ`, Line: 62, Col: 27}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var5).String())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/navbar.templ`, Line: 1, Col: 0}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" style=\"isolation: isolate;\" _=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(p.navbarHyperscript())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/navbar.templ`, Line: 66, Col: 27}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"><div class=\"flex items-center gap-2\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = p.Menu().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -191,19 +165,15 @@ func (p *Props) Navbar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
 		templ_7745c5c3_Err = p.Logo.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</nav>")
+		templ_7745c5c3_Err = p.Source.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = p.MenuExpanded().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

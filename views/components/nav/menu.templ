@@ -150,7 +150,7 @@ templ (p *Props) Menu() {
 	<div
 		id="nav-menu"
 		tabindex="0"
-		class="z-50 flex relative justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
+		class="z-50 fixed top-2 left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
 		_={ p.menuHyperscript() }
 	>
 		@p.menuController()
@@ -167,14 +167,15 @@ templ (p *Props) Menu() {
 			esc
 		</kbd>
 	</div>
+	@p.MenuExpanded()
 }
 
 templ (p *Props) MenuExpanded() {
-	<div id="nav-menu-expanded" class="z-[60] fixed inset-0 pointer-events-none h-svh">
-		<div id="menu-backdrop" class="z-[60] absolute inset-0 opacity-0 min-h-svh bg-black/5 backdrop-blur cursor-w-resize"></div>
+	<div id="nav-menu-expanded" class="z-40 fixed inset-0 pointer-events-none h-svh">
+		<div id="menu-backdrop" class="absolute inset-0 opacity-0 min-h-svh bg-black/5 backdrop-blur cursor-w-resize"></div>
 		<div
 			id="menu-bg"
-			class="z-[70] flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-14 pb-8 h-full min-w-fit bg-base-600"
+			class="flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-14 pb-8 h-full min-w-fit bg-base-600"
 			style="transform: translateX(-100%);"
 		>
 			@p.MenuBookmarks()
