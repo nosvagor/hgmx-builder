@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Scroll() *Icon {
 	return &Icon{
-		Name:    "scroll",
-		handler: templ.NewOnceHandle(),
-		script:  scrollAnimation,
-		svg:     scrollContent,
+		Name:         "scroll",
+		handler:      templ.NewOnceHandle(),
+		script:       scrollAnimation,
+		svg:          scrollContent,
+		Tags:         []string{"scroll", "docs", "text", "info"},
+		Categories:   []string{"text", "files"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

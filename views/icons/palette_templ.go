@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Palette() *Icon {
 	return &Icon{
-		Name:    "palette",
-		handler: templ.NewOnceHandle(),
-		script:  paletteAnimation,
-		svg:     paletteContent,
+		Name:         "palette",
+		handler:      templ.NewOnceHandle(),
+		script:       paletteAnimation,
+		svg:          paletteContent,
+		Tags:         []string{"palette", "color", "art", "paint"},
+		Categories:   []string{"design", "tools"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

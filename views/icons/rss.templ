@@ -2,10 +2,13 @@ package icons
 
 func Rss() *Icon {
 	return &Icon{
-		Name:    "rss",
-		handler: templ.NewOnceHandle(),
-		script:  rssAnimation,
-		svg:     rssContent,
+		Name:         "rss",
+		handler:      templ.NewOnceHandle(),
+		script:       rssAnimation,
+		svg:          rssContent,
+		Tags:         []string{"rss", "feed", "news", "blog", "updates"},
+		Categories:   []string{"communication", "social"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
@@ -24,7 +27,7 @@ templ rssAnimation() {
 
 templ rssContent() {
 	@svg() {
-		<circle cx="5" cy="19" r="1"></circle>
+		<circle cx="5" cy="19" r="1" fill="currentColor"></circle>
 		<path d="M4 11a9 9 0 0 1 9 9"></path>
 		<path d="M4 4a16 16 0 0 1 16 16"></path>
 	}

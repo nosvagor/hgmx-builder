@@ -9,7 +9,6 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/pages/docs"
 	"github.com/nosvagor/hgmx-builder/views/pages/faq"
 	"github.com/nosvagor/hgmx-builder/views/pages/home"
-	"github.com/nosvagor/hgmx-builder/views/pages/icons"
 	"github.com/nosvagor/hgmx-builder/views/pages/notfound"
 	"github.com/nosvagor/hgmx-builder/views/pages/palette"
 	"github.com/nosvagor/hgmx-builder/views/pages/settings"
@@ -42,10 +41,6 @@ func Palette(c echo.Context) error {
 	}
 	view := colors.Generate(hex).ToView()
 	return web.Page(c, palette.Main(view, hex), "Palette", Preload)
-}
-
-func Icons(c echo.Context) error {
-	return web.Page(c, icons.Main(), "Icons", Preload)
 }
 
 func Blog(c echo.Context) error {

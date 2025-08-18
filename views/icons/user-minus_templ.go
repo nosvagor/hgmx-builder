@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserMinus() *Icon {
 	return &Icon{
-		Name:    "userMinus",
-		handler: templ.NewOnceHandle(),
-		script:  userMinusAnimation,
-		svg:     userMinusContent,
+		Name:         "userMinus",
+		handler:      templ.NewOnceHandle(),
+		script:       userMinusAnimation,
+		svg:          userMinusContent,
+		Tags:         []string{"user", "remove", "minus"},
+		Categories:   []string{"people", "account"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

@@ -16,6 +16,7 @@ func RegisterWebRoutes(e *echo.Echo) {
 	e.GET("/docs", pages.Docs)
 	e.GET("/palette", pages.Palette)
 	e.GET("/icons", pages.Icons)
+	e.GET("/icons/search", pages.Search)
 	e.GET("/blog", pages.Blog)
 	e.GET("/faq", pages.FAQ)
 

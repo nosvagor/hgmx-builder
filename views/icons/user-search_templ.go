@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserSearch() *Icon {
 	return &Icon{
-		Name:    "userSearch",
-		handler: templ.NewOnceHandle(),
-		script:  userSearchAnimation,
-		svg:     userSearchContent,
+		Name:         "userSearch",
+		handler:      templ.NewOnceHandle(),
+		script:       userSearchAnimation,
+		svg:          userSearchContent,
+		Tags:         []string{"user", "search", "find", "filter"},
+		Categories:   []string{"people", "tools"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

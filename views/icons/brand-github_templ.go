@@ -8,16 +8,20 @@ package icons
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func BrandGithub() *Icon {
+func Github() *Icon {
 	return &Icon{
-		Name:    "brandGithub",
-		handler: templ.NewOnceHandle(),
-		script:  brandGithubAnimation,
-		svg:     brandGithubContent,
+		Name:         "github",
+		handler:      templ.NewOnceHandle(),
+		script:       githubAnimation,
+		svg:          githubContent,
+		Brand:        true,
+		Tags:         []string{"github", "brand", "code", "repo", "git"},
+		Categories:   []string{"brands", "development", "social"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
-func brandGithubAnimation() templ.Component {
+func githubAnimation() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,7 +42,7 @@ func brandGithubAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n        window.brandGithubAnimate = (el) => {\n\t\tconst paths = el.querySelectorAll('path');\n\t\tconst tailPaths = Array.from(paths).slice(1);\n\t\tconst mainLogo = paths[0];\n\t\tconst group = el.querySelector('g');\n\n        animate(tailPaths,\n            { scale: [0, 1.75, 1], opacity: [0, 1] },\n            { delay: stagger(0.1), ease: \"easeOut\" }\n        );\n\n\t\tanimate(mainLogo,\n\t\t\t{ opacity: [0, 1] },\n\t\t\t{ duration: 0.69, ease: \"easeOut\" }\n\t\t);\n\n\t\tanimate(group,\n\t\t\t{ rotateZ: [0, -360], scale: [0.25, 1.08, 1] },\n\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t);\n\t};\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger } from \"/static/scripts/motion.min.js\";\n        window.githubAnimate = (el) => {\n\t\tconst paths = el.querySelectorAll('path');\n\t\tconst tailPaths = Array.from(paths).slice(1);\n\t\tconst mainLogo = paths[0];\n\t\tconst group = el.querySelector('g');\n\n        animate(tailPaths,\n            { scale: [0, 1.75, 1], opacity: [0, 1] },\n            { delay: stagger(0.1), ease: \"easeOut\" }\n        );\n\n\t\tanimate(mainLogo,\n\t\t\t{ opacity: [0, 1] },\n\t\t\t{ duration: 0.69, ease: \"easeOut\" }\n\t\t);\n\n\t\tanimate(group,\n\t\t\t{ rotateZ: [0, -360], scale: [0.25, 1.08, 1] },\n\t\t\t{ duration: 0.42, ease: \"easeOut\" }\n\t\t);\n\t};\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -46,7 +50,7 @@ func brandGithubAnimation() templ.Component {
 	})
 }
 
-func brandGithubContent() templ.Component {
+func githubContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {

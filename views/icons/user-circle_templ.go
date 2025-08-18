@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserCircle() *Icon {
 	return &Icon{
-		Name:    "userCircle",
-		handler: templ.NewOnceHandle(),
-		script:  userCircleAnimation,
-		svg:     userCircleContent,
+		Name:         "userCircle",
+		handler:      templ.NewOnceHandle(),
+		script:       userCircleAnimation,
+		svg:          userCircleContent,
+		Tags:         []string{"user", "circle", "account", "profile"},
+		Categories:   []string{"people", "account", "shapes"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

@@ -14,6 +14,10 @@ func Users() *Icon {
 		handler: templ.NewOnceHandle(),
 		script:  usersAnimation,
 		svg:     usersContent,
+
+		Tags:         []string{"users", "group", "team", "people"},
+		Categories:   []string{"people", "account"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

@@ -10,10 +10,14 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Settings() *Icon {
 	return &Icon{
-		Name:    "settings",
-		handler: templ.NewOnceHandle(),
-		script:  settingsAnimation,
-		svg:     settingsContent,
+		Name:         "settings",
+		handler:      templ.NewOnceHandle(),
+		script:       settingsAnimation,
+		svg:          settingsContent,
+		Tags:         []string{"settings", "gear", "cog"},
+		Categories:   []string{"tools"},
+		Contributors: []string{"nosvagor", "lucide"},
+		Aliases:      []string{"cog", "gear"},
 	}
 }
 

@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserPlus() *Icon {
 	return &Icon{
-		Name:    "userPlus",
-		handler: templ.NewOnceHandle(),
-		script:  userPlusAnimation,
-		svg:     userPlusContent,
+		Name:         "userPlus",
+		handler:      templ.NewOnceHandle(),
+		script:       userPlusAnimation,
+		svg:          userPlusContent,
+		Tags:         []string{"user", "add", "plus", "invite", "new"},
+		Categories:   []string{"people", "account"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

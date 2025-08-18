@@ -1,18 +1,22 @@
 package icons
 
-func BrandGithub() *Icon {
+func Github() *Icon {
 	return &Icon{
-		Name:    "brandGithub",
-		handler: templ.NewOnceHandle(),
-		script:  brandGithubAnimation,
-		svg:     brandGithubContent,
+		Name:         "github",
+		handler:      templ.NewOnceHandle(),
+		script:       githubAnimation,
+		svg:          githubContent,
+		Brand:        true,
+		Tags:         []string{"github", "brand", "code", "repo", "git"},
+		Categories:   []string{"brands", "development", "social"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
-templ brandGithubAnimation() {
+templ githubAnimation() {
 	<script type="module">
 		import { animate, stagger } from "/static/scripts/motion.min.js";
-        window.brandGithubAnimate = (el) => {
+        window.githubAnimate = (el) => {
 		const paths = el.querySelectorAll('path');
 		const tailPaths = Array.from(paths).slice(1);
 		const mainLogo = paths[0];
@@ -36,7 +40,7 @@ templ brandGithubAnimation() {
 	</script>
 }
 
-templ brandGithubContent() {
+templ githubContent() {
 	@svgFill() {
 		<g>
 			<path d="m 12.010473,1.257208 c -5.9363256,0 -10.7500734,4.8128619 -10.7500734,10.750073 0,4.749664 3.0802196,8.779251 7.351555,10.200715 0.5372518,0.09952 0.734496,-0.233203 0.734496,-0.517138 0,-0.256345 -0.00955,-1.103172 -0.014604,-2.001444 -2.9906838,0.650295 -3.62175,-1.268368 -3.62175,-1.268368 C 5.2210873,17.178489 4.51649,16.84809 4.51649,16.84809 3.5411418,16.180886 4.590009,16.194585 4.590009,16.194585 c 1.0794963,0.07579 1.6479036,1.107804 1.6479036,1.107804 0.9588007,1.64345 2.5148416,1.168324 3.1282821,0.893645 0.096507,-0.6948 0.3750906,-1.169038 0.6825193,-1.437484 -2.3877412,-0.271829 -4.8977693,-1.193607 -4.8977693,-5.312732 0,-1.17367 0.4199444,-2.1326372 1.1076228,-2.8854769 C 6.1469721,8.289578 5.7789817,7.196204 6.3627395,5.7154542 c 0,0 0.9027273,-0.2889153 2.9570333,1.1019233 0.8575032,-0.2381824 1.7771372,-0.3576329 2.6907242,-0.361728 0.913576,0.0036 1.83393,0.1235456 2.693036,0.361728 2.051821,-1.3908386 2.953298,-1.1019233 2.953298,-1.1019233 0.585142,1.4807498 0.217003,2.5741238 0.105381,2.8448869 0.689281,0.7528397 1.106375,1.7118069 1.106375,2.8854769 0,4.12892 -2.514843,5.038054 -4.908626,5.304182 0.385579,0.333607 0.729156,0.987818 0.729156,1.990765 0,1.438374 -0.01245,2.596017 -0.01245,2.950093 0,0.286072 0.193508,0.621277 0.738411,0.515715 4.269014,-1.423067 7.345322,-5.451232 7.345322,-10.199292 0,-5.9372111 -4.813038,-10.750073 -10.74989,-10.750073 z"></path>

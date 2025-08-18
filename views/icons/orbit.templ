@@ -2,10 +2,13 @@ package icons
 
 func Orbit() *Icon {
 	return &Icon{
-		Name:    "orbit",
-		handler: templ.NewOnceHandle(),
-		script:  orbitAnimation,
-		svg:     orbitContent,
+		Name:         "orbit",
+		handler:      templ.NewOnceHandle(),
+		script:       orbitAnimation,
+		svg:          orbitContent,
+		Tags:         []string{"orbit", "rotate", "planet", "motion", "icons", "astronomy"},
+		Categories:   []string{"shapes", "science", "actions"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
@@ -22,10 +25,10 @@ templ orbitAnimation() {
 				{ duration: 0.42, ease: "easeOut" }
 			);
 
-			const planet = el.querySelector('circle[r="3"]');
+			const planet = el.querySelector('circle[r="3.5"]');
 			animate(planet,
-				{ opacity: [0, 1], scale: [0.5, 1.25, 1] },
-				{ duration: 0.42, ease: "easeOut" }
+				{ opacity: [0, 1], scale: [1, 0.5, 1] },
+				{ duration: 0.42, ease: "easeInOut" }
 			);
 		}
 	</script>
@@ -39,6 +42,6 @@ templ orbitContent() {
 			<circle cx="19" cy="5" r="1.5" fill="currentColor"></circle>
 			<circle cx="5" cy="19" r="1" fill="currentColor"></circle>
 		</g>
-		<circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+		<circle cx="12" cy="12" r="3.5" fill="currentColor"></circle>
 	}
 }

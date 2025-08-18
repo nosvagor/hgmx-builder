@@ -10,10 +10,14 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Question() *Icon {
 	return &Icon{
-		Name:    "question",
-		handler: templ.NewOnceHandle(),
-		script:  questionAnimation,
-		svg:     questionContent,
+		Name:         "question",
+		handler:      templ.NewOnceHandle(),
+		script:       questionAnimation,
+		svg:          questionContent,
+		Tags:         []string{"question", "help", "support", "unknown"},
+		Categories:   []string{"communication"},
+		Contributors: []string{"nosvagor", "lucide"},
+		Aliases:      []string{"help"},
 	}
 }
 

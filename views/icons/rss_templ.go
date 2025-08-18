@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Rss() *Icon {
 	return &Icon{
-		Name:    "rss",
-		handler: templ.NewOnceHandle(),
-		script:  rssAnimation,
-		svg:     rssContent,
+		Name:         "rss",
+		handler:      templ.NewOnceHandle(),
+		script:       rssAnimation,
+		svg:          rssContent,
+		Tags:         []string{"rss", "feed", "news", "blog", "updates"},
+		Categories:   []string{"communication", "social"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
@@ -79,7 +82,7 @@ func rssContent() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<circle cx=\"5\" cy=\"19\" r=\"1\"></circle> <path d=\"M4 11a9 9 0 0 1 9 9\"></path> <path d=\"M4 4a16 16 0 0 1 16 16\"></path>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<circle cx=\"5\" cy=\"19\" r=\"1\" fill=\"currentColor\"></circle> <path d=\"M4 11a9 9 0 0 1 9 9\"></path> <path d=\"M4 4a16 16 0 0 1 16 16\"></path>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

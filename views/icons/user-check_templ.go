@@ -10,10 +10,14 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserCheck() *Icon {
 	return &Icon{
-		Name:    "userCheck",
-		handler: templ.NewOnceHandle(),
-		script:  userCheckAnimation,
-		svg:     userCheckContent,
+		Name:         "userCheck",
+		handler:      templ.NewOnceHandle(),
+		script:       userCheckAnimation,
+		svg:          userCheckContent,
+		Tags:         []string{"user", "check", "verify", "ok", "success"},
+		Categories:   []string{"people", "account"},
+		Contributors: []string{"nosvagor", "lucide"},
+		Aliases:      []string{"userVerified"},
 	}
 }
 

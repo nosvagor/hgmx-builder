@@ -10,10 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserContact() *Icon {
 	return &Icon{
-		Name:    "userContact",
-		handler: templ.NewOnceHandle(),
-		script:  userContactAnimation,
-		svg:     userContactContent,
+		Name:         "userContact",
+		handler:      templ.NewOnceHandle(),
+		script:       userContactAnimation,
+		svg:          userContactContent,
+		Tags:         []string{"user", "id", "card", "contact"},
+		Categories:   []string{"people", "files"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

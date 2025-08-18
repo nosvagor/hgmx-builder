@@ -2,10 +2,13 @@ package icons
 
 func UserCog() *Icon {
 	return &Icon{
-		Name:    "userCog",
-		handler: templ.NewOnceHandle(),
-		script:  userCogAnimation,
-		svg:     userCogContent,
+		Name:         "userCog",
+		handler:      templ.NewOnceHandle(),
+		script:       userCogAnimation,
+		svg:          userCogContent,
+		Tags:         []string{"user", "settings", "cog", "gear"},
+		Categories:   []string{"people", "account", "tools"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 

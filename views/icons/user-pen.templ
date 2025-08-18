@@ -6,6 +6,10 @@ func UserPen() *Icon {
 		handler: templ.NewOnceHandle(),
 		script:  userPenAnimation,
 		svg:     userPenContent,
+
+		Tags:         []string{"user", "pen", "edit", "write", "update"},
+		Categories:   []string{"people", "account", "tools"},
+		Contributors: []string{"nosvagor", "lucide"},
 	}
 }
 
