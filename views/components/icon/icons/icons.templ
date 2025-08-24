@@ -1,0 +1,36 @@
+package icons
+
+type Icon struct {
+	Name    name
+	Handler *templ.OnceHandle
+	Script  func() templ.Component
+	Icon    func() templ.Component
+}
+
+type IconDetails struct {
+	Icon
+	Tags         []string
+	Categories   []string
+	Contributors []string
+}
+
+templ (i *Icon) Render() {
+	<icon>
+		@i.Handler.Once() {
+			@i.Script()
+		}
+		@i.Icon()
+	</icon>
+}
+
+templ SVG() {
+	<svg class="overflow-visible" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+		{ children... }
+	</svg>
+}
+
+templ BrandSVG() {
+	<svg class="overflow-visible" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 24 24">
+		{ children... }
+	</svg>
+}

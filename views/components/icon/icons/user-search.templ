@@ -1,0 +1,55 @@
+package icons
+
+func UserSearch() *Icon {
+	return &Icon{
+		Name:    "userSearch",
+		Handler: templ.NewOnceHandle(),
+		Script:  userSearchAnimation,
+		Icon:    userSearchContent,
+	}
+}
+
+templ userSearchAnimation() {
+	<script type="module">
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.userSearchAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+			const searchGroup = el.querySelector('g.search');
+			animate(searchGroup,
+				{ scale: [1.35, 1] },
+				{ duration: τmax, easeOut }
+			);
+			animate(searchGroup,
+				{
+					translateX: [0, -12, 2, 0],
+					translateY: [0, -6, -5, 0]
+				},
+				{ duration: τmax, easeOut }
+			);
+
+			const head = el.querySelector('circle[cx="10"]');
+			animate(head,
+				{ translateY: [1, 1, -2, 0], opacity: [0, 1] },
+				{ duration: τmid, delay: τmin, easeOut }
+			);
+
+			const body = el.querySelector('path[d*="15H7"]');
+			animate(body,
+				{ pathLength: [0, 1], opacity: [0, 1] },
+				{ duration: τmin, delay: τmid, easeOut }
+			);
+		}
+	</script>
+}
+
+templ userSearchContent() {
+	@SVG() {
+		<circle cx="10" cy="7" r="4"></circle>
+		<path d="M10.3 15H7a4 4 0 0 0-4 4v2"></path>
+		<g class="search">
+			<circle cx="17" cy="17" r="3"></circle>
+			<path d="m22 22-2.5-2.5"></path>
+		</g>
+	}
+}

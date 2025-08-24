@@ -8,17 +8,16 @@ templ scrollController() {
 			const nav = document.getElementById('navbar');
 			const menu = document.getElementById('nav-menu');
 
-			let hidden = false;
+			let hidden = false, fullyHidden = false;
 			let lastY = window.scrollY;
 			let lastTick = performance.now();
-			let dir = null;
-			let Σd = 0;
-			let Σu = 0;
+			let direction = null;
+			let Σd = 0, Σu = 0;
 
-			const Λ = 400;
-			const τ = 500;
+			const δd = 500, δr = 1400, δu = 800;
+			const τ = 500, μν = 9; 
 
-			const reset = (y, t) => { lastY = y; lastTick = t; Σd = 0; Σu = 0; };
+			const reset = (y, t) => { lastY = y; lastTick = t; Σd = 0; Σu = 0; hidden = false; fullyHidden = false; };
 
 			const hide = () => {
 				if (!nav || hidden) return;
@@ -26,8 +25,18 @@ templ scrollController() {
 				hidden = true;
 			};
 
+			const hideFully = () => {
+				if (!nav || fullyHidden) return;
+				nav.classList.add('navbar_hidden');
+				fullyHidden = true;
+			};
+
 			const reveal = () => {
 				if (!nav || !hidden) return;
+				if (fullyHidden) {
+					nav.classList.remove('navbar_hidden');
+					fullyHidden = false;
+				}
 				menu.animateBookmarksIn();
 				menu.delayedMenu();
 				hidden = false;
@@ -59,24 +68,29 @@ templ scrollController() {
 				const Δy = y - lastY;
 				const Δt = t - lastTick;
 
-				if (Δy > 0) {
-					if (dir !== 'down' || Δt > τ) Σd = 0;
-					Σd += Δy;
-					Σu = 0;
-					if (Σd >= Λ && !hidden) {
-						hide();
-						Σd = 0;
-					}
-					dir = 'down';
-				} else if (Δy < 0) {
-					if (dir !== 'up' || Δt > τ) Σu = 0;
-					Σu += -Δy;
-					Σd = 0;
-					if (Σu >= (Λ / 2) && hidden) {
-						reveal();
+				const ν = Δt > 0 ? Math.abs(Δy) / Δt : 0;
+
+				if (ν <= μν) {
+					if (Δy > 0) {
+						if (direction !== 'down' || Δt > τ) Σd = 0;
+						Σd += Δy;
 						Σu = 0;
+						if (Σd >= δr && !fullyHidden) {
+							hideFully();
+						} else if (Σd >= δd && !hidden) {
+							hide();
+						}
+						direction = 'down';
+					} else if (Δy < 0) {
+						if (direction !== 'up' || Δt > τ) Σu = 0;
+						Σu += -Δy;
+						Σd = 0;
+						if (Σu >= (δu) && hidden) {
+							reveal();
+							Σu = 0;
+						}
+						direction = 'up';
 					}
-					dir = 'up';
 				}
 
 				lastY = y;
@@ -90,7 +104,9 @@ templ scrollController() {
 				if (!nav) return;
 				menu.setMenuIcon('user');
 				nav.classList.toggle('navbar_scrolling', y > 1);
+				nav.classList.remove('navbar_hidden');
 				hidden = false;
+				fullyHidden = false;
 				menu.delayedMenu();
 				window.addEventListener('scroll', onScroll, { passive: true });
 			})();
@@ -103,6 +119,9 @@ templ (p *Props) styles() {
 		#navbar {
 			background-color: color-mix(in oklab, var(--color-base-500) 95%, transparent);
 			backdrop-filter: blur(8px);
+		}
+		.navbar_hidden {
+			transform: translateY(-100%);
 		}
 		.navbar_scrolling {
 			box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -141,7 +160,7 @@ templ (p *Props) Navbar() {
 	@p.styles()
 	<nav
 		id="navbar"
-		class="z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 transition ease-in-out isolate"
+		class="z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 pt-3 transition ease-in-out isolate"
 	>
 		@p.NavbarBookmarks()
 		@p.Source

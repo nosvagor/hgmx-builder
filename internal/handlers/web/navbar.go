@@ -12,8 +12,8 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/components/app/source"
 	"github.com/nosvagor/hgmx-builder/views/components/button"
 	"github.com/nosvagor/hgmx-builder/views/components/icon"
+	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
 	"github.com/nosvagor/hgmx-builder/views/components/nav"
-	"github.com/nosvagor/hgmx-builder/views/icons"
 	"github.com/nosvagor/hgmx-builder/views/utils/htmx"
 )
 

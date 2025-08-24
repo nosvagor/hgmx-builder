@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/nosvagor/hgmx-builder/internal/handlers/web/pages"
+	"github.com/nosvagor/hgmx-builder/internal/handlers/web/pages/icons"
 	"github.com/nosvagor/hgmx-builder/internal/store"
 )
 
@@ -16,7 +17,7 @@ func RegisterWebRoutes(e *echo.Echo) {
 	e.GET("/docs", pages.Docs)
 	e.GET("/palette", pages.Palette)
 	e.GET("/icons", pages.Icons)
-	e.GET("/icons/search", pages.Search)
+	e.GET("/icons/search", icons.Search)
 	e.GET("/blog", pages.Blog)
 	e.GET("/faq", pages.FAQ)
 

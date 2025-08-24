@@ -1,0 +1,64 @@
+package icon
+
+import (
+	"fmt"
+
+	"github.com/nosvagor/hgmx-builder/views/components"
+	"github.com/nosvagor/hgmx-builder/views/components/content"
+	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
+)
+
+// <-- Models <--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--
+
+type Props struct {
+	components.Styler
+
+	NoAnimate bool
+	Icon      *icons.Icon
+	Content   components.Customizeable
+}
+
+func (p *Props) Style(classes ...string) components.Customizeable {
+	p.Styler.Add(classes...)
+	return p
+}
+
+func (p *Props) hyprscript() string {
+	if !p.NoAnimate {
+		return fmt.Sprintf(`on hovered get first <svg/> in me then call %sAnimate(it) end`, p.Icon.Name)
+	}
+	return ""
+}
+
+// === Icon Component ==========================================================
+templ (p *Props) Render() {
+	<div
+		class={ p.Styler.Build("flex relative gap-1 items-center") }
+		_={ p.hyprscript() }
+	>
+		@p.Icon.Render()
+		if p.Content != nil {
+			@p.Content.Render()
+		} else {
+			{ children... }
+		}
+	</div>
+}
+
+templ Render(i *icons.Icon, classes ...string) {
+	{{
+		props := &Props{Icon: i}
+		props.Styler.Add(classes...)
+	}}
+	@props.Render()
+}
+
+// --> Factories -->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->
+
+func Text(icon *icons.Icon, text string) components.Customizeable {
+	return &Props{Icon: icon, Content: content.Text(text)}
+}
+
+func Icon(icon *icons.Icon) components.Customizeable {
+	return &Props{Icon: icon}
+}

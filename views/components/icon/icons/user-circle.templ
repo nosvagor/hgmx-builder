@@ -1,0 +1,45 @@
+package icons
+
+func UserCircle() *Icon {
+	return &Icon{
+		Name:    "userCircle",
+		Handler: templ.NewOnceHandle(),
+		Script:  userCircleAnimation,
+		Icon:    userCircleContent,
+	}
+}
+
+templ userCircleAnimation() {
+	<script type="module">
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.userCircleAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+			const outerCircle = el.querySelector('circle[r="10"]');
+			animate(outerCircle,
+				{ pathLength: [0, 1], opacity: [0.5, 1], rotate: [270, 115] },
+				{ duration: τmid, easeOut }
+			);
+
+			const body = el.querySelector('path');
+			animate(body,
+				{ pathLength: [0, 1], opacity: [0, 1] },
+				{ duration: τmid, delay: τmin, easeOut }
+			);
+
+			const head = el.querySelectorAll('circle[r="3"]');
+			animate(head,
+				{ translateY: [1, -2, 0], opacity: [1] },
+				{ duration: τmin, delay: τmid, easeOut }
+			);
+		}
+	</script>
+}
+
+templ userCircleContent() {
+	@SVG() {
+		<circle cx="12" cy="12" r="10"></circle>
+		<circle cx="12" cy="10" r="3"></circle>
+		<path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
+	}
+}

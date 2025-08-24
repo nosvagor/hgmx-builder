@@ -42,7 +42,10 @@ The goal is to lean into the undertalized bandwidth that intentional color assoc
 
 #### Key Principles
 
-- **Heirarchical**: Inspired by 60/30/10 rule. Choose background color (60%), primary accent (30%), and action color (10%). &rarr; get a cohesive palette built into components.
+- **Heirarchical**: manipluates attention around three main hues:
+  - _base_, which dictates from background to surface. Inludes a range of shades that works to set foundations and comprises most of screen real estate.
+  - _primary_, which creates brand identity around a specific color.
+  - _action_, which represtents the spotlight of attention.
 - **Semantic Motifs**: Components use semantic names (surface, base, primary, accent, error, success, change, delete, true/false, etc..); not specific colors. Geometrically determined from core choices.
 - **Runtime Flexibility**: Swap entire theme by changing root CSS variables, no changes to components needed.
 - **Color Agnostic**: Components built to work without colors, but effortlessly work with them to add depth&mdash;you choose the syntatic meaning of the colors.
@@ -75,6 +78,7 @@ hgmx is designed to be built on top of an event-driven modular monolith foundati
  │  ├─ handlers
  │  │  ├─ api
  │  │  └─ web
+ │  │     └─ pages
  │  │
  │  ├─ jobs
  │  │
@@ -100,8 +104,6 @@ hgmx is designed to be built on top of an event-driven modular monolith foundati
     │  ├─ {component}
     │  ├─ ...
     │  └─ {component}
-    │
-    ├─ icons
     │
     ├─ pages
     │  ├─ {page}

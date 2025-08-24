@@ -1,0 +1,46 @@
+package icons
+
+func Scroll() *Icon {
+	return &Icon{
+		Name:    "scroll",
+		Handler: templ.NewOnceHandle(),
+		Script:  scrollAnimation,
+		Icon:    scrollContent,
+	}
+}
+
+templ scrollAnimation() {
+	<script type="module">
+		import { animate, stagger, easeOut } from "/static/scripts/motion.min.js";
+			window.scrollAnimate = (el) => {
+				const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+				const paths = el.querySelectorAll('path');
+
+				const scrollPaths = [paths[2], paths[3]];
+				animate(scrollPaths,
+					{ y: [-10, 2, 0] },
+					{ duration: τmax, easeOut }
+				);
+				animate(scrollPaths,
+					{ pathLength: [0, 1] },
+					{ duration: τmax, easeOut }
+				);
+
+				const textPaths = [paths[0], paths[1]];
+				animate(textPaths,
+					{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },
+					{ delay: stagger(0.12), easeOut }
+				);
+			};
+	</script>
+}
+
+templ scrollContent() {
+	@SVG() {
+		<path d="M15 8h-5"></path>
+		<path d="M15 12h-5"></path>
+		<path d="M19 17V5a2 2 0 0 0-2-2H4"></path>
+		<path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"></path>
+	}
+}

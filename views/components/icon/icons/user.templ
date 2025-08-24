@@ -1,0 +1,38 @@
+package icons
+
+func User() *Icon {
+	return &Icon{
+		Name:    "user",
+		Handler: templ.NewOnceHandle(),
+		Script:  userAnimation,
+		Icon:    userContent,
+	}
+}
+
+templ userAnimation() {
+	<script type="module">
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.userAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+			const body = el.querySelector('path');
+			animate(body,
+				{ pathLength: [0, 1], opacity: [0, 1] },
+				{ duration: τmax, easeOut }
+			);
+
+			const head = el.querySelector('circle');
+			animate(head,
+				{ translateY: [1, -2, 0] },
+				{ duration: τmin, delay: τmid, easeOut }
+			);
+		}
+	</script>
+}
+
+templ userContent() {
+	@SVG() {
+		<circle cx="12" cy="7" r="4"></circle>
+		<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+	}
+}

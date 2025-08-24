@@ -1,0 +1,39 @@
+package icons
+
+func Question() *Icon {
+	return &Icon{
+		Name:    "question",
+		Handler: templ.NewOnceHandle(),
+		Script:  questionAnimation,
+		Icon:    questionContent,
+	}
+}
+
+templ questionAnimation() {
+	<script type="module">
+		import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.questionAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+			const circle = el.querySelector('circle');
+			animate(circle,
+				{ pathLength: [0, 1], rotate: [270, 90] },
+				{ duration: τmid, easeOut }
+			);
+
+			const questionMark = el.querySelectorAll('path');
+			animate(questionMark,
+				{ rotateY: [0, 360], scale: [1, 1.35, 1] },
+				{ duration: τmax, easeOut }
+			);
+		}
+	</script>
+}
+
+templ questionContent() {
+	@SVG() {
+		<circle cx="12" cy="12" r="10"></circle>
+		<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+		<path d="M12 17h.01"></path>
+	}
+}

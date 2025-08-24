@@ -1,0 +1,45 @@
+package icons
+
+func UserPen() *Icon {
+	return &Icon{
+		Name:    "userPen",
+		Handler: templ.NewOnceHandle(),
+		Script:  userPenAnimation,
+		Icon:    userPenContent,
+	}
+}
+
+templ userPenAnimation() {
+	<script type="module">
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.userPenAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+			const pen = el.querySelector('path[d*="21.378"]');
+			animate(pen,
+				{ rotate: [-15, 15, -10, 0], translateX: [0, -5, 0] },
+				{ duration: τmax, easeOut }
+			);
+
+			const head = el.querySelector('circle');
+			animate(head,
+				{ translateY: [1, 1, -2, 0], opacity: [1] },
+				{ duration: τmin, delay: τmid, easeOut }
+			);
+
+			const body = el.querySelector('path[d*="15H7"]');
+			animate(body,
+				{ pathLength: [0, 1], opacity: [0, 1] },
+				{ duration: τmin, delay: τmid, easeOut }
+			);
+		}
+	</script>
+}
+
+templ userPenContent() {
+	@SVG() {
+		<path d="M11.5 15H7a4 4 0 0 0-4 4v2"></path>
+		<path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"></path>
+		<circle cx="10" cy="7" r="4"></circle>
+	}
+}

@@ -120,7 +120,7 @@ func (p *Props) Menu() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"nav-menu\" tabindex=\"0\" class=\"z-50 fixed top-[0.2rem] left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"nav-menu\" tabindex=\"0\" class=\"z-50 fixed top-2 left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -141,7 +141,7 @@ func (p *Props) Menu() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<svg viewBox=\"0 0 24 24\" width=\"1.6rem\" height=\"1.6rem\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path id=\"menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg> <kbd id=\"esc-indicator\" class=\"absolute top-2.5 left-8 text-[0.625rem] font-mono pointer-events-none opacity-0\" style=\"transform: translate(-100%);\">esc</kbd></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<svg viewBox=\"0 0 24 24\" width=\"1.5rem\" height=\"1.5rem\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path id=\"menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg> <kbd id=\"esc-indicator\" class=\"absolute top-2.5 left-8 text-[0.625rem] font-mono pointer-events-none opacity-0\" style=\"transform: translate(-100%);\">esc</kbd></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

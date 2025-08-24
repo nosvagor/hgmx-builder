@@ -4,7 +4,7 @@ import (
 	"github.com/a-h/templ"
 	"github.com/nosvagor/hgmx-builder/internal/utils"
 	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/icons"
+	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
 )
 
 type Props struct {

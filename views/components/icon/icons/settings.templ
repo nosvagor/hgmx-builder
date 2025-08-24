@@ -1,0 +1,38 @@
+package icons
+
+func Settings() *Icon {
+	return &Icon{
+		Name:    "settings",
+		Handler: templ.NewOnceHandle(),
+		Script:  settingsAnimation,
+		Icon:    settingsContent,
+	}
+}
+
+templ settingsAnimation() {
+	<script type="module">
+		import { animate, easeOut } from "/static/scripts/motion.min.js";
+		window.settingsAnimate = (el) => {
+			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+
+            const innerGear = el.querySelectorAll('circle');
+			animate(innerGear,
+				{ scale: [1.15, 0.75, 1] },
+				{ duration: τmax, easeOut }
+			);
+
+			const outerGear = el.querySelector('path');
+			animate(outerGear,
+                { rotate: [0, 360],  scale: [0, 1.15, 1], opacity: [0, 1]},
+                { duration: τmax, easeOut }
+            );
+		};
+	</script>
+}
+
+templ settingsContent() {
+	@SVG() {
+		<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+		<circle cx="12" cy="12" r="3"></circle>
+	}
+}
