@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"github.com/nosvagor/hgmx-builder/internal/database"
 	"github.com/nosvagor/hgmx-builder/internal/services/stats"
+	database "github.com/nosvagor/hgmx-builder/internal/store"
 	"github.com/nosvagor/hgmx-builder/internal/utils"
 )
 
@@ -27,6 +27,12 @@ func New() *echo.Echo {
 	RegisterStaticRoutes(e)
 	RegisterWebRoutes(e)
 	RegisterHealthRoutes(e)
+
+	// Optional: Register API routes if you want to expose APIs
+	// RegisterAPIRoutes(e)
+
+	// Optional: Register advanced routes with middleware
+	// RegisterAdvancedRoutes(e)
 
 	return e
 }
@@ -108,7 +114,7 @@ func printDBHealth(cfg utils.Config) {
 	open := fmt.Sprintf("%d", hs.OpenConnections)
 	alive := fmt.Sprintf("%d", hs.InUse)
 	idle := fmt.Sprintf("%d", hs.Idle)
-	op := fmt.Sprintf("%s@%s", hs.User, hs.Database)
+	op := fmt.Sprintf("%s%s@%s%s", yellow, hs.User, hs.Database, blue)
 	write := utils.If(hs.ReadOnly, fmt.Sprintf("%sread%s", red, color), fmt.Sprintf("%swrite%s", yellow, color))
 
 	fmt.Printf(`%s

@@ -41,6 +41,14 @@ func If[T any](condition bool, trueVal T, falseVal T) T {
 
 // JSONPretty returns a indented JSON encoding of v.
 //
+// Example:
+//
+//	utils.JSONPretty(map[string]string{"key": "value"})
+//
+// is the same as:
+//
+//	json.MarshalIndent(map[string]string{"key": "value"}, "", "  ")
+//
 // Returns formatted JSON string
 func JSONPretty(v any) string {
 	switch data := v.(type) {

@@ -14,7 +14,7 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/components/icon"
 	"github.com/nosvagor/hgmx-builder/views/components/nav"
 	"github.com/nosvagor/hgmx-builder/views/icons"
-	"github.com/nosvagor/hgmx-builder/views/utilities/htmx"
+	"github.com/nosvagor/hgmx-builder/views/utils/htmx"
 )
 
 func fmtStars(stars int) string {
@@ -54,7 +54,7 @@ func navbar() templ.Component {
 		{Path: "icons", Icon: icons.Orbit()},
 		{Path: "blog", Icon: icons.Rss()},
 		{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
-		{Path: "users", Icon: icons.Users(), Label: "Users"},
+		{Path: "users", Icon: icons.Users()},
 	}
 
 	for _, link := range bookmarks {

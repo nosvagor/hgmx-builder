@@ -3,7 +3,7 @@ package button
 import (
 	"github.com/a-h/templ"
 	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/utilities/htmx"
+	"github.com/nosvagor/hgmx-builder/views/utils/htmx"
 )
 
 func Get(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/nosvagor/hgmx-builder/internal/web/pages"
+	"github.com/nosvagor/hgmx-builder/internal/handlers/web/pages"
 )
 
 func CustomHTTPErrorHandler(err error, c echo.Context) {

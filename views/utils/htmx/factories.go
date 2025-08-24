@@ -3,7 +3,7 @@ package htmx
 import (
 	"strings"
 
-	"github.com/nosvagor/hgmx-builder/views/utilities/include"
+	"github.com/nosvagor/hgmx-builder/views/utils/include"
 )
 
 func Get(url string, opts ...Options) *Props {

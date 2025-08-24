@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/nosvagor/hgmx-builder/internal/web"
+	"github.com/nosvagor/hgmx-builder/internal/handlers/web"
 	"github.com/nosvagor/hgmx-builder/views/icons"
 	view "github.com/nosvagor/hgmx-builder/views/pages/icons"
 )

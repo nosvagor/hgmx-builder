@@ -2,7 +2,7 @@ package button
 
 import (
 	"github.com/nosvagor/hgmx-builder/views/components"
-	"github.com/nosvagor/hgmx-builder/views/utilities/htmx"
+	"github.com/nosvagor/hgmx-builder/views/utils/htmx"
 )
 
 type Variant int

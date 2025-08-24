@@ -8,7 +8,7 @@ package button
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/nosvagor/hgmx-builder/views/utilities/html"
+import "github.com/nosvagor/hgmx-builder/views/utils/html"
 
 func (p *Props) classes() string {
 	return p.Styler.Build(p.variant())

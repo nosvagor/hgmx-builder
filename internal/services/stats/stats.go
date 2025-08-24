@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/nosvagor/hgmx-builder/internal/database"
+	"github.com/nosvagor/hgmx-builder/internal/store"
 	"gorm.io/gorm/clause"
 )
 
@@ -25,18 +25,18 @@ type RepoStat struct {
 func (RepoStat) TableName() string { return "repo_stats" }
 
 func Migrate() error {
-	db := database.DB()
+	db := store.DB()
 	if db == nil {
-		db = database.MustOpen()
+		db = store.MustOpen()
 	}
 	return db.AutoMigrate(&RepoStat{})
 }
 
 func GetCachedRepoStats(ctx context.Context, owner, repo string) (RepoStat, error) {
 	var rs RepoStat
-	DB := database.DB()
+	DB := store.DB()
 	if DB == nil {
-		DB = database.MustOpen()
+		DB = store.MustOpen()
 	}
 	if err := DB.WithContext(ctx).Where("owner = ? AND repo = ?", owner, repo).Take(&rs).Error; err != nil {
 		return RepoStat{}, err
@@ -45,9 +45,9 @@ func GetCachedRepoStats(ctx context.Context, owner, repo string) (RepoStat, erro
 }
 
 func UpsertRepoStats(ctx context.Context, rs RepoStat) (RepoStat, error) {
-	DB := database.DB()
+	DB := store.DB()
 	if DB == nil {
-		DB = database.MustOpen()
+		DB = store.MustOpen()
 	}
 	err := DB.WithContext(ctx).Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "owner"}, {Name: "repo"}},

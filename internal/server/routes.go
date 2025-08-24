@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/nosvagor/hgmx-builder/internal/database"
-	"github.com/nosvagor/hgmx-builder/internal/web/pages"
+	"github.com/nosvagor/hgmx-builder/internal/handlers/web/pages"
+	"github.com/nosvagor/hgmx-builder/internal/store"
 )
 
 // =============================================================================
@@ -30,7 +30,7 @@ func RegisterWebRoutes(e *echo.Echo) {
 
 func RegisterHealthRoutes(e *echo.Echo) {
 	e.GET("/health/db", func(c echo.Context) error {
-		hs, err := database.Health(c.Request().Context())
+		hs, err := store.Health(c.Request().Context())
 		if err != nil {
 			return c.JSON(503, hs)
 		}

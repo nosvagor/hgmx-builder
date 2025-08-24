@@ -1,61 +1,124 @@
-# HGMX
+<p align="right">
+    <a href="https://github.com/nosvagor/hgmx-builder/stargazers">
+        <img
+            src="https://img.shields.io/github/stars/nosvagor/hgmx-builder?color=ecc45d&logo=apachespark&labelColor=222536&logoColor=ecc45d&style=for-the-badge"
+            title="what is love, baby don't hurt me"
+        >
+    </a>
+</p>
 
-> A boutique, open design system (ODS) built with Go Templ, HTMX, and Hyperscript, and Motion.js
+<p align="center">
+<a href="https://hgmx.dev">
+<kbd>
+ <img 
+   src="https://github.com/nosvagor/hgmx-builder/blob/master/views/static/svgs/htmx-full.svg?raw=true"
+   title="hgmx.dev"
+   alt="hgmx logo" width="500"
+  /> 
+</kbd>
+</a>
 
-## Vision
+> a Go powered, hypermedia driven, open design system;
+> utilizing HTML-first tools like [htmx](https://htmx.org), [\_hyperscript](https://hyperscript.org), [templ](https://templ.guide), and [tailwind](https://tailwindcss.com).
 
-In an age where UI can be instantly generated, hgmx design system takes a different approach&mdash; _crafting_ a unique, yet cohesive, set of componenets with small touches that spark joy when used.
+## Open Design System?
 
-## Core Philosophy
+An ODS is cousin to the idea of a framework, but inverts ownership. That is, it allows you to build a library that you own, one you can improve.
 
-1. **Boutique Components**: Each component should feel artisan crafted, yet customizable.
-2. **Opinionated First Principles**: Start minimal, with opinionated defaults to manage complexity.
-3. **Semantic Theming**: Rich color system with semantic variables for easy theme adjustments.
-4. **HATEOAS**: Hypermedia driven state management.
+The general idea comes from [shadcn/ui](https://ui.shadcn.com/docs). hgmx is an evolution of this concept, one that fills niche carved out of the javascript ecosystem by [htmx](https://htmx.org/docs), which encourages using [**H**ypermedia **A**s **T**he **E**ngine **O**f **A**pplication **S**tate](https://htmx.org/essays/hypermedia-friendly-scripting/#prime_directive). The divergence from htmx stems from the fact is that htmx does not care what backend you use&mdash;but hgmx does&mdash;it's built specifically for Go. Futhermore, it diverges from shadcn/ui in that it extends the open design system into the backend with more opinionated defaults.
 
-### Theme
+Overall, the goal of hgmx is to blur the boundary between frontend and backend, and to create a holistic design system with foundation that can be grown into any direction you need.
 
-Traditional dark/light mode toggles are a false dichotomy. Our theming system generates entire color palettes from a single seed color using the perceptually uniform OKLCH color space. This creates harmonious color relationships automatically.
+## Unique Philosophies (UI)
 
-#### How It Works
+- **Semantic Theming**: Baked in structural theming to create a consistent, customizable color language to communicate with.
+- **Boutique Components**: Components should feel artisan crafted, sparking joy when used.
 
-1. **Seed-Based Generation**: inspired by 60/30/10 rule. choose background color (60%), primary accent (30%), and action color (10%). &rarr; get an cohesive palette.
-2. **Semantic Mappings**: Components use semantic names (primary, error, success); not specific colors. Geometrically determined from core choices.
-3. **Automatic Relationships**: Colors are generated with proper contrast ratios and perceptual balance.
-4. **Runtime Flexibility**: Swap entire themes by changing root CSS variables, no component changes needed.
+### Semantic Theming
 
-#### Semantic Motifs
+Traditional dark/light mode toggles are a false dichotomy. hgmx's theming system generates entire color palettes from a single seed color using the OKLCH color space. This creates harmonious color relationships automatically to pick and choose colors to build up a theme easily.
+
+The goal is to lean into the undertalized bandwidth that intentional color assocatiations can do to reduce cognitive load. Think of how films subtle use color to communciate emotions, or how syntax highlighting can make reading code easier.
+
+#### Key Principles
+
+- **Heirarchical**: Inspired by 60/30/10 rule. Choose background color (60%), primary accent (30%), and action color (10%). &rarr; get a cohesive palette built into components.
+- **Semantic Motifs**: Components use semantic names (surface, base, primary, accent, error, success, change, delete, true/false, etc..); not specific colors. Geometrically determined from core choices.
+- **Runtime Flexibility**: Swap entire theme by changing root CSS variables, no changes to components needed.
+- **Color Agnostic**: Components built to work without colors, but effortlessly work with them to add depth&mdash;you choose the syntatic meaning of the colors.
+
+### Boutique Components
+
+In an age of slop, hgmx's components are crafted to stand out in a effortful way to signal intentionality.
+
+The barbel hypothesis of maturing markets suggests a convex relationship betwen quality and quantitiy. That is, either you lean into cheap slop and scale to the masses, or reject and go boutique and establish a brand with specilized focus on quality over a particular dimension.
+
+There is nohting wrong with the perusing quantity, it's needed. But hgmx leans into the boutique approach, creating components tailored to stand out, sparking joy when used.
+
+#### Key Principles
+
+- **Motion Enabled**: Subtle animations built in to command attention and signal state.
+- **Keyboard Driven**: Frequently used components built with optional keyboard navigation.
+- **MAYA (Most Adavanced, Yet Acceptable)**: Create unique takes on components that push the boundaries, yet remain intutive and usable.
+
+## Architecture
+
+hgmx is designed to be built on top of an event-driven modular monolith foundation, extending the event focused prime directive of HATEOAS. It can be used with alternaitve architectural patterns and backend libraries, but was developed with tools like [rabbitmq](https://www.rabbitmq.com), [echo](https://echo.labstack.com), [gorm](https://gorm.io), and [signoz](https://signoz.io) in use.
 
 ```
-Signaling: info, success, warning, error
-Branding:  primary, secondary, accent
-States:    positive/negative, true/false, in/out
-Actions:   change, link, delete
+ .
+ │
+ ├─ cmd
+ │  └─ main.go
+ │
+ ├─ internal
+ │  ├─ handlers
+ │  │  ├─ api
+ │  │  └─ web
+ │  │
+ │  ├─ jobs
+ │  │
+ │  ├─ server
+ │  │  ├─ bus
+ │  │  ├─ logging
+ │  │  ├─ middleware
+ │  │  └─ routes
+ │  │
+ │  ├─ services
+ │  │  ├─ {service}
+ │  │  │  └─ models
+ │  │  ├─ ...
+ │  │  └─ {service}
+ │  │     └─ models
+ │  │
+ │  ├─ store
+ │  │
+ │  └─ utils
+ │
+ └─ views
+    ├─ components
+    │  ├─ {component}
+    │  ├─ ...
+    │  └─ {component}
+    │
+    ├─ icons
+    │
+    ├─ pages
+    │  ├─ {page}
+    │  ├─ ...
+    │  └─ {page}
+    │
+    ├─ static
+    │  ├─ css
+    │  ├─ favicon
+    │  ├─ fonts
+    │  ├─ images
+    │  ├─ scripts
+    │  └─ svgs
+    │
+    └─ utils
+        ├─ html
+        ├─ htmx
+        ├─ ...
+        └─ {util}
 ```
-
-Each motif maps to a color pair for subtle variations to add another simple dimension to add choice themes.
-
-## Current Status
-
-### Completed
-
-- [x] Base HTML structure with smart asset hashing
-- [x] Rich color system generated from seed color alone.
-- [x] Navbar
-
-### Rough Roadmap
-
-#### Phase 0 (continuous; ongoing): Abstract or Enhance
-
-1. **Navbar decomposition** Identiy and create key components likely re-used in other places outside of navbar
-2. **Active state** Estalish shared visual lanugage for focus, active, hover, and other common interactive states.
-
-#### Phase 1: Navigation Foundation
-
-1. **Sidebar**, for keeping track of current position if navigation is complex (like in a docs page).
-
-2. **Command Mode**
-   - Fuzzy search
-   - Action shortcuts
-   - Recent/frequent destinations
-   - Context-aware suggestions
