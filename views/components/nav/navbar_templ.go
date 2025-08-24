@@ -115,7 +115,7 @@ func (p *Props) Navbar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 transition ease-in-out isolate\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<nav id=\"navbar\" class=\"z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 pt-3 transition ease-in-out isolate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
