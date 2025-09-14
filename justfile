@@ -18,6 +18,15 @@ gen:
 templ-update:
     go install github.com/a-h/templ/cmd/templ@latest
 
+air-update:
+    go install github.com/air-verse/air@latest
+
+upgrade:
+    @just templ-update
+    @just air-update
+    go get -u ./...
+    go mod tidy
+
 build: gen
     @go build -ldflags="-X {{VERSION_VAR_PATH}}={{GIT_VERSION}}" -o {{BINARY_NAME}} {{MAIN_PACKAGE_PATH}}
 

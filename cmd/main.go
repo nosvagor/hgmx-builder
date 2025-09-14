@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/nosvagor/hgmx-builder/internal/server"
-)
+import "github.com/nosvagor/hgmx-builder/internal/server"
 
 func main() {
 	server.InitLogger()

@@ -6,6 +6,7 @@ tmp_dir = "../../../tmp/hgmx-builder"
   args_bin = []
   bin = "../../../tmp/main"
   cmd = "go build -o ../../../tmp/main cmd/main.go"
+  env = ["GOEXPERIMENT=greenteagc,jsonv2"]
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = ["*.css"]
