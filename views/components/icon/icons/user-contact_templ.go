@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserContact() *Icon {
 	return &Icon{
-		Name:    "userContact",
+		Name:    userContact,
 		Handler: templ.NewOnceHandle(),
 		Script:  userContactAnimation,
 		Icon:    userContactContent,
@@ -38,7 +38,7 @@ func userContactAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, stagger, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.userContactAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\tconst card = el.querySelector('rect');\n\t\t\tanimate(card,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0.5, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst allPaths = el.querySelectorAll('path');\n\t\t\tconst pins = [allPaths[0], allPaths[2]]; \n\t\t\tanimate(pins,\n\t\t\t\t{ scale: [0, 1.75, 1] },\n\t\t\t\t{ delay: stagger(0.21), easeOut }\n\t\t\t);\n\n\t\t\tconst body = allPaths[1]; \n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0], opacity: [1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, stagger, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.userContactAnimate = (el) => {\n\n\t\t\tconst card = el.querySelector('rect');\n\t\t\tanimate(card,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0.5, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst allPaths = el.querySelectorAll('path');\n\t\t\tconst pins = [allPaths[0], allPaths[2]]; \n\t\t\tanimate(pins,\n\t\t\t\t{ scale: [0, 1.75, 1] },\n\t\t\t\t{ delay: stagger(0.21), easeOut }\n\t\t\t);\n\n\t\t\tconst body = allPaths[1]; \n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0], opacity: [1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

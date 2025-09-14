@@ -38,7 +38,7 @@ func orbitAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.orbitAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\t\t\tconst Θ = Number(el.dataset.rotation || 0);\n\t\t\tconst Δ = Θ + 360 + Math.random() * 100;\n\t\t\tel.dataset.rotation = Δ;\n\n\t\t\tconst moons = el.querySelector('g');\n\t\t\tanimate(moons,\n\t\t\t\t{ rotate: [Θ, Δ] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst planet = el.querySelector('circle[r=\"3.5\"]');\n\t\t\tanimate(planet,\n\t\t\t\t{ opacity: [0, 1], scale: [1, 0.5, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.orbitAnimate = (el) => {\n\t\t\tconst Θ = Number(el.dataset.rotation || 0);\n\t\t\tconst Δ = Θ + 360 + Math.random() * 100;\n\t\t\tel.dataset.rotation = Δ;\n\n\t\t\tconst moons = el.querySelector('g');\n\t\t\tanimate(moons,\n\t\t\t\t{ rotate: [Θ, Δ] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst planet = el.querySelector('circle[r=\"3.5\"]');\n\t\t\tanimate(planet,\n\t\t\t\t{ opacity: [0, 1], scale: [1, 0.5, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

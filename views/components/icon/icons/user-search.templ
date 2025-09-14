@@ -2,7 +2,7 @@ package icons
 
 func UserSearch() *Icon {
 	return &Icon{
-		Name:    "userSearch",
+		Name:    userSearch,
 		Handler: templ.NewOnceHandle(),
 		Script:  userSearchAnimation,
 		Icon:    userSearchContent,
@@ -12,8 +12,8 @@ func UserSearch() *Icon {
 templ userSearchAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userSearchAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const searchGroup = el.querySelector('g.search');
 			animate(searchGroup,

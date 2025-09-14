@@ -8,8 +8,20 @@ package logo
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/nosvagor/hgmx-builder/views/components"
+
+type Props struct {
+	components.Styler
+	Logo templ.Component
+}
+
 func (p *Props) classes() string {
 	return p.Styler.Build()
+}
+
+func (p *Props) Style(classes ...string) components.Customizeable {
+	p.Styler.Add(classes...)
+	return p
 }
 
 func (p *Props) Render() templ.Component {
@@ -45,7 +57,7 @@ func (p *Props) Render() templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var2).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/app/logo/render.templ`, Line: 1, Col: 0}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/app/logo/logo.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

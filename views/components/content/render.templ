@@ -1,9 +1,0 @@
-package content
-
-templ (c *Props) Render() {
-	if c.Text != "" {
-		<span class={ c.Styler.Build() }>{ c.Text }</span>
-	} else {
-		@c.Component
-	}
-}

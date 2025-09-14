@@ -2,7 +2,7 @@ package icons
 
 func Palette() *Icon {
 	return &Icon{
-		Name:    "palette",
+		Name:    palette,
 		Handler: templ.NewOnceHandle(),
 		Script:  paletteAnimation,
 		Icon:    paletteContent,
@@ -12,8 +12,8 @@ func Palette() *Icon {
 templ paletteAnimation() {
 	<script type="module">
         import { animate, stagger, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.paletteAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const path = el.querySelector('path');
 			animate(path,

@@ -105,7 +105,7 @@ Define a templ component for the icon's animation. The component name should be 
 templ {iconName}Animation() {
     <script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
-        const τmax = 0.42, τmid = 0.27, τmin = 0.15;
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 
         // The animation function must be attached to the `window` object.
         // The function name must be in the format `{iconName}Animate`.

@@ -8,6 +8,11 @@ package nav
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+)
+
 var menuControllerScript = templ.NewOnceHandle()
 
 func (p *Props) menuController() templ.Component {
@@ -120,14 +125,14 @@ func (p *Props) Menu() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"nav-menu\" tabindex=\"0\" class=\"z-50 fixed top-2 left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"nav-menu\" tabindex=\"0\" class=\"hidden fixed top-2 left-4 z-50 justify-center items-center p-1.5 rounded-full cursor-pointer outline-none md:flex bg-base-600 text-secondary-601 hover:text-primary-401\" _=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(p.menuHyperscript())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/menu.templ`, Line: 244, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/menu.templ`, Line: 249, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -174,7 +179,7 @@ func (p *Props) MenuExpanded() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"nav-menu-expanded\" class=\"z-40 fixed inset-0 pointer-events-none h-svh\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 min-h-svh bg-black/10 backdrop-blur cursor-w-resize\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600\" style=\"transform: translateX(-100%);\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"nav-menu-expanded\" class=\"fixed inset-0 z-40 pointer-events-none h-svh\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 backdrop-blur min-h-svh bg-black/10 cursor-w-resize\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600\" style=\"transform: translateX(-100%);\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -189,6 +194,51 @@ func (p *Props) MenuExpanded() templ.Component {
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func (p *Props) MenuBookmarks() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var6 == nil {
+			templ_7745c5c3_Var6 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		if p.Bookmarks != nil {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div id=\"menu-bookmarks\" class=\"flex flex-col gap-4\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = p.Logo.Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			for _, link := range p.Bookmarks {
+				templ_7745c5c3_Err = button.GetCustom(link.Route(), icon.Text(link.Icon, link.Text()), button.Primary, "justify-start").Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		return nil
 	})
@@ -210,12 +260,12 @@ func (p *Props) MenuAccount() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div id=\"menu-account\" class=\"flex w-full flex-col gap-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div id=\"menu-account\" class=\"flex flex-col gap-2 w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -227,7 +277,7 @@ func (p *Props) MenuAccount() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

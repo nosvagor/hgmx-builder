@@ -2,7 +2,7 @@ package icons
 
 func UserCog() *Icon {
 	return &Icon{
-		Name:    "userCog",
+		Name:    userCog,
 		Handler: templ.NewOnceHandle(),
 		Script:  userCogAnimation,
 		Icon:    userCogContent,
@@ -12,8 +12,8 @@ func UserCog() *Icon {
 templ userCogAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userCogAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const gearGroup = el.querySelector('g.gear');
 			animate(gearGroup,

@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserMinus() *Icon {
 	return &Icon{
-		Name:    "userMinus",
+		Name:    userMinus,
 		Handler: templ.NewOnceHandle(),
 		Script:  userMinusAnimation,
 		Icon:    userMinusContent,
@@ -38,7 +38,7 @@ func userMinusAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.userMinusAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\tconst body = el.querySelector('path');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst minusLine = el.querySelector('line');\n\t\t\tanimate(minusLine,\n\t\t\t\t{ scale: [0, 1.25, 1], rotate: [0, 360] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.userMinusAnimate = (el) => {\n\n\t\t\tconst body = el.querySelector('path');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst minusLine = el.querySelector('line');\n\t\t\tanimate(minusLine,\n\t\t\t\t{ scale: [0, 1.25, 1], rotate: [0, 360] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

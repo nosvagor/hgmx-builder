@@ -2,7 +2,7 @@ package icons
 
 func UserPen() *Icon {
 	return &Icon{
-		Name:    "userPen",
+		Name:    userPen,
 		Handler: templ.NewOnceHandle(),
 		Script:  userPenAnimation,
 		Icon:    userPenContent,
@@ -12,8 +12,8 @@ func UserPen() *Icon {
 templ userPenAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userPenAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const pen = el.querySelector('path[d*="21.378"]');
 			animate(pen,

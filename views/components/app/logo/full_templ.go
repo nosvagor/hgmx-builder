@@ -8,6 +8,8 @@ package logo
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/nosvagor/hgmx-builder/views/components"
+
 var fullControllerHandler = templ.NewOnceHandle()
 
 func fullController() templ.Component {
@@ -88,6 +90,12 @@ func full() templ.Component {
 		}
 		return nil
 	})
+}
+
+func Full(classes ...string) components.Customizeable {
+	p := &Props{Logo: full()}
+	p.Styler.Add(classes...)
+	return p
 }
 
 var _ = templruntime.GeneratedTemplate

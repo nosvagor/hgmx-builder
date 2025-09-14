@@ -1,0 +1,23 @@
+package logo
+
+import "github.com/nosvagor/hgmx-builder/views/components"
+
+type Props struct {
+	components.Styler
+	Logo templ.Component
+}
+
+func (p *Props) classes() string {
+	return p.Styler.Build()
+}
+
+func (p *Props) Style(classes ...string) components.Customizeable {
+	p.Styler.Add(classes...)
+	return p
+}
+
+templ (p *Props) Render() {
+	<div class={ p.classes() }>
+		@p.Logo
+	</div>
+}

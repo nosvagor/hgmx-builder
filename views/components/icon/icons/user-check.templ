@@ -2,7 +2,7 @@ package icons
 
 func UserCheck() *Icon {
 	return &Icon{
-		Name:    "userCheck",
+		Name:    userCheck,
 		Handler: templ.NewOnceHandle(),
 		Script:  userCheckAnimation,
 		Icon:    userCheckContent,
@@ -12,8 +12,8 @@ func UserCheck() *Icon {
 templ userCheckAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userCheckAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const body = el.querySelector('path[d*="21v-2"]');
 			animate(body,

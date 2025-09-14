@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Settings() *Icon {
 	return &Icon{
-		Name:    "settings",
+		Name:    settings,
 		Handler: templ.NewOnceHandle(),
 		Script:  settingsAnimation,
 		Icon:    settingsContent,
@@ -38,7 +38,7 @@ func settingsAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.settingsAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n            const innerGear = el.querySelectorAll('circle');\n\t\t\tanimate(innerGear,\n\t\t\t\t{ scale: [1.15, 0.75, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst outerGear = el.querySelector('path');\n\t\t\tanimate(outerGear,\n                { rotate: [0, 360],  scale: [0, 1.15, 1], opacity: [0, 1]},\n                { duration: τmax, easeOut }\n            );\n\t\t};\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.settingsAnimate = (el) => {\n\n            const innerGear = el.querySelectorAll('circle');\n\t\t\tanimate(innerGear,\n\t\t\t\t{ scale: [0.5, 1.25, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst outerGear = el.querySelector('path');\n\t\t\tanimate(outerGear,\n                { rotate: [0, 360],  scale: [0, 1.15, 1], opacity: [0, 1]},\n                { duration: τmax, easeOut }\n            );\n\t\t};\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

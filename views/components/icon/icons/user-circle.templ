@@ -2,7 +2,7 @@ package icons
 
 func UserCircle() *Icon {
 	return &Icon{
-		Name:    "userCircle",
+		Name:    userCircle,
 		Handler: templ.NewOnceHandle(),
 		Script:  userCircleAnimation,
 		Icon:    userCircleContent,
@@ -12,8 +12,8 @@ func UserCircle() *Icon {
 templ userCircleAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userCircleAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const outerCircle = el.querySelector('circle[r="10"]');
 			animate(outerCircle,

@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Rss() *Icon {
 	return &Icon{
-		Name:    "rss",
+		Name:    rss,
 		Handler: templ.NewOnceHandle(),
 		Script:  rssAnimation,
 		Icon:    rssContent,

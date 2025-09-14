@@ -8,6 +8,42 @@ package nav
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import (
+	"github.com/nosvagor/hgmx-builder/internal/utils"
+	"github.com/nosvagor/hgmx-builder/views/components"
+	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
+)
+
+type Props struct {
+	components.Standard
+
+	Bookmarks       []Link
+	BookmarksMobile [3]Link
+	Account         templ.Component
+	Settings        templ.Component
+
+	Logo   templ.Component
+	Source templ.Component
+}
+
+type Link struct {
+	Path  string
+	Icon  *icons.Icon
+	Label string
+}
+
+func (l *Link) Route() string {
+	return "/" + l.Path
+}
+
+func (l *Link) Text() string {
+	if l.Label != "" {
+		return l.Label
+	}
+
+	return utils.Title(l.Path)
+}
+
 func (p *Props) Render() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -34,6 +70,10 @@ func (p *Props) Render() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = p.Navbar().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = p.MobileNav().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

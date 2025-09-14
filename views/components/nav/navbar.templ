@@ -1,5 +1,10 @@
 package nav
 
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+)
+
 var scrollControllerScript = templ.NewOnceHandle()
 
 templ scrollController() {
@@ -160,9 +165,28 @@ templ (p *Props) Navbar() {
 	@p.styles()
 	<nav
 		id="navbar"
-		class="z-30 flex w-full sticky top-0 items-center justify-between px-4 pl-14 py-2 pt-3 transition ease-in-out isolate"
+		class="hidden isolate sticky top-0 z-30 justify-between items-center px-4 py-3 pl-14 w-full transition ease-in-out md:flex"
 	>
 		@p.NavbarBookmarks()
 		@p.Source
 	</nav>
+}
+
+templ (p *Props) NavbarBookmarks() {
+	if p.Bookmarks != nil {
+		<div
+			id="navbar-bookmarks"
+			class="flex gap-1 items-center pl-1 font-medium font-display"
+			hx-target="#main"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			for i, link := range p.Bookmarks {
+				if i >= 4 {
+					{{ break }}
+				}
+				@button.Get(link.Route(), icon.Text(link.Icon, link.Text()))
+			}
+		</div>
+	}
 }

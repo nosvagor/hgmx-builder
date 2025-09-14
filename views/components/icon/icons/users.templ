@@ -2,7 +2,7 @@ package icons
 
 func Users() *Icon {
 	return &Icon{
-		Name:    "users",
+		Name:    users,
 		Handler: templ.NewOnceHandle(),
 		Script:  usersAnimation,
 		Icon:    usersContent,
@@ -12,8 +12,8 @@ func Users() *Icon {
 templ usersAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.usersAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const secondUserHead = el.querySelector('path[d*="16 3.128"]');
 			animate(secondUserHead,

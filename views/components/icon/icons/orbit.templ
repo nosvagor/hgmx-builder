@@ -11,9 +11,9 @@ func Orbit() *Icon {
 
 templ orbitAnimation() {
 	<script type="module">
-		import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.orbitAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 			const Θ = Number(el.dataset.rotation || 0);
 			const Δ = Θ + 360 + Math.random() * 100;
 			el.dataset.rotation = Δ;

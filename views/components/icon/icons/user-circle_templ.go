@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserCircle() *Icon {
 	return &Icon{
-		Name:    "userCircle",
+		Name:    userCircle,
 		Handler: templ.NewOnceHandle(),
 		Script:  userCircleAnimation,
 		Icon:    userCircleContent,
@@ -38,7 +38,7 @@ func userCircleAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.userCircleAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\tconst outerCircle = el.querySelector('circle[r=\"10\"]');\n\t\t\tanimate(outerCircle,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0.5, 1], rotate: [270, 115] },\n\t\t\t\t{ duration: τmid, easeOut }\n\t\t\t);\n\n\t\t\tconst body = el.querySelector('path');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelectorAll('circle[r=\"3\"]');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0], opacity: [1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.userCircleAnimate = (el) => {\n\n\t\t\tconst outerCircle = el.querySelector('circle[r=\"10\"]');\n\t\t\tanimate(outerCircle,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0.5, 1], rotate: [270, 115] },\n\t\t\t\t{ duration: τmid, easeOut }\n\t\t\t);\n\n\t\t\tconst body = el.querySelector('path');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelectorAll('circle[r=\"3\"]');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, -2, 0], opacity: [1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

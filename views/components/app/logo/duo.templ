@@ -1,5 +1,7 @@
 package logo
 
+import "github.com/nosvagor/hgmx-builder/views/components"
+
 var duoControllerHandler = templ.NewOnceHandle()
 
 templ duoController() {
@@ -21,4 +23,10 @@ templ duo() {
 			<path stroke="#000" d="M29 28h-5.817c-1.375-2.76-2.815-5.49-4.142-8.273-1.28-2.824-.898-6.186.656-8.822L23.283 4H29c-1.798 3.294-3.656 6.557-5.412 9.874-.758 1.342-.61 3.014.189 4.302C25.543 21.436 27.256 24.727 29 28Z"></path>
 		</g>
 	</svg>
+}
+
+func Duo(classes ...string) components.Customizeable {
+	p := &Props{Logo: duo()}
+	p.Styler.Add(classes...)
+	return p
 }

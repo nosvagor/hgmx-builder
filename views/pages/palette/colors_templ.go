@@ -42,7 +42,7 @@ func Palette(colors []ColorScaleView, hex string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"p-4 mx-auto max-w-6xl w-full font-sans bg-bgc-600 text-fgc-600 isolate\"><div class=\"flex flex-col space-y-3\"><div class=\"flex items-center\"><div class=\"w-16 shrink-0\"></div><div class=\"grid flex-1 grid-cols-11 gap-x-2 mb-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-6xl w-full font-sans bg-bgc-600 text-fgc-600 isolate\"><div class=\"flex flex-col space-y-3\"><div class=\"flex items-center\"><div class=\"w-16 shrink-0\"></div><div class=\"grid flex-1 grid-cols-11 gap-x-2 mb-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

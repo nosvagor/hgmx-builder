@@ -46,26 +46,19 @@ func navbar() templ.Component {
 		Settings: button.Get("/settings", icon.Text(icons.Settings(), "Settings"), opts...),
 		Account:  button.Get("/account", icon.Text(icons.User(), "Account"), opts...),
 		Source:   source.Source("github.com/nosvagor/hgmx-builder", icons.Github(), fmtStars(gitStats.Stars)),
-	}
-
-	bookmarks := []nav.Link{
-		{Path: "docs", Icon: icons.Scroll()},
-		{Path: "palette", Icon: icons.Palette()},
-		{Path: "icons", Icon: icons.Orbit()},
-		{Path: "blog", Icon: icons.Rss()},
-		{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
-		{Path: "users", Icon: icons.Users()},
-	}
-
-	for _, link := range bookmarks {
-		p.Bookmarks = append(p.Bookmarks,
-			button.GetCustom(
-				"/"+link.Path,
-				icon.Text(link.Icon, link.Text()),
-				button.Primary,
-				"justify-start",
-			),
-		)
+		BookmarksMobile: [3]nav.Link{
+			{Path: "docs", Icon: icons.Scroll()},
+			{Path: "palette", Icon: icons.Palette()},
+			{Path: "blog", Icon: icons.Rss()},
+		},
+		Bookmarks: []nav.Link{
+			{Path: "docs", Icon: icons.Scroll()},
+			{Path: "palette", Icon: icons.Palette()},
+			{Path: "icons", Icon: icons.Orbit()},
+			{Path: "blog", Icon: icons.Rss()},
+			{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
+			{Path: "users", Icon: icons.Users()},
+		},
 	}
 
 	return p.Render()

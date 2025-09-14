@@ -2,7 +2,7 @@ package icons
 
 func UserContact() *Icon {
 	return &Icon{
-		Name:    "userContact",
+		Name:    userContact,
 		Handler: templ.NewOnceHandle(),
 		Script:  userContactAnimation,
 		Icon:    userContactContent,
@@ -12,8 +12,8 @@ func UserContact() *Icon {
 templ userContactAnimation() {
 	<script type="module">
         import { animate, stagger, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userContactAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const card = el.querySelector('rect');
 			animate(card,

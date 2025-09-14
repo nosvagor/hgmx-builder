@@ -80,45 +80,43 @@ templ (p *Props) Render() {
 	}
 }
 
-// --> Factories -->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->-->
-
-func Get(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: Primary}
-	return p.Render()
+templ Get(path string, content components.Customizeable, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: Primary} }}
+	@p.Render()
 }
 
-func GetCustom(path string, content components.Customizeable, variant Variant, classes string, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: variant}
-	p.Styler.Add(classes)
-	return p.Render()
+templ GetCustom(path string, content components.Customizeable, variant Variant, classes string, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Get(path, opts...), Content: content, Variant: variant} }}
+	{{ p.Styler.Add(classes) }}
+	@p.Render()
 }
 
-func Link(href string, content components.Customizeable) templ.Component {
-	p := &Props{Href: href, Content: content, Variant: External}
-	return p.Render()
+templ Link(href string, content components.Customizeable) {
+	{{ p := &Props{Href: href, Content: content, Variant: External} }}
+	@p.Render()
 }
 
-func Bust(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Primary}
-	return p.Render()
+templ Bust(path string, content components.Customizeable, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Primary} }}
+	@p.Render()
 }
 
-func Post(path string, content components.Customizeable, opts htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Post(path, opts), Content: content, Variant: Constructive}
-	return p.Render()
+templ Post(path string, content components.Customizeable, opts htmx.Options) {
+	{{ p := &Props{HX: htmx.Post(path, opts), Content: content, Variant: Constructive} }}
+	@p.Render()
 }
 
-func Put(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Put(path, opts...), Content: content, Variant: Transformative}
-	return p.Render()
+templ Put(path string, content components.Customizeable, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Put(path, opts...), Content: content, Variant: Transformative} }}
+	@p.Render()
 }
 
-func Patch(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Patch(path, opts...), Content: content, Variant: Transformative}
-	return p.Render()
+templ Patch(path string, content components.Customizeable, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Patch(path, opts...), Content: content, Variant: Transformative} }}
+	@p.Render()
 }
 
-func Delete(path string, content components.Customizeable, opts ...htmx.Options) templ.Component {
-	p := &Props{HX: htmx.Delete(path, opts...), Content: content, Variant: Destructive}
-	return p.Render()
+templ Delete(path string, content components.Customizeable, opts ...htmx.Options) {
+	{{ p := &Props{HX: htmx.Delete(path, opts...), Content: content, Variant: Destructive} }}
+	@p.Render()
 }

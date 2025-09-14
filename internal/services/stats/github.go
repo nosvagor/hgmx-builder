@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/nosvagor/hgmx-builder/internal/utils"
 )
 
 type Github struct {
@@ -46,14 +44,10 @@ func (g Github) FetchRepoStats(ctx context.Context, owner, repo string) (RepoSta
 		return RepoStat{}, fmt.Errorf("github api: %s", res.Status)
 	}
 
-	utils.Debug(res.Body, "github api response")
-
 	var gr githubRepoResponse
 	if err := json.NewDecoder(res.Body).Decode(&gr); err != nil {
 		return RepoStat{}, err
 	}
-
-	utils.Debug(gr, "github api response")
 
 	rs := RepoStat{
 		Owner:       owner,

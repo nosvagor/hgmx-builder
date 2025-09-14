@@ -2,7 +2,7 @@ package icons
 
 func UserMinus() *Icon {
 	return &Icon{
-		Name:    "userMinus",
+		Name:    userMinus,
 		Handler: templ.NewOnceHandle(),
 		Script:  userMinusAnimation,
 		Icon:    userMinusContent,
@@ -12,8 +12,8 @@ func UserMinus() *Icon {
 templ userMinusAnimation() {
 	<script type="module">
         import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userMinusAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const body = el.querySelector('path');
 			animate(body,

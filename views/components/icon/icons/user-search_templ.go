@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func UserSearch() *Icon {
 	return &Icon{
-		Name:    "userSearch",
+		Name:    userSearch,
 		Handler: templ.NewOnceHandle(),
 		Script:  userSearchAnimation,
 		Icon:    userSearchContent,
@@ -38,7 +38,7 @@ func userSearchAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.userSearchAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\tconst searchGroup = el.querySelector('g.search');\n\t\t\tanimate(searchGroup,\n\t\t\t\t{ scale: [1.35, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t\tanimate(searchGroup,\n\t\t\t\t{\n\t\t\t\t\ttranslateX: [0, -12, 2, 0],\n\t\t\t\t\ttranslateY: [0, -6, -5, 0]\n\t\t\t\t},\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle[cx=\"10\"]');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, 1, -2, 0], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst body = el.querySelector('path[d*=\"15H7\"]');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.userSearchAnimate = (el) => {\n\n\t\t\tconst searchGroup = el.querySelector('g.search');\n\t\t\tanimate(searchGroup,\n\t\t\t\t{ scale: [1.35, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t\tanimate(searchGroup,\n\t\t\t\t{\n\t\t\t\t\ttranslateX: [0, -12, 2, 0],\n\t\t\t\t\ttranslateY: [0, -6, -5, 0]\n\t\t\t\t},\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\n\t\t\tconst head = el.querySelector('circle[cx=\"10\"]');\n\t\t\tanimate(head,\n\t\t\t\t{ translateY: [1, 1, -2, 0], opacity: [0, 1] },\n\t\t\t\t{ duration: τmid, delay: τmin, easeOut }\n\t\t\t);\n\n\t\t\tconst body = el.querySelector('path[d*=\"15H7\"]');\n\t\t\tanimate(body,\n\t\t\t\t{ pathLength: [0, 1], opacity: [0, 1] },\n\t\t\t\t{ duration: τmin, delay: τmid, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -2,7 +2,7 @@ package icons
 
 func UserX() *Icon {
 	return &Icon{
-		Name:    "userX",
+		Name:    userX,
 		Handler: templ.NewOnceHandle(),
 		Script:  userXAnimation,
 		Icon:    userXContent,
@@ -12,8 +12,8 @@ func UserX() *Icon {
 templ userXAnimation() {
 	<script type="module">
         import { animate, stagger, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.userXAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
 			const body = el.querySelector('path');
 			animate(body,

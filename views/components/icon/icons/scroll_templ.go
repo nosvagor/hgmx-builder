@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Scroll() *Icon {
 	return &Icon{
-		Name:    "scroll",
+		Name:    scroll,
 		Handler: templ.NewOnceHandle(),
 		Script:  scrollAnimation,
 		Icon:    scrollContent,
@@ -38,7 +38,7 @@ func scrollAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger, easeOut } from \"/static/scripts/motion.min.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\t\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\n\t\t\t\tconst scrollPaths = [paths[2], paths[3]];\n\t\t\t\tanimate(scrollPaths,\n\t\t\t\t\t{ y: [-10, 2, 0] },\n\t\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t\t);\n\t\t\t\tanimate(scrollPaths,\n\t\t\t\t\t{ pathLength: [0, 1] },\n\t\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t\t);\n\n\t\t\t\tconst textPaths = [paths[0], paths[1]];\n\t\t\t\tanimate(textPaths,\n\t\t\t\t\t{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },\n\t\t\t\t\t{ delay: stagger(0.12), easeOut }\n\t\t\t\t);\n\t\t\t};\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, stagger, easeOut } from \"/static/scripts/motion.min.js\";\n\t\timport { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\t\twindow.scrollAnimate = (el) => {\n\n\t\t\t\tconst paths = el.querySelectorAll('path');\n\n\t\t\t\tconst scrollPaths = [paths[2], paths[3]];\n\t\t\t\tanimate(scrollPaths,\n\t\t\t\t\t{ y: [-10, 2, 0] },\n\t\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t\t);\n\t\t\t\tanimate(scrollPaths,\n\t\t\t\t\t{ pathLength: [0, 1] },\n\t\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t\t);\n\n\t\t\t\tconst textPaths = [paths[0], paths[1]];\n\t\t\t\tanimate(textPaths,\n\t\t\t\t\t{ opacity: [0, 1], x: [-3, 0], y: [-2, 0] },\n\t\t\t\t\t{ delay: stagger(0.12), easeOut }\n\t\t\t\t);\n\t\t\t};\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

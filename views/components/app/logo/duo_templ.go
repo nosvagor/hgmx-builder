@@ -8,6 +8,8 @@ package logo
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/nosvagor/hgmx-builder/views/components"
+
 var duoControllerHandler = templ.NewOnceHandle()
 
 func duoController() templ.Component {
@@ -88,6 +90,12 @@ func duo() templ.Component {
 		}
 		return nil
 	})
+}
+
+func Duo(classes ...string) components.Customizeable {
+	p := &Props{Logo: duo()}
+	p.Styler.Add(classes...)
+	return p
 }
 
 var _ = templruntime.GeneratedTemplate

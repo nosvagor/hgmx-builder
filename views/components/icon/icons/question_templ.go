@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 func Question() *Icon {
 	return &Icon{
-		Name:    "question",
+		Name:    question,
 		Handler: templ.NewOnceHandle(),
 		Script:  questionAnimation,
 		Icon:    questionContent,
@@ -38,7 +38,7 @@ func questionAnimation() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\twindow.questionAnimate = (el) => {\n\t\t\tconst τmax = 0.42, τmid = 0.27, τmin = 0.15;\n\n\t\t\tconst circle = el.querySelector('circle');\n\t\t\tanimate(circle,\n\t\t\t\t{ pathLength: [0, 1], rotate: [270, 90] },\n\t\t\t\t{ duration: τmid, easeOut }\n\t\t\t);\n\n\t\t\tconst questionMark = el.querySelectorAll('path');\n\t\t\tanimate(questionMark,\n\t\t\t\t{ rotateY: [0, 360], scale: [1, 1.35, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n        import { animate, easeOut } from \"/static/scripts/motion.min.js\";\n        import { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\twindow.questionAnimate = (el) => {\n\n\t\t\tconst circle = el.querySelector('circle');\n\t\t\tanimate(circle,\n\t\t\t\t{ pathLength: [0, 1], rotate: [270, 90] },\n\t\t\t\t{ duration: τmid, easeOut }\n\t\t\t);\n\n\t\t\tconst questionMark = el.querySelectorAll('path');\n\t\t\tanimate(questionMark,\n\t\t\t\t{ rotateY: [0, 360], scale: [1, 1.35, 1] },\n\t\t\t\t{ duration: τmax, easeOut }\n\t\t\t);\n\t\t}\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

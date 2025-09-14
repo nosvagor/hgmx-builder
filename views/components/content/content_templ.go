@@ -8,6 +8,28 @@ package content
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/nosvagor/hgmx-builder/views/components"
+
+func Text(text string) components.Customizeable {
+	return &Props{Text: text}
+}
+
+func Component(c templ.Component) components.Customizeable {
+	return &Props{Component: c}
+}
+
+type Props struct {
+	components.Styler
+	Text string
+
+	Component templ.Component
+}
+
+func (p *Props) Style(classes ...string) components.Customizeable {
+	p.Styler.Add(classes...)
+	return p
+}
+
 func (c *Props) Render() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -42,7 +64,7 @@ func (c *Props) Render() templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var2).String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/content/render.templ`, Line: 1, Col: 0}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/content/content.templ`, Line: 1, Col: 0}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -55,7 +77,7 @@ func (c *Props) Render() templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(c.Text)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/content/render.templ`, Line: 5, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/content/content.templ`, Line: 27, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {

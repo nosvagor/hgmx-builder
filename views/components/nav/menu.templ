@@ -1,5 +1,10 @@
 package nav
 
+import (
+	"github.com/nosvagor/hgmx-builder/views/components/button"
+	"github.com/nosvagor/hgmx-builder/views/components/icon"
+)
+
 var menuControllerScript = templ.NewOnceHandle()
 
 templ (p *Props) menuController() {
@@ -240,7 +245,7 @@ templ (p *Props) Menu() {
 	<div
 		id="nav-menu"
 		tabindex="0"
-		class="z-50 fixed top-2 left-4 flex justify-center items-center rounded-full p-1.5 cursor-pointer outline-none bg-base-600 text-secondary-601 hover:text-primary-401"
+		class="hidden fixed top-2 left-4 z-50 justify-center items-center p-1.5 rounded-full cursor-pointer outline-none md:flex bg-base-600 text-secondary-601 hover:text-primary-401"
 		_={ p.menuHyperscript() }
 	>
 		@p.menuController()
@@ -261,8 +266,8 @@ templ (p *Props) Menu() {
 }
 
 templ (p *Props) MenuExpanded() {
-	<div id="nav-menu-expanded" class="z-40 fixed inset-0 pointer-events-none h-svh">
-		<div id="menu-backdrop" class="absolute inset-0 opacity-0 min-h-svh bg-black/10 backdrop-blur cursor-w-resize"></div>
+	<div id="nav-menu-expanded" class="fixed inset-0 z-40 pointer-events-none h-svh">
+		<div id="menu-backdrop" class="absolute inset-0 opacity-0 backdrop-blur min-h-svh bg-black/10 cursor-w-resize"></div>
 		<div
 			id="menu-bg"
 			class="flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600"
@@ -274,8 +279,25 @@ templ (p *Props) MenuExpanded() {
 	</div>
 }
 
+templ (p *Props) MenuBookmarks() {
+	if p.Bookmarks != nil {
+		<div
+			id="menu-bookmarks"
+			class="flex flex-col gap-4"
+			hx-target="#main"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			@p.Logo
+			for _, link := range p.Bookmarks {
+				@button.GetCustom(link.Route(), icon.Text(link.Icon, link.Text()), button.Primary, "justify-start")
+			}
+		</div>
+	}
+}
+
 templ (p *Props) MenuAccount() {
-	<div id="menu-account" class="flex w-full flex-col gap-2">
+	<div id="menu-account" class="flex flex-col gap-2 w-full">
 		@p.Account
 		@p.Settings
 	</div>

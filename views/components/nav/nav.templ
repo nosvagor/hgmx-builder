@@ -1,0 +1,46 @@
+package nav
+
+import (
+	"github.com/nosvagor/hgmx-builder/internal/utils"
+	"github.com/nosvagor/hgmx-builder/views/components"
+	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
+)
+
+type Props struct {
+	components.Standard
+
+	Bookmarks       []Link
+	BookmarksMobile [3]Link
+	Account         templ.Component
+	Settings        templ.Component
+
+	Logo   templ.Component
+	Source templ.Component
+}
+
+type Link struct {
+	Path  string
+	Icon  *icons.Icon
+	Label string
+}
+
+func (l *Link) Route() string {
+	return "/" + l.Path
+}
+
+func (l *Link) Text() string {
+	if l.Label != "" {
+		return l.Label
+	}
+
+	return utils.Title(l.Path)
+}
+
+templ (p *Props) Render() {
+	// pinned sidebar 
+	@p.Menu()
+	@p.Navbar()
+	@p.MobileNav()
+	// telescope/find?
+	// command?
+}

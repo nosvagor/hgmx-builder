@@ -2,7 +2,7 @@ package icons
 
 func Settings() *Icon {
 	return &Icon{
-		Name:    "settings",
+		Name:    settings,
 		Handler: templ.NewOnceHandle(),
 		Script:  settingsAnimation,
 		Icon:    settingsContent,
@@ -11,13 +11,13 @@ func Settings() *Icon {
 
 templ settingsAnimation() {
 	<script type="module">
-		import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { animate, easeOut } from "/static/scripts/motion.min.js";
+        import { τmax, τmid, τmin } from "/static/scripts/constants.js";
 		window.settingsAnimate = (el) => {
-			const τmax = 0.42, τmid = 0.27, τmin = 0.15;
 
             const innerGear = el.querySelectorAll('circle');
 			animate(innerGear,
-				{ scale: [1.15, 0.75, 1] },
+				{ scale: [0.5, 1.25, 1] },
 				{ duration: τmax, easeOut }
 			);
 

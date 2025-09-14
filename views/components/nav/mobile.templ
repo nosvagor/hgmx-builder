@@ -1,0 +1,46 @@
+package nav
+
+import "github.com/nosvagor/hgmx-builder/views/components/icon"
+
+templ (p *Props) MobileNav() {
+	<nav
+		id="mobile-nav"
+		class="flex fixed right-0 bottom-0 left-0 z-50 flex-row justify-between backdrop-blur-md md:hidden bg-base-600/95"
+	>
+		@p.MobileBookmarks()
+	</nav>
+}
+
+templ (p *Props) MobileMenu() {
+	<div class="relative flex justify-center items-center w-full py-2 pt-3 cursor-pointer hover:text-primary-401 active:text-primary-401">
+		<svg viewBox="0 0.5 24 24" width="2.25em" height="2.25em" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="z-50">
+			<path id="menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
+			<path id="menu-mid" d="M 3,12 C 8,12 16,12 21,12"></path>
+			<path id="menu-bot" d="M 3,17 C 8,17 16,17 21,17"></path>
+		</svg>
+	</div>
+}
+
+templ (p *Props) MobileBookmarks() {
+	<div
+		id="mobile-bookmarks"
+		class="flex flex-1 justify-between border-t border-base-300"
+		hx-target="#main"
+		hx-swap="outerHTML"
+		hx-push-url="true"
+	>
+		for _, link := range p.BookmarksMobile {
+			@mobileBookmark(link)
+		}
+		@p.MobileMenu()
+	</div>
+}
+
+templ mobileBookmark(link Link) {
+	<div
+		hx-get={ link.Route() }
+		class="flex flex-col justify-center items-center py-2 w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401"
+	>
+		@icon.Icon(link.Icon).Render()
+	</div>
+}

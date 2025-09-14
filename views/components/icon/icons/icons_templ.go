@@ -155,4 +155,28 @@ func BrandSVG() templ.Component {
 	})
 }
 
+type name string
+
+const (
+	github      name = "github"
+	orbit       name = "orbit"
+	palette     name = "palette"
+	question    name = "question"
+	rss         name = "rss"
+	scroll      name = "scroll"
+	settings    name = "settings"
+	user        name = "user"
+	userCheck   name = "userCheck"
+	userCircle  name = "userCircle"
+	userCog     name = "userCog"
+	userContact name = "userContact"
+	userMinus   name = "userMinus"
+	userPen     name = "userPen"
+	userPlus    name = "userPlus"
+	userSearch  name = "userSearch"
+	userStar    name = "userStar"
+	userX       name = "userX"
+	users       name = "users"
+)
+
 var _ = templruntime.GeneratedTemplate
