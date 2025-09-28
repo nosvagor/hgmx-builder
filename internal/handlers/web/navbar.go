@@ -11,7 +11,6 @@ import (
 	"github.com/nosvagor/hgmx-builder/views/components/app/logo"
 	"github.com/nosvagor/hgmx-builder/views/components/app/source"
 	"github.com/nosvagor/hgmx-builder/views/components/button"
-	"github.com/nosvagor/hgmx-builder/views/components/icon"
 	"github.com/nosvagor/hgmx-builder/views/components/icon/icons"
 	"github.com/nosvagor/hgmx-builder/views/components/nav"
 	"github.com/nosvagor/hgmx-builder/views/utils/htmx"
@@ -42,10 +41,8 @@ func navbar() templ.Component {
 	}
 
 	p := &nav.Props{
-		Logo:     button.GetCustom("/", logo.Full("text-surface-50", "text-lg"), button.Primary, "p-2", opts...),
-		Settings: button.Get("/settings", icon.Text(icons.Settings(), "Settings"), opts...),
-		Account:  button.Get("/account", icon.Text(icons.User(), "Account"), opts...),
-		Source:   source.Source("github.com/nosvagor/hgmx-builder", icons.Github(), fmtStars(gitStats.Stars)),
+		Logo:   button.GetCustom("/", logo.Full("text-surface-50", "text-lg"), button.Primary, "p-2", opts...),
+		Source: source.Source("github.com/nosvagor/hgmx-builder", icons.Github(), fmtStars(gitStats.Stars)),
 		BookmarksMobile: [3]nav.Link{
 			{Path: "docs", Icon: icons.Scroll()},
 			{Path: "palette", Icon: icons.Palette()},
@@ -59,6 +56,8 @@ func navbar() templ.Component {
 			{Path: "faq", Icon: icons.Question(), Label: "FAQ"},
 			{Path: "users", Icon: icons.Users()},
 		},
+		Settings: nav.Link{Path: "settings", Icon: icons.Settings()},
+		Account:  nav.Link{Path: "account", Icon: icons.User()},
 	}
 
 	return p.Render()

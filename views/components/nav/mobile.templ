@@ -17,7 +17,7 @@ templ mobileMenuController() {
 			const open = mobileMenu.classList.contains('mobile-menu-open');
 			const expandedMenu = document.getElementById('mobile-menu-expanded');
 			const nav = document.getElementById('mobile-nav');
-			const popoutBehavior = ['absolute', 'bottom-4', 'right-0', 'pr-8', 'pl-4', 'scale-135'];
+			const popoutBehavior = ['absolute', 'bottom-4', 'right-0', 'pr-6', 'pl-4', 'scale-135'];
 
 			function closeMenu() {
 				mobileMenu.classList.remove('mobile-menu-open');
@@ -26,7 +26,7 @@ templ mobileMenuController() {
 				setTimeout(() => {
 					mobileMenu.classList.remove(...popoutBehavior);
 					mobileMenu.classList.add('w-full');
-				}, τmid*1000 - 100);
+				}, (expandedMenu.scrollHeight * 0.3));
 
 				const textSpans = nav.querySelectorAll('.mobile-bookmark-text');
 				animate(textSpans, { opacity: 0 }, τ)
@@ -140,10 +140,31 @@ templ (p *Props) MobileMenuIcon() {
 }
 
 templ (p *Props) MobileMenuExpanded() {
-	<div id="mobile-menu-expanded" class="overflow-hidden h-0">
-		<div class="px-6 py-4 h-[50vh]">
-			<h2 class="text-lg font-semibold">Mobile Menu</h2>
-			<p class="text-sm">This should expand smoothly!</p>
+	<div id="mobile-menu-expanded" class="overflow-hidden h-0 w-full">
+		<div
+			class="px-6 py-4 h-[50vh] w-full text-lg"
+			hx-target="#main"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			<div class="flex flex-col gap-2">
+				for _, link := range p.RemainingBookmarks() {
+					<div class="flex items-center gap-2">
+						@icon.Icon(link.Icon).Render()
+						<span>{ link.Text() }</span>
+					</div>
+				}
+			</div>
+			<div class="flex flex-col gap-2">
+				<div class="flex items-center gap-2">
+					@icon.Icon(p.Account.Icon).Render()
+					<span>{ p.Account.Text() }</span>
+				</div>
+				<div class="flex items-center gap-2">
+					@icon.Icon(p.Settings.Icon).Render()
+					<span>{ p.Settings.Text() }</span>
+				</div>
+			</div>
 		</div>
 	</div>
 }

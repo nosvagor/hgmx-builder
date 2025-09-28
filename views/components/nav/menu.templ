@@ -298,7 +298,7 @@ templ (p *Props) MenuBookmarks() {
 
 templ (p *Props) MenuAccount() {
 	<div id="menu-account" class="flex flex-col gap-2 w-full">
-		@p.Account
-		@p.Settings
+		@button.GetCustom(p.Account.Route(), icon.Text(p.Account.Icon, p.Account.Text()), button.Primary, "justify-start")
+		@button.GetCustom(p.Settings.Route(), icon.Text(p.Settings.Icon, p.Settings.Text()), button.Primary, "justify-start")
 	</div>
 }

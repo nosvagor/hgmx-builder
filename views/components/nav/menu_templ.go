@@ -269,11 +269,11 @@ func (p *Props) MenuAccount() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = p.Account.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = button.GetCustom(p.Account.Route(), icon.Text(p.Account.Icon, p.Account.Text()), button.Primary, "justify-start").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = p.Settings.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = button.GetCustom(p.Settings.Route(), icon.Text(p.Settings.Icon, p.Settings.Text()), button.Primary, "justify-start").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

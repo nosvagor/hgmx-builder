@@ -19,11 +19,28 @@ type Props struct {
 
 	Bookmarks       []Link
 	BookmarksMobile [3]Link
-	Account         templ.Component
-	Settings        templ.Component
+	Account         Link
+	Settings        Link
 
 	Logo   templ.Component
 	Source templ.Component
+}
+
+func (p *Props) RemainingBookmarks() []Link {
+	var remaining []Link
+	mobileSet := make(map[string]bool)
+
+	for _, mobileLink := range p.BookmarksMobile {
+		mobileSet[mobileLink.Path] = true
+	}
+
+	for _, bookmark := range p.Bookmarks {
+		if !mobileSet[bookmark.Path] {
+			remaining = append(remaining, bookmark)
+		}
+	}
+
+	return remaining
 }
 
 type Link struct {
