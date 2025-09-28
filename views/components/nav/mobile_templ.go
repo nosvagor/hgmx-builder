@@ -45,7 +45,7 @@ func mobileMenuController() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\timport { τmax, τmid, τmin } from \"/static/scripts/constants.js\";\n\t\tconst τ = { duration: τmin, ease: easeOut };\n\n\t\tconst mobileMenu = document.getElementById('mobile-menu-trigger');\n\n\t\tfunction toggleMobileMenu() {\n\t\t\tconst open = mobileMenu.classList.contains('mobile-menu-open');\n\t\t\tconst expandedMenu = document.getElementById('mobile-menu-expanded');\n\t\t\tconst nav = document.getElementById('mobile-nav');\n\n\t\t\tfunction closeMenu() {\n\t\t\t\tmobileMenu.classList.remove('mobile-menu-open');\n\t\t\t\tsetMobileMenuIcon('hamburger');\n\n\t\t\t\tconst textSpans = nav.querySelectorAll('.mobile-bookmark-text');\n\t\t\t\ttextSpans.forEach(span => {\n\t\t\t\t\tanimate(span, { opacity: 0 }, τ)\n\t\t\t\t\t\t.then(() => {\n\t\t\t\t\t\t\tspan.classList.add('hidden');\n\t\t\t\t\t\t\tconst originalText = span.getAttribute('data-text');\n\t\t\t\t\t\t\tif (originalText) span.textContent = originalText;\n\t\t\t\t\t\t});\n\t\t\t\t});\n\n\t\t\t\tanimate(expandedMenu, { height: 0 }, τ)\n\t\t\t\t\t.then(() => expandedMenu.classList.add('hidden'));\n\t\t\t}\n\n\t\t\tfunction typeWriter(span, text, dur = 320) {\n\t\t\t\tlet i = 0;\n\t\t\t\tconst speed = dur / text.length; \n\t\t\t\tspan.textContent = '';\n\t\t\t\tspan.classList.remove('hidden');\n\t\t\t\tanimate(span, { opacity: 1 }, τ);\n\n\t\t\t\tfunction type() {\n\t\t\t\t\tif (i < text.length) {\n\t\t\t\t\t\tspan.textContent += text.charAt(i); i++;\n\t\t\t\t\t\tsetTimeout(type, speed);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\ttype();\n\t\t\t}\n\n\t\t\tfunction openMenu() {\n\t\t\t\tmobileMenu.classList.add('mobile-menu-open');\n\t\t\t\tsetMobileMenuIcon('close');\n\n\t\t\t\tconst textSpans = nav.querySelectorAll('.mobile-bookmark-text');\n\t\t\t\ttextSpans.forEach((span) => {\n\t\t\t\t\tconst text = span.getAttribute('data-text') || span.textContent;\n\t\t\t\t\tspan.setAttribute('data-text', text);\n\t\t\t\t\ttypeWriter(span, text);\n\t\t\t\t});\n\n\t\t\t\texpandedMenu.classList.remove('hidden');\n\t\t\t\tconst targetHeight = expandedMenu.scrollHeight;\n\t\t\t\tanimate(expandedMenu, { height: [0, targetHeight] }, τ);\n\t\t\t}\n\n\t\t\topen ? closeMenu() : openMenu();\n\t\t}\n\n\t\tfunction setMobileMenuIcon(icon) {\n\t\t\tconst top = document.getElementById('mobile-menu-top');\n\t\t\tconst mid = document.getElementById('mobile-menu-mid');\n\t\t\tconst bot = document.getElementById('mobile-menu-bot');\n\t\t\tconst t = { duration: τmid, ease: easeOut };\n\n\t\t\tconst iconPaths = {\n\t\t\t\thamburger: {\n\t\t\t\t\ttop: \"M 3,7 C 8,7 16,7 21,7\",\n\t\t\t\t\tmid: \"M 3,12 C 8,12 16,12 21,12\",\n\t\t\t\t\tbot: \"M 3,17 C 8,17 16,17 21,17\",\n\t\t\t\t},\n\t\t\t\tclose: {\n\t\t\t\t\ttop: \"M 6,6 C 9,9 15,15 18,18\",\n\t\t\t\t\tmid: \"M 26,12 C 26,12 26,12 26,12\",\n\t\t\t\t\tbot: \"M 6,18 C 9,15 15,9 18,6\",\n\t\t\t\t}\n\t\t\t};\n\t\t\n\n\t\t\tconst rotate = icon === 'close' ? [0, 90, 90, 90] : [90, 90, -15, 0];\n\t\t\tconst ease = icon === 'close' ? 'easeIn' : 'easeOut';\n\t\t\tconst opacity = icon === 'close' ? [1, 0] : [0.5, 1];\n\t\t\tanimate(top, { d: iconPaths[icon].top}, t);\n\t\t\tanimate(mid, { d: iconPaths[icon].mid, opacity: opacity, rotate: rotate }, { duration: τmid, ease: ease });\n\t\t\tanimate(bot, { d: iconPaths[icon].bot}, t);\n\t\t}\n\n\t\tmobileMenu.toggleMobileMenu = toggleMobileMenu;\n\t\tmobileMenu.setMobileMenuIcon = setMobileMenuIcon;\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<script type=\"module\">\n\t\timport { animate, easeOut } from \"/static/scripts/motion.min.js\";\n\t\timport { τmid } from \"/static/scripts/constants.js\";\n\t\tconst τ = { duration: τmid, ease: easeOut };\n\n\t\tconst mobileMenu = document.getElementById('mobile-menu-trigger');\n\n\t\tfunction toggleMobileMenu() {\n\t\t\tconst open = mobileMenu.classList.contains('mobile-menu-open');\n\t\t\tconst expandedMenu = document.getElementById('mobile-menu-expanded');\n\t\t\tconst nav = document.getElementById('mobile-nav');\n\n\t\t\tfunction closeMenu() {\n\t\t\t\tmobileMenu.classList.remove('mobile-menu-open');\n\t\t\t\tsetMobileMenuIcon('hamburger');\n\n\t\t\t\tconst textSpans = nav.querySelectorAll('.mobile-bookmark-text');\n\t\t\t\tanimate(textSpans, { opacity: 0 }, τ)\n\t\t\t\tanimate(expandedMenu, { height: 0 }, τ)\n\t\t\t}\n\n\n\t\t\tfunction openMenu() {\n\t\t\t\tmobileMenu.classList.add('mobile-menu-open');\n\t\t\t\tsetMobileMenuIcon('close');\n\n\t\t\t\tconst textSpans = nav.querySelectorAll('.mobile-bookmark-text');\n\t\t\t\tanimate(textSpans, { opacity: 1 }, τ);\n\n\t\t\t\tconst targetHeight = expandedMenu.scrollHeight;\n\t\t\t\tanimate(expandedMenu, { height: [0, targetHeight] }, τ);\n\t\t\t}\n\n\t\t\topen ? closeMenu() : openMenu();\n\t\t}\n\n\t\tfunction setMobileMenuIcon(icon) {\n\t\t\tconst top = document.getElementById('mobile-menu-top');\n\t\t\tconst mid = document.getElementById('mobile-menu-mid');\n\t\t\tconst bot = document.getElementById('mobile-menu-bot');\n\t\t\tconst t = { duration: τmid, ease: easeOut };\n\n\t\t\tconst iconPaths = {\n\t\t\t\thamburger: {\n\t\t\t\t\ttop: \"M 3,7 C 8,7 16,7 21,7\",\n\t\t\t\t\tmid: \"M 3,12 C 8,12 16,12 21,12\",\n\t\t\t\t\tbot: \"M 3,17 C 8,17 16,17 21,17\",\n\t\t\t\t},\n\t\t\t\tclose: {\n\t\t\t\t\ttop: \"M 6,6 C 9,9 15,15 18,18\",\n\t\t\t\t\tmid: \"M 26,12 C 26,12 26,12 26,12\",\n\t\t\t\t\tbot: \"M 6,18 C 9,15 15,9 18,6\",\n\t\t\t\t}\n\t\t\t};\n\t\t\n\n\t\t\tconst rotate = icon === 'close' ? [0, 90, 90, 90] : [90, 90, -15, 0];\n\t\t\tconst ease = icon === 'close' ? 'easeIn' : 'easeOut';\n\t\t\tconst opacity = icon === 'close' ? [1, 0] : [0.5, 1];\n\t\t\tanimate(top, { d: iconPaths[icon].top}, t);\n\t\t\tanimate(mid, { d: iconPaths[icon].mid, opacity: opacity, rotate: rotate }, { duration: τmid, ease: ease });\n\t\t\tanimate(bot, { d: iconPaths[icon].bot}, t);\n\t\t}\n\n\t\tmobileMenu.toggleMobileMenu = toggleMobileMenu;\n\t\tmobileMenu.setMobileMenuIcon = setMobileMenuIcon;\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -84,7 +84,20 @@ func (p *Props) MobileNav() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<nav id=\"mobile-nav\" class=\"flex fixed right-0 bottom-0 left-0 z-50 flex-col backdrop-blur-md bg-base-600/95 md:hidden\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"fixed inset-0 z-40 opacity-0 md:hidden\" _=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(`on click call #mobile-menu-trigger.toggleMobileMenu() end`)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 81, Col: 116}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"></div><nav id=\"mobile-nav\" class=\"flex fixed right-0 bottom-0 left-0 z-50 flex-col backdrop-blur-md bg-base-600/96 md:hidden\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,7 +109,7 @@ func (p *Props) MobileNav() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</nav>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -120,12 +133,12 @@ func (p *Props) MobileBookmarks() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"mobile-bookmarks\" class=\"flex flex-1 justify-between border-t border-base-300\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"mobile-bookmarks\" class=\"flex flex-1 justify-between border-t border-base-300\" hx-target=\"#main\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -139,7 +152,7 @@ func (p *Props) MobileBookmarks() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -163,25 +176,25 @@ func mobileBookmark(link Link) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var5 == nil {
-			templ_7745c5c3_Var5 = templ.NopComponent
+		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var6 == nil {
+			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div hx-get=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div hx-get=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(link.Route())
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(link.Route())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 136, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 108, Col: 23}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" class=\"flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -189,20 +202,20 @@ func mobileBookmark(link Link) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<span class=\"mobile-bookmark-text text-sm font-semibold -mb-5 opacity-0 hidden\" data-text=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<span class=\"mobile-bookmark-text text-sm font-semibold -mb-5 opacity-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(link.Text())
+		var templ_7745c5c3_Var8 string
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(link.Text())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 140, Col: 105}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 112, Col: 88}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\"></span></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</span></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -226,25 +239,25 @@ func (p *Props) MobileMenuIcon() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var8 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var8 == nil {
-			templ_7745c5c3_Var8 = templ.NopComponent
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div id=\"mobile-menu-trigger\" class=\"flex justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401\" _=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div id=\"mobile-menu-trigger\" class=\"flex justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401\" _=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(`on click call me.toggleMobileMenu() end`)
+		var templ_7745c5c3_Var10 string
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(`on click call me.toggleMobileMenu() end`)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 148, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/nav/mobile.templ`, Line: 120, Col: 47}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"><svg viewBox=\"0 0.5 24 24\" width=\"2.25em\" height=\"2.25em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linecap=\"round\" class=\"z-50\"><path id=\"mobile-menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"mobile-menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"mobile-menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"><svg viewBox=\"0 0.5 24 24\" width=\"2.25em\" height=\"2.25em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linecap=\"round\" class=\"z-50\"><path id=\"mobile-menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"mobile-menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"mobile-menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -268,12 +281,12 @@ func (p *Props) MobileMenuExpanded() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var10 == nil {
-			templ_7745c5c3_Var10 = templ.NopComponent
+		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var11 == nil {
+			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div id=\"mobile-menu-expanded\" class=\"hidden overflow-hidden h-0\"><div class=\"px-6 py-4 h-[50vh]\"><h2 class=\"text-lg font-semibold\">Mobile Menu</h2><p class=\"text-sm\">This should expand smoothly!</p></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div id=\"mobile-menu-expanded\" class=\"overflow-hidden h-0\"><div class=\"px-6 py-4 h-[50vh]\"><h2 class=\"text-lg font-semibold\">Mobile Menu</h2><p class=\"text-sm\">This should expand smoothly!</p></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

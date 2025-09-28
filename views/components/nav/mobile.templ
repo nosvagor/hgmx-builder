@@ -8,8 +8,8 @@ templ mobileMenuController() {
 	@mobileMenuControllerScript.Once() {
 		<script type="module">
 		import { animate, easeOut } from "/static/scripts/motion.min.js";
-		import { τmax, τmid, τmin } from "/static/scripts/constants.js";
-		const τ = { duration: τmin, ease: easeOut };
+		import { τmid } from "/static/scripts/constants.js";
+		const τ = { duration: τmid, ease: easeOut };
 
 		const mobileMenu = document.getElementById('mobile-menu-trigger');
 
@@ -23,47 +23,18 @@ templ mobileMenuController() {
 				setMobileMenuIcon('hamburger');
 
 				const textSpans = nav.querySelectorAll('.mobile-bookmark-text');
-				textSpans.forEach(span => {
-					animate(span, { opacity: 0 }, τ)
-						.then(() => {
-							span.classList.add('hidden');
-							const originalText = span.getAttribute('data-text');
-							if (originalText) span.textContent = originalText;
-						});
-				});
-
+				animate(textSpans, { opacity: 0 }, τ)
 				animate(expandedMenu, { height: 0 }, τ)
-					.then(() => expandedMenu.classList.add('hidden'));
 			}
 
-			function typeWriter(span, text, dur = 320) {
-				let i = 0;
-				const speed = dur / text.length; 
-				span.textContent = '';
-				span.classList.remove('hidden');
-				animate(span, { opacity: 1 }, τ);
-
-				function type() {
-					if (i < text.length) {
-						span.textContent += text.charAt(i); i++;
-						setTimeout(type, speed);
-					}
-				}
-				type();
-			}
 
 			function openMenu() {
 				mobileMenu.classList.add('mobile-menu-open');
 				setMobileMenuIcon('close');
 
 				const textSpans = nav.querySelectorAll('.mobile-bookmark-text');
-				textSpans.forEach((span) => {
-					const text = span.getAttribute('data-text') || span.textContent;
-					span.setAttribute('data-text', text);
-					typeWriter(span, text);
-				});
+				animate(textSpans, { opacity: 1 }, τ);
 
-				expandedMenu.classList.remove('hidden');
 				const targetHeight = expandedMenu.scrollHeight;
 				animate(expandedMenu, { height: [0, targetHeight] }, τ);
 			}
@@ -107,9 +78,10 @@ templ mobileMenuController() {
 
 templ (p *Props) MobileNav() {
 	@mobileMenuController()
+	<div class="fixed inset-0 z-40 opacity-0 md:hidden" _={ `on click call #mobile-menu-trigger.toggleMobileMenu() end` }></div>
 	<nav
 		id="mobile-nav"
-		class="flex fixed right-0 bottom-0 left-0 z-50 flex-col backdrop-blur-md bg-base-600/95 md:hidden"
+		class="flex fixed right-0 bottom-0 left-0 z-50 flex-col backdrop-blur-md bg-base-600/96 md:hidden"
 	>
 		@p.MobileBookmarks()
 		@p.MobileMenuExpanded()
@@ -137,7 +109,7 @@ templ mobileBookmark(link Link) {
 		class="flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401"
 	>
 		@icon.Icon(link.Icon).Render()
-		<span class="mobile-bookmark-text text-sm font-semibold -mb-5 opacity-0 hidden" data-text={ link.Text() }></span>
+		<span class="mobile-bookmark-text text-sm font-semibold -mb-5 opacity-0">{ link.Text() }</span>
 	</div>
 }
 
@@ -156,7 +128,7 @@ templ (p *Props) MobileMenuIcon() {
 }
 
 templ (p *Props) MobileMenuExpanded() {
-	<div id="mobile-menu-expanded" class="hidden overflow-hidden h-0">
+	<div id="mobile-menu-expanded" class="overflow-hidden h-0">
 		<div class="px-6 py-4 h-[50vh]">
 			<h2 class="text-lg font-semibold">Mobile Menu</h2>
 			<p class="text-sm">This should expand smoothly!</p>
