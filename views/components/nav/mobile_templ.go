@@ -68,7 +68,7 @@ func (p *Props) MobileMenu() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"relative flex justify-center items-center w-full py-2 pt-3 cursor-pointer hover:text-primary-401 active:text-primary-401\"><svg viewBox=\"0 0.5 24 24\" width=\"2.25em\" height=\"2.25em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" class=\"z-50\"><path id=\"menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"flex relative justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401\"><svg viewBox=\"0 0.5 24 24\" width=\"2.25em\" height=\"2.25em\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1\" stroke-linecap=\"round\" class=\"z-50\"><path id=\"menu-top\" d=\"M 3,7 C 8,7 16,7 21,7\"></path> <path id=\"menu-mid\" d=\"M 3,12 C 8,12 16,12 21,12\"></path> <path id=\"menu-bot\" d=\"M 3,17 C 8,17 16,17 21,17\"></path></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -153,7 +153,7 @@ func mobileBookmark(link Link) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"flex flex-col justify-center items-center py-2 w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -179,7 +179,7 @@ func (p *Props) MenuExpanded() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"nav-menu-expanded\" class=\"fixed inset-0 z-40 pointer-events-none h-svh\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 backdrop-blur min-h-svh bg-black/10 cursor-w-resize\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600\" style=\"transform: translateX(-100%);\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"nav-menu-expanded\" class=\"hidden md:block fixed inset-0 z-40 pointer-events-none h-svh\"><div id=\"menu-backdrop\" class=\"absolute inset-0 opacity-0 backdrop-blur min-h-svh bg-black/10 cursor-w-resize\"></div><div id=\"menu-bg\" class=\"flex absolute top-0 left-0 flex-col justify-between rounded-br-[3rem] rounded-tr-[3rem] border-r-1 border-base-700 shadow-sm px-4 pt-12 pb-8 h-full min-w-fit bg-base-600\" style=\"transform: translateX(-100%);\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
