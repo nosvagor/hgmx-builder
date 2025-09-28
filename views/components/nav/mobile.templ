@@ -144,8 +144,8 @@ templ mobileBookmark(link Link) {
 templ (p *Props) MobileMenuIcon() {
 	<div
 		id="mobile-menu-trigger"
-		class="flex relative justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401"
-		_={ "on click call me.toggleMobileMenu() end" }
+		class="flex justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401"
+		_={ `on click call me.toggleMobileMenu() end` }
 	>
 		<svg viewBox="0 0.5 24 24" width="2.25em" height="2.25em" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="z-50">
 			<path id="mobile-menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
