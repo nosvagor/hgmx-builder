@@ -2,29 +2,86 @@ package nav
 
 import "github.com/nosvagor/hgmx-builder/views/components/icon"
 
-templ (p *Props) MobileNav() {
-	<nav
-		id="mobile-nav"
-		class="flex fixed right-0 bottom-0 left-0 z-50 flex-row justify-between backdrop-blur-md md:hidden bg-base-600/95"
-	>
-		@p.MobileBookmarks()
-	</nav>
+var mobileMenuControllerScript = templ.NewOnceHandle()
+
+templ mobileMenuController() {
+	@mobileMenuControllerScript.Once() {
+		<script type="module">
+			import { animate, easeOut } from "/static/scripts/motion.min.js";
+			import { τmax, τmid, τmin } from "/static/scripts/constants.js";
+			const τ = { duration: τmin, ease: easeOut };
+
+			const mobileMenu = document.getElementById('mobile-menu-trigger');
+
+			function toggleMobileMenu() {
+				const open = mobileMenu.classList.contains('mobile-menu-open');
+				const expandedMenu = document.getElementById('mobile-menu-expanded');
+
+				function closeMenu() {
+					mobileMenu.classList.remove('mobile-menu-open');
+					setMobileMenuIcon('hamburger');
+
+					animate(expandedMenu, { height: 0 }, τ)
+						.then(() => expandedMenu.classList.add('hidden'));
+				}
+
+				function openMenu() {
+					mobileMenu.classList.add('mobile-menu-open');
+					setMobileMenuIcon('close');
+
+					expandedMenu.classList.remove('hidden');
+					const targetHeight = expandedMenu.scrollHeight;
+					animate(expandedMenu, { height: [0, targetHeight] }, τ);
+				}
+
+				open ? closeMenu() : openMenu();
+			}
+
+			function setMobileMenuIcon(icon) {
+				const top = document.getElementById('mobile-menu-top');
+				const mid = document.getElementById('mobile-menu-mid');
+				const bot = document.getElementById('mobile-menu-bot');
+				const t = { duration: τmid, ease: easeOut };
+
+				const iconPaths = {
+					hamburger: {
+						top: "M 3,7 C 8,7 16,7 21,7",
+						mid: "M 3,12 C 8,12 16,12 21,12",
+						bot: "M 3,17 C 8,17 16,17 21,17",
+					},
+					close: {
+						top: "M 6,6 C 9,9 15,15 18,18",
+						mid: "M 26,12 C 26,12 26,12 26,12",
+						bot: "M 6,18 C 9,15 15,9 18,6",
+					}
+				};
+
+				animate(top, { d: iconPaths[icon].top }, t);
+				animate(mid, { d: iconPaths[icon].mid }, t);
+				animate(bot, { d: iconPaths[icon].bot }, t);
+			}
+
+			mobileMenu.toggleMobileMenu = toggleMobileMenu;
+			mobileMenu.setMobileMenuIcon = setMobileMenuIcon;
+		</script>
+	}
 }
 
-templ (p *Props) MobileMenu() {
-	<div class="flex relative justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401">
-		<svg viewBox="0 0.5 24 24" width="2.25em" height="2.25em" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="z-50">
-			<path id="menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
-			<path id="menu-mid" d="M 3,12 C 8,12 16,12 21,12"></path>
-			<path id="menu-bot" d="M 3,17 C 8,17 16,17 21,17"></path>
-		</svg>
-	</div>
+templ (p *Props) MobileNav() {
+	@mobileMenuController()
+	<nav
+		id="mobile-nav"
+		class="flex fixed right-0 bottom-0 left-0 z-50 flex-col backdrop-blur-md bg-base-600/95 md:hidden"
+	>
+		@p.MobileBookmarks()
+		@p.MobileMenuExpanded()
+	</nav>
 }
 
 templ (p *Props) MobileBookmarks() {
 	<div
 		id="mobile-bookmarks"
-		class="flex flex-1 justify-between border-t border-base-300"
+		class="flex flex-1 justify-between border-t border-b border-base-300 border-b-red-300"
 		hx-target="#main"
 		hx-swap="outerHTML"
 		hx-push-url="true"
@@ -32,7 +89,7 @@ templ (p *Props) MobileBookmarks() {
 		for _, link := range p.BookmarksMobile {
 			@mobileBookmark(link)
 		}
-		@p.MobileMenu()
+		@p.MobileMenuIcon()
 	</div>
 }
 
@@ -42,5 +99,32 @@ templ mobileBookmark(link Link) {
 		class="flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401"
 	>
 		@icon.Icon(link.Icon).Render()
+	</div>
+}
+
+templ (p *Props) MobileMenuIcon() {
+	<div
+		id="mobile-menu-trigger"
+		class="flex relative justify-center items-center py-2 -mb-1 w-full hover:text-primary-401 active:text-primary-401"
+		_={ `
+			on click
+				call me.toggleMobileMenu()
+			end
+		` }
+	>
+		<svg viewBox="0 0.5 24 24" width="2.25em" height="2.25em" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="z-50">
+			<path id="mobile-menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
+			<path id="mobile-menu-mid" d="M 3,12 C 8,12 16,12 21,12"></path>
+			<path id="mobile-menu-bot" d="M 3,17 C 8,17 16,17 21,17"></path>
+		</svg>
+	</div>
+}
+
+templ (p *Props) MobileMenuExpanded() {
+	<div id="mobile-menu-expanded" class="hidden overflow-hidden h-0">
+		<div class="px-6 py-4 border-t border-base-300">
+			<h2 class="text-lg font-semibold text-secondary-601">Mobile Menu</h2>
+			<p class="mt-2 text-sm text-secondary-501">This should expand smoothly!</p>
+		</div>
 	</div>
 }
