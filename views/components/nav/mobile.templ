@@ -7,62 +7,100 @@ var mobileMenuControllerScript = templ.NewOnceHandle()
 templ mobileMenuController() {
 	@mobileMenuControllerScript.Once() {
 		<script type="module">
-			import { animate, easeOut } from "/static/scripts/motion.min.js";
-			import { τmax, τmid, τmin } from "/static/scripts/constants.js";
-			const τ = { duration: τmin, ease: easeOut };
+		import { animate, easeOut } from "/static/scripts/motion.min.js";
+		import { τmax, τmid, τmin } from "/static/scripts/constants.js";
+		const τ = { duration: τmin, ease: easeOut };
 
-			const mobileMenu = document.getElementById('mobile-menu-trigger');
+		const mobileMenu = document.getElementById('mobile-menu-trigger');
 
-			function toggleMobileMenu() {
-				const open = mobileMenu.classList.contains('mobile-menu-open');
-				const expandedMenu = document.getElementById('mobile-menu-expanded');
+		function toggleMobileMenu() {
+			const open = mobileMenu.classList.contains('mobile-menu-open');
+			const expandedMenu = document.getElementById('mobile-menu-expanded');
+			const nav = document.getElementById('mobile-nav');
 
-				function closeMenu() {
-					mobileMenu.classList.remove('mobile-menu-open');
-					setMobileMenuIcon('hamburger');
+			function closeMenu() {
+				mobileMenu.classList.remove('mobile-menu-open');
+				setMobileMenuIcon('hamburger');
 
-					animate(expandedMenu, { height: 0 }, τ)
-						.then(() => expandedMenu.classList.add('hidden'));
-				}
+				const textSpans = nav.querySelectorAll('.mobile-bookmark-text');
+				textSpans.forEach(span => {
+					animate(span, { opacity: 0 }, τ)
+						.then(() => {
+							span.classList.add('hidden');
+							const originalText = span.getAttribute('data-text');
+							if (originalText) span.textContent = originalText;
+						});
+				});
 
-				function openMenu() {
-					mobileMenu.classList.add('mobile-menu-open');
-					setMobileMenuIcon('close');
-
-					expandedMenu.classList.remove('hidden');
-					const targetHeight = expandedMenu.scrollHeight;
-					animate(expandedMenu, { height: [0, targetHeight] }, τ);
-				}
-
-				open ? closeMenu() : openMenu();
+				animate(expandedMenu, { height: 0 }, τ)
+					.then(() => expandedMenu.classList.add('hidden'));
 			}
 
-			function setMobileMenuIcon(icon) {
-				const top = document.getElementById('mobile-menu-top');
-				const mid = document.getElementById('mobile-menu-mid');
-				const bot = document.getElementById('mobile-menu-bot');
-				const t = { duration: τmid, ease: easeOut };
+			function typeWriter(span, text, dur = 320) {
+				let i = 0;
+				const speed = dur / text.length; 
+				span.textContent = '';
+				span.classList.remove('hidden');
+				animate(span, { opacity: 1 }, τ);
 
-				const iconPaths = {
-					hamburger: {
-						top: "M 3,7 C 8,7 16,7 21,7",
-						mid: "M 3,12 C 8,12 16,12 21,12",
-						bot: "M 3,17 C 8,17 16,17 21,17",
-					},
-					close: {
-						top: "M 6,6 C 9,9 15,15 18,18",
-						mid: "M 26,12 C 26,12 26,12 26,12",
-						bot: "M 6,18 C 9,15 15,9 18,6",
+				function type() {
+					if (i < text.length) {
+						span.textContent += text.charAt(i); i++;
+						setTimeout(type, speed);
 					}
-				};
-
-				animate(top, { d: iconPaths[icon].top }, t);
-				animate(mid, { d: iconPaths[icon].mid }, t);
-				animate(bot, { d: iconPaths[icon].bot }, t);
+				}
+				type();
 			}
 
-			mobileMenu.toggleMobileMenu = toggleMobileMenu;
-			mobileMenu.setMobileMenuIcon = setMobileMenuIcon;
+			function openMenu() {
+				mobileMenu.classList.add('mobile-menu-open');
+				setMobileMenuIcon('close');
+
+				const textSpans = nav.querySelectorAll('.mobile-bookmark-text');
+				textSpans.forEach((span) => {
+					const text = span.getAttribute('data-text') || span.textContent;
+					span.setAttribute('data-text', text);
+					typeWriter(span, text);
+				});
+
+				expandedMenu.classList.remove('hidden');
+				const targetHeight = expandedMenu.scrollHeight;
+				animate(expandedMenu, { height: [0, targetHeight] }, τ);
+			}
+
+			open ? closeMenu() : openMenu();
+		}
+
+		function setMobileMenuIcon(icon) {
+			const top = document.getElementById('mobile-menu-top');
+			const mid = document.getElementById('mobile-menu-mid');
+			const bot = document.getElementById('mobile-menu-bot');
+			const t = { duration: τmid, ease: easeOut };
+
+			const iconPaths = {
+				hamburger: {
+					top: "M 3,7 C 8,7 16,7 21,7",
+					mid: "M 3,12 C 8,12 16,12 21,12",
+					bot: "M 3,17 C 8,17 16,17 21,17",
+				},
+				close: {
+					top: "M 6,6 C 9,9 15,15 18,18",
+					mid: "M 26,12 C 26,12 26,12 26,12",
+					bot: "M 6,18 C 9,15 15,9 18,6",
+				}
+			};
+		
+
+			const rotate = icon === 'close' ? [0, 90, 90, 90] : [90, 90, -15, 0];
+			const ease = icon === 'close' ? 'easeIn' : 'easeOut';
+			const opacity = icon === 'close' ? [1, 0] : [0.5, 1];
+			animate(top, { d: iconPaths[icon].top}, t);
+			animate(mid, { d: iconPaths[icon].mid, opacity: opacity, rotate: rotate }, { duration: τmid, ease: ease });
+			animate(bot, { d: iconPaths[icon].bot}, t);
+		}
+
+		mobileMenu.toggleMobileMenu = toggleMobileMenu;
+		mobileMenu.setMobileMenuIcon = setMobileMenuIcon;
 		</script>
 	}
 }
@@ -81,7 +119,7 @@ templ (p *Props) MobileNav() {
 templ (p *Props) MobileBookmarks() {
 	<div
 		id="mobile-bookmarks"
-		class="flex flex-1 justify-between border-t border-b border-base-300 border-b-red-300"
+		class="flex flex-1 justify-between border-t border-base-300"
 		hx-target="#main"
 		hx-swap="outerHTML"
 		hx-push-url="true"
@@ -99,18 +137,15 @@ templ mobileBookmark(link Link) {
 		class="flex flex-col justify-center items-center w-full text-2xl cursor-pointer hover:text-primary-401 active:text-primary-401"
 	>
 		@icon.Icon(link.Icon).Render()
+		<span class="mobile-bookmark-text text-sm font-semibold -mb-5 opacity-0 hidden" data-text={ link.Text() }></span>
 	</div>
 }
 
 templ (p *Props) MobileMenuIcon() {
 	<div
 		id="mobile-menu-trigger"
-		class="flex relative justify-center items-center py-2 -mb-1 w-full hover:text-primary-401 active:text-primary-401"
-		_={ `
-			on click
-				call me.toggleMobileMenu()
-			end
-		` }
+		class="flex relative justify-center items-center py-2 -mb-1 w-full cursor-pointer hover:text-primary-401 active:text-primary-401"
+		_={ "on click call me.toggleMobileMenu() end" }
 	>
 		<svg viewBox="0 0.5 24 24" width="2.25em" height="2.25em" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" class="z-50">
 			<path id="mobile-menu-top" d="M 3,7 C 8,7 16,7 21,7"></path>
@@ -122,9 +157,9 @@ templ (p *Props) MobileMenuIcon() {
 
 templ (p *Props) MobileMenuExpanded() {
 	<div id="mobile-menu-expanded" class="hidden overflow-hidden h-0">
-		<div class="px-6 py-4 border-t border-base-300">
-			<h2 class="text-lg font-semibold text-secondary-601">Mobile Menu</h2>
-			<p class="mt-2 text-sm text-secondary-501">This should expand smoothly!</p>
+		<div class="px-6 py-4 h-[50vh]">
+			<h2 class="text-lg font-semibold">Mobile Menu</h2>
+			<p class="text-sm">This should expand smoothly!</p>
 		</div>
 	</div>
 }
