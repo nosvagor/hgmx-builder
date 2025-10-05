@@ -45,7 +45,7 @@ func ZerologRequestLogger() echo.MiddlewareFunc {
 				c.Error(err)
 			}
 
-			duration := time.Since(start)
+			ms := time.Since(start).Truncate(time.Millisecond)
 
 			var event *zerolog.Event
 			if err != nil {
@@ -63,15 +63,24 @@ func ZerologRequestLogger() echo.MiddlewareFunc {
 				event = log.Info()
 			}
 
-			event.
-				Str("hx", req.Method).
-				Int("c", res.Status).
-				Str("uri", req.RequestURI).
-				Str("ip", c.RealIP()).
-				Str("ref", req.Referer()).
-				Str("host", req.Host).
-				Dur("ms", duration).
-				Msg("")
+			if utils.LoadConfig().ENV == "DEV" {
+				event.
+					Int("c", res.Status).
+					Str("m", req.Method).
+					Str("r", req.RequestURI).
+					Dur("t", ms).
+					Msg("")
+			} else {
+				event.
+					Str("hx", req.Method).
+					Int("c", res.Status).
+					Str("uri", req.RequestURI).
+					Str("ip", c.RealIP()).
+					Str("ref", req.Referer()).
+					Str("host", req.Host).
+					Dur("ms", ms).
+					Msg("")
+			}
 
 			return nil
 		}

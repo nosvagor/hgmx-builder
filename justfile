@@ -8,6 +8,7 @@ CSS_OUTPUT          := "views/static/css/main.min.css"
 PATH_SCRIPTS        := "views/static/scripts"
 COMPOSE             := "docker compose"
 DB_SERVICE          := "hgmx-pg"
+WATCHER_PORT        := "8003"
 
 default:
     @just --list
@@ -41,28 +42,40 @@ run *ARGS:
     @go run {{MAIN_PACKAGE_PATH}} {{ARGS}}
 
 tw:
-    @tailwindcss -i {{CSS_INPUT}} -o {{CSS_OUTPUT}} --minify
+    @tailwindcss -i {{CSS_INPUT}} -o {{CSS_OUTPUT}} --minify --watch --verbose
 
 watch:
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     if ! docker info >/dev/null 2>&1; then
         echo "Docker is not running. Please start Docker first."
         exit 1
     fi
-    
+
     if ! {{COMPOSE}} ps --services --filter "status=running" | grep -q "{{DB_SERVICE}}"; then
         {{COMPOSE}} up -d
         if {{COMPOSE}} help 2>/dev/null | grep -q " wait "; then
             {{COMPOSE}} wait || true
         else
-            sleep 3
+            sleep 2
         fi
     fi
-    
-    
+
+    env PROXY=true \
+    templ generate --watch --proxy="http://localhost:3008" --proxyport={{WATCHER_PORT}} --open-browser=false --cmd="go run cmd/main.go" --log-level=warn &
+    TEMPL_PID=$!
+
+    cleanup() {
+        kill $TEMPL_PID 2>/dev/null || true
+        wait $TEMPL_PID 2>/dev/null || true
+        exit 0
+    }
+
+    trap cleanup SIGINT SIGTERM
+
     air
+    cleanup
 
 patch:
     #!/usr/bin/env bash

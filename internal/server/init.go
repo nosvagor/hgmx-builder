@@ -151,8 +151,11 @@ func Start(e *echo.Echo) error {
 
 	_ = database.MustOpen()
 	_ = stats.Migrate()
-	printBanner(cfg)
-	printDBHealth(cfg)
+
+	if !cfg.Proxy {
+		printBanner(cfg)
+		printDBHealth(cfg)
+	}
 
 	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: e, ReadTimeout: 5 * time.Second, WriteTimeout: 10 * time.Second, IdleTimeout: 120 * time.Second}
 

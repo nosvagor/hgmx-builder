@@ -96,11 +96,6 @@ templ Link(href string, content components.Customizeable) {
 	@p.Render()
 }
 
-templ Bust(path string, content components.Customizeable, opts ...htmx.Options) {
-	{{ p := &Props{HX: htmx.Bust(path, opts...), Content: content, Variant: Primary} }}
-	@p.Render()
-}
-
 templ Post(path string, content components.Customizeable, opts htmx.Options) {
 	{{ p := &Props{HX: htmx.Post(path, opts), Content: content, Variant: Constructive} }}
 	@p.Render()

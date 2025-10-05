@@ -28,11 +28,11 @@ const (
 )
 
 func Home(c echo.Context) error {
-	return web.Page(c, home.Main(), "Home", Preload)
+	return web.Page(c, home.Main(), "Home", Day)
 }
 
 func Docs(c echo.Context) error {
-	return web.Page(c, docs.Main(), "Docs", Preload)
+	return web.Page(c, docs.Main(), "Docs", Day)
 }
 
 func Palette(c echo.Context) error {
@@ -41,29 +41,29 @@ func Palette(c echo.Context) error {
 		hex = "#222536"
 	}
 	view := colors.Generate(hex).ToView()
-	return web.Page(c, palette.Main(view, hex), "Palette", Preload)
+	return web.Page(c, palette.Main(view, hex), "Palette", Day)
 }
 
 func Icons(c echo.Context) error {
-	return web.Page(c, icons.Main(c), "Icons", Preload)
+	return web.Page(c, icons.Main(c), "Icons", Day)
 }
 
 func Blog(c echo.Context) error {
-	return web.Page(c, blog.Main(), "Blog", Preload)
+	return web.Page(c, blog.Main(), "Blog", Day)
 }
 
 func FAQ(c echo.Context) error {
-	return web.Page(c, faq.Main(), "FAQ", Preload)
+	return web.Page(c, faq.Main(), "FAQ", Day)
 }
 
 func Settings(c echo.Context) error {
-	return web.Page(c, settings.Main(), "Settings", Preload)
+	return web.Page(c, settings.Main(), "Settings", Day)
 }
 
 func Account(c echo.Context) error {
-	return web.Page(c, account.Main(), "Account", Preload)
+	return web.Page(c, account.Main(), "Account", Day)
 }
 
 func NotFound(c echo.Context) error {
-	return web.Page(c, notfound.Main(), "Not Found", Preload)
+	return web.Page(c, notfound.Main(), "Not Found", Day)
 }
